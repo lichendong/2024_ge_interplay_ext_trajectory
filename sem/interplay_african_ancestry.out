@@ -1,0 +1,887 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+08/31/2024   7:45 AM
+
+INPUT INSTRUCTIONS
+
+  Data:
+    File is FinalMplusbyAncestryAll.csv;
+  Variable:
+   Names are
+    id race
+    pgs parent peer school neighbor age sex
+    sub asb
+    income pared
+    sub_hi_dum sub_lo_dum
+    asb_hi_dum asb_mod_dum asb_ado_dum
+    pgsparent pgspeer pgsschool pgsneighbor
+    pgsage pgssex pgsinc pgspared
+    ancestry
+    ;
+
+   usevariables are
+    sub asb
+    pgs parent peer school neighbor age sex
+    income pared
+    sub_hi_dum sub_lo_dum
+    asb_hi_dum asb_mod_dum asb_ado_dum
+    pgsparent pgspeer pgsschool pgsneighbor
+    pgsage pgssex pgsinc pgspared
+    ;
+
+    NOMINAL ARE
+     asb sub;
+
+    USEOBSERVATIONS ARE
+      ancestry == 1;
+
+    Missing are .;
+
+  Analysis:
+      process = 24;
+      estimator = ML;
+      Algorithm = INTEGRATION;
+      INTEGRATION = MONTECARLO (5000);
+      !LINK = PROBIT;
+      bootstrap=500;
+
+  Define:
+
+
+  MODEL:
+
+      parent peer school neighbor ON age sex income pared;
+
+      parent ON pgs(a1);
+      peer ON pgs(a2);
+      school ON pgs(a3);
+      neighbor ON pgs(a4);
+
+
+      asb ON pgsparent pgspeer
+      pgsschool pgsneighbor
+      pgsage pgssex pgsinc pgspared
+      sub_hi_dum sub_lo_dum age sex
+      income pared;
+
+      asb#1 ON pgs(cpasb1);
+      asb#1 ON parent(basb11);
+      asb#1 ON peer(basb12);
+      asb#1 ON school(basb13);
+      asb#1 ON neighbor(basb14);
+
+      asb#2 ON pgs(cpasb2);
+      asb#2 ON parent(basb21);
+      asb#2 ON peer(basb22);
+      asb#2 ON school(basb23);
+      asb#2 ON neighbor(basb24);
+
+      asb#3 ON pgs(cpasb3);
+      asb#3 ON parent(basb31);
+      asb#3 ON peer(basb32);
+      asb#3 ON school(basb33);
+      asb#3 ON neighbor(basb34);
+
+
+      sub ON pgsparent pgspeer pgsschool pgsneighbor
+      pgsage pgssex pgsinc pgspared
+      asb_hi_dum asb_mod_dum asb_ado_dum age sex
+      income pared;
+
+      sub#1 ON pgs(cpsub1);
+      sub#1 ON parent(bsub11);
+      sub#1 ON peer(bsub12);
+      sub#1 ON school(bsub13);
+      sub#1 ON neighbor(bsub14);
+
+      sub#2 ON pgs(cpsub2);
+      sub#2 ON parent(bsub21);
+      sub#2 ON peer(bsub22);
+      sub#2 ON school(bsub23);
+      sub#2 ON neighbor(bsub24);
+
+      parent WITH peer school neighbor;
+
+      peer WITH parent school neighbor;
+
+      school WITH parent peer neighbor;
+
+      neighbor WITH parent peer school;
+
+  MODEL CONSTRAINT:
+      NEW (indasb11 indasb12 indasb13 indasb14 totalasb1
+      indasb21 indasb22 indasb23 indasb24 totalasb2
+      indasb31 indasb32 indasb33 indasb34 totalasb3
+      indsub11 indsub12 indsub13 indsub14 totalsub1
+      indsub21 indsub22 indsub23 indsub24 totalsub2);
+
+      indasb11 = a1*basb11;
+      indasb12 = a2*basb12;
+      indasb13 = a3*basb13;
+      indasb14 = a4*basb14;
+      totalasb1 = indasb11 + indasb12 + indasb13 +
+          indasb14 + cpasb1;
+
+      indasb21 = a1*basb21;
+      indasb22 = a2*basb22;
+      indasb23 = a3*basb23;
+      indasb24 = a4*basb24;
+      totalasb2 = indasb21 + indasb22 + indasb23 +
+          indasb24 + cpasb2;
+
+      indasb31 = a1*basb31;
+      indasb32 = a2*basb32;
+      indasb33 = a3*basb33;
+      indasb34 = a4*basb34;
+      totalasb3 = indasb31 + indasb32 + indasb33 +
+          indasb34 + cpasb3;
+
+      indsub11 = a1*bsub11;
+      indsub12 = a2*bsub12;
+      indsub13 = a3*bsub13;
+      indsub14 = a4*bsub14;
+      totalsub1 = indsub11 + indsub12 + indsub13 +
+          indsub14 + cpsub1;
+
+      indsub21 = a1*bsub21;
+      indsub22 = a2*bsub22;
+      indsub23 = a3*bsub23;
+      indsub24 = a4*bsub24;
+      totalsub2 = indsub21 + indsub22 + indsub23 +
+          indsub24 + cpsub2;
+
+
+      OUTPUT:
+      CINTERVAL(BOOTSTRAP)
+      ;
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        1614
+
+Number of dependent variables                                    6
+Number of independent variables                                 18
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   PARENT      PEER        SCHOOL      NEIGHBOR
+
+  Unordered categorical (nominal)
+   ASB         SUB
+
+Observed independent variables
+   PGS         AGE         SEX         INCOME      PARED       SUB_HI_D
+   SUB_LO_D    ASB_HI_D    ASB_MOD_    ASB_ADO_    PGSPAREN    PGSPEER
+   PGSSCHOO    PGSNEIGH    PGSAGE      PGSSEX      PGSINC      PGSPARED
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-02
+    Relative loglikelihood change                        0.100D-05
+    Derivative                                           0.100D-02
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Number of bootstrap draws
+    Requested                                                  500
+    Completed                                                  500
+Optimization algorithm                                         EMA
+Integration Specifications
+  Type                                                  MONTECARLO
+  Number of integration points                                5000
+  Dimensions of numerical integration                            0
+  Adaptive quadrature                                           ON
+  Monte Carlo integration seed                                   0
+Cholesky                                                       OFF
+
+Input data file(s)
+  FinalMplusbyAncestryAll.csv
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR Y
+
+
+           Covariance Coverage
+              PARENT        PEER          SCHOOL        NEIGHBOR      PGS
+              ________      ________      ________      ________      ________
+ PARENT         1.000
+ PEER           1.000         1.000
+ SCHOOL         1.000         1.000         1.000
+ NEIGHBOR       1.000         1.000         1.000         1.000
+ PGS            1.000         1.000         1.000         1.000         1.000
+ AGE            1.000         1.000         1.000         1.000         1.000
+ SEX            1.000         1.000         1.000         1.000         1.000
+ INCOME         1.000         1.000         1.000         1.000         1.000
+ PARED          1.000         1.000         1.000         1.000         1.000
+ SUB_HI_D       1.000         1.000         1.000         1.000         1.000
+ SUB_LO_D       1.000         1.000         1.000         1.000         1.000
+ ASB_HI_D       1.000         1.000         1.000         1.000         1.000
+ ASB_MOD_       1.000         1.000         1.000         1.000         1.000
+ ASB_ADO_       1.000         1.000         1.000         1.000         1.000
+ PGSPAREN       1.000         1.000         1.000         1.000         1.000
+ PGSPEER        1.000         1.000         1.000         1.000         1.000
+ PGSSCHOO       1.000         1.000         1.000         1.000         1.000
+ PGSNEIGH       1.000         1.000         1.000         1.000         1.000
+ PGSAGE         1.000         1.000         1.000         1.000         1.000
+ PGSSEX         1.000         1.000         1.000         1.000         1.000
+ PGSINC         1.000         1.000         1.000         1.000         1.000
+ PGSPARED       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              AGE           SEX           INCOME        PARED         SUB_HI_D
+              ________      ________      ________      ________      ________
+ AGE            1.000
+ SEX            1.000         1.000
+ INCOME         1.000         1.000         1.000
+ PARED          1.000         1.000         1.000         1.000
+ SUB_HI_D       1.000         1.000         1.000         1.000         1.000
+ SUB_LO_D       1.000         1.000         1.000         1.000         1.000
+ ASB_HI_D       1.000         1.000         1.000         1.000         1.000
+ ASB_MOD_       1.000         1.000         1.000         1.000         1.000
+ ASB_ADO_       1.000         1.000         1.000         1.000         1.000
+ PGSPAREN       1.000         1.000         1.000         1.000         1.000
+ PGSPEER        1.000         1.000         1.000         1.000         1.000
+ PGSSCHOO       1.000         1.000         1.000         1.000         1.000
+ PGSNEIGH       1.000         1.000         1.000         1.000         1.000
+ PGSAGE         1.000         1.000         1.000         1.000         1.000
+ PGSSEX         1.000         1.000         1.000         1.000         1.000
+ PGSINC         1.000         1.000         1.000         1.000         1.000
+ PGSPARED       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_      PGSPAREN
+              ________      ________      ________      ________      ________
+ SUB_LO_D       1.000
+ ASB_HI_D       1.000         1.000
+ ASB_MOD_       1.000         1.000         1.000
+ ASB_ADO_       1.000         1.000         1.000         1.000
+ PGSPAREN       1.000         1.000         1.000         1.000         1.000
+ PGSPEER        1.000         1.000         1.000         1.000         1.000
+ PGSSCHOO       1.000         1.000         1.000         1.000         1.000
+ PGSNEIGH       1.000         1.000         1.000         1.000         1.000
+ PGSAGE         1.000         1.000         1.000         1.000         1.000
+ PGSSEX         1.000         1.000         1.000         1.000         1.000
+ PGSINC         1.000         1.000         1.000         1.000         1.000
+ PGSPARED       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ PGSPEER        1.000
+ PGSSCHOO       1.000         1.000
+ PGSNEIGH       1.000         1.000         1.000
+ PGSAGE         1.000         1.000         1.000         1.000
+ PGSSEX         1.000         1.000         1.000         1.000         1.000
+ PGSINC         1.000         1.000         1.000         1.000         1.000
+ PGSPARED       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              PGSINC        PGSPARED
+              ________      ________
+ PGSINC         1.000
+ PGSPARED       1.000         1.000
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    ASB
+      Category 1    0.015           24.000
+      Category 2    0.159          257.000
+      Category 3    0.062          100.000
+      Category 4    0.764         1233.000
+    SUB
+      Category 1    0.272          439.000
+      Category 2    0.325          525.000
+      Category 3    0.403          650.000
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                      136
+
+Loglikelihood
+
+          H0 Value                      -11522.090
+
+Information Criteria
+
+          Akaike (AIC)                   23316.180
+          Bayesian (BIC)                 24048.740
+          Sample-Size Adjusted BIC       23616.693
+            (n* = (n + 2) / 24)
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PARENT     ON
+    AGE               -0.284      0.052     -5.490      0.000
+    SEX               -0.173      0.026     -6.749      0.000
+    INCOME             0.048      0.026      1.804      0.071
+    PARED              0.069      0.030      2.290      0.022
+    PGS               -0.037      0.033     -1.119      0.263
+
+ PEER       ON
+    AGE               -0.136      0.048     -2.816      0.005
+    SEX                0.177      0.023      7.793      0.000
+    INCOME            -0.052      0.023     -2.286      0.022
+    PARED             -0.094      0.025     -3.744      0.000
+    PGS                0.060      0.031      1.897      0.058
+
+ SCHOOL     ON
+    AGE               -0.148      0.053     -2.788      0.005
+    SEX               -0.087      0.025     -3.516      0.000
+    INCOME            -0.050      0.023     -2.160      0.031
+    PARED              0.016      0.025      0.638      0.523
+    PGS               -0.055      0.033     -1.670      0.095
+
+ NEIGHBOR   ON
+    AGE               -0.283      0.048     -5.874      0.000
+    SEX               -0.125      0.023     -5.318      0.000
+    INCOME             0.041      0.024      1.706      0.088
+    PARED             -0.007      0.026     -0.255      0.799
+    PGS                0.004      0.031      0.118      0.906
+
+ ASB#1      ON
+    PGSPARENT         -0.024      0.266     -0.092      0.927
+    PGSPEER            0.106      0.271      0.393      0.694
+    PGSSCHOOL         -0.094      0.245     -0.383      0.702
+    PGSNEIGHBO        -0.247      0.380     -0.650      0.516
+    PGSAGE            -0.148      0.308     -0.479      0.632
+    PGSSEX            -1.300      1.675     -0.776      0.438
+    PGSINC             0.001      0.231      0.005      0.996
+    PGSPARED          -0.136      0.320     -0.425      0.671
+    SUB_HI_DUM         1.157      0.851      1.360      0.174
+    SUB_LO_DUM        -9.474      2.156     -4.394      0.000
+    AGE               -1.351      2.415     -0.559      0.576
+    SEX               -0.327      0.319     -1.025      0.305
+    INCOME            -0.336      0.278     -1.206      0.228
+    PARED              0.510      0.282      1.808      0.071
+    PGS                0.071      0.889      0.080      0.936
+    PARENT            -0.143      0.363     -0.393      0.694
+    PEER               1.059      0.280      3.787      0.000
+    SCHOOL            -0.179      0.281     -0.638      0.523
+    NEIGHBOR          -0.080      0.470     -0.171      0.864
+
+ ASB#2      ON
+    PGSPARENT         -0.024      0.096     -0.250      0.803
+    PGSPEER            0.185      0.107      1.721      0.085
+    PGSSCHOOL          0.048      0.103      0.469      0.639
+    PGSNEIGHBO         0.070      0.115      0.613      0.540
+    PGSAGE             0.040      0.101      0.399      0.690
+    PGSSEX             0.107      0.199      0.539      0.590
+    PGSINC            -0.203      0.094     -2.163      0.031
+    PGSPARED           0.184      0.110      1.682      0.093
+    SUB_HI_DUM         0.705      0.159      4.427      0.000
+    SUB_LO_DUM        -1.044      0.238     -4.382      0.000
+    AGE               -1.007      0.159     -6.320      0.000
+    SEX               -0.063      0.083     -0.756      0.450
+    INCOME            -0.004      0.073     -0.053      0.958
+    PARED             -0.086      0.084     -1.025      0.305
+    PGS               -0.099      0.111     -0.892      0.372
+    PARENT            -0.115      0.074     -1.552      0.121
+    PEER               0.305      0.082      3.748      0.000
+    SCHOOL            -0.115      0.083     -1.380      0.168
+    NEIGHBOR           0.024      0.083      0.285      0.775
+
+ ASB#3      ON
+    PGSPARENT          0.231      0.167      1.384      0.166
+    PGSPEER           -0.075      0.149     -0.502      0.616
+    PGSSCHOOL          0.047      0.147      0.319      0.750
+    PGSNEIGHBO         0.049      0.183      0.270      0.787
+    PGSAGE             0.053      0.176      0.304      0.761
+    PGSSEX             0.244      0.332      0.737      0.461
+    PGSINC            -0.269      0.153     -1.756      0.079
+    PGSPARED           0.130      0.179      0.724      0.469
+    SUB_HI_DUM         0.001      0.285      0.003      0.998
+    SUB_LO_DUM        -0.893      0.373     -2.394      0.017
+    AGE               -1.401      0.290     -4.825      0.000
+    SEX               -0.453      0.131     -3.458      0.001
+    INCOME             0.049      0.120      0.406      0.685
+    PARED              0.113      0.138      0.820      0.412
+    PGS                0.217      0.198      1.094      0.274
+    PARENT            -0.196      0.119     -1.644      0.100
+    PEER               0.935      0.118      7.956      0.000
+    SCHOOL            -0.255      0.125     -2.045      0.041
+    NEIGHBOR          -0.019      0.124     -0.155      0.876
+
+ SUB#1      ON
+    PGSPARENT          0.016      0.098      0.162      0.871
+    PGSPEER            0.030      0.084      0.361      0.718
+    PGSSCHOOL         -0.086      0.087     -0.991      0.322
+    PGSNEIGHBO        -0.073      0.099     -0.743      0.458
+    PGSAGE             0.031      0.095      0.331      0.741
+    PGSSEX             0.063      0.182      0.346      0.729
+    PGSINC            -0.004      0.081     -0.046      0.963
+    PGSPARED          -0.002      0.098     -0.023      0.981
+    ASB_HI_DUM         1.088      0.807      1.349      0.177
+    ASB_MOD_DU         0.707      0.159      4.444      0.000
+    ASB_ADO_DU         0.033      0.270      0.122      0.903
+    AGE               -0.676      0.144     -4.697      0.000
+    SEX               -0.039      0.069     -0.568      0.570
+    INCOME            -0.145      0.067     -2.181      0.029
+    PARED             -0.045      0.071     -0.627      0.530
+    PGS                0.133      0.097      1.372      0.170
+    PARENT             0.026      0.064      0.402      0.688
+    PEER               0.389      0.072      5.376      0.000
+    SCHOOL            -0.140      0.072     -1.954      0.051
+    NEIGHBOR          -0.015      0.074     -0.198      0.843
+
+ SUB#2      ON
+    PGSPARENT         -0.124      0.081     -1.522      0.128
+    PGSPEER            0.070      0.115      0.612      0.541
+    PGSSCHOOL         -0.075      0.090     -0.835      0.404
+    PGSNEIGHBO         0.022      0.088      0.247      0.805
+    PGSAGE            -0.046      0.084     -0.554      0.580
+    PGSSEX            -0.002      0.181     -0.014      0.989
+    PGSINC            -0.208      0.078     -2.673      0.008
+    PGSPARED           0.005      0.097      0.048      0.962
+    ASB_HI_DUM       -10.764      0.886    -12.146      0.000
+    ASB_MOD_DU        -1.024      0.240     -4.270      0.000
+    ASB_ADO_DU        -0.781      0.355     -2.204      0.028
+    AGE                0.451      0.141      3.188      0.001
+    SEX                0.182      0.069      2.641      0.008
+    INCOME            -0.112      0.060     -1.876      0.061
+    PARED              0.042      0.071      0.585      0.559
+    PGS               -0.006      0.093     -0.063      0.949
+    PARENT             0.134      0.063      2.142      0.032
+    PEER              -0.381      0.082     -4.621      0.000
+    SCHOOL             0.067      0.070      0.958      0.338
+    NEIGHBOR          -0.083      0.068     -1.216      0.224
+
+ PARENT   WITH
+    PEER              -0.128      0.024     -5.219      0.000
+    SCHOOL             0.210      0.030      7.026      0.000
+    NEIGHBOR           0.107      0.026      4.146      0.000
+
+ PEER     WITH
+    SCHOOL            -0.162      0.027     -6.021      0.000
+    NEIGHBOR           0.008      0.022      0.352      0.725
+
+ SCHOOL   WITH
+    NEIGHBOR           0.196      0.025      7.918      0.000
+
+ Intercepts
+    PARENT             0.002      0.027      0.085      0.932
+    PEER              -0.091      0.025     -3.708      0.000
+    SCHOOL            -0.088      0.024     -3.618      0.000
+    NEIGHBOR          -0.061      0.024     -2.576      0.010
+    ASB#1             -5.120      1.483     -3.454      0.001
+    ASB#2             -1.610      0.117    -13.738      0.000
+    ASB#3             -2.706      0.199    -13.622      0.000
+    SUB#1             -0.693      0.089     -7.802      0.000
+    SUB#2             -0.295      0.082     -3.594      0.000
+
+ Residual Variances
+    PARENT             1.096      0.063     17.275      0.000
+    PEER               0.891      0.038     23.441      0.000
+    SCHOOL             0.977      0.039     25.045      0.000
+    NEIGHBOR           0.945      0.032     29.352      0.000
+
+New/Additional Parameters
+    INDASB11           0.005      0.019      0.281      0.779
+    INDASB12           0.063      0.039      1.619      0.105
+    INDASB13           0.010      0.018      0.555      0.579
+    INDASB14           0.000      0.017     -0.017      0.986
+    TOTALASB           0.149      0.895      0.167      0.868
+    INDASB21           0.004      0.005      0.872      0.383
+    INDASB22           0.018      0.011      1.648      0.099
+    INDASB23           0.006      0.006      0.977      0.328
+    INDASB24           0.000      0.003      0.029      0.977
+    TOTALASB          -0.070      0.112     -0.631      0.528
+    INDASB31           0.007      0.008      0.948      0.343
+    INDASB32           0.056      0.031      1.776      0.076
+    INDASB33           0.014      0.012      1.221      0.222
+    INDASB34           0.000      0.005     -0.016      0.987
+    TOTALASB           0.294      0.201      1.463      0.144
+    INDSUB11          -0.001      0.003     -0.285      0.776
+    INDSUB12           0.023      0.014      1.714      0.087
+    INDSUB13           0.008      0.007      1.147      0.251
+    INDSUB14           0.000      0.003     -0.021      0.983
+    TOTALSUB           0.163      0.099      1.649      0.099
+    INDSUB21          -0.005      0.006     -0.891      0.373
+    INDSUB22          -0.023      0.013     -1.740      0.082
+    INDSUB23          -0.004      0.005     -0.711      0.477
+    INDSUB24           0.000      0.004     -0.080      0.936
+    TOTALSUB          -0.038      0.092     -0.407      0.684
+
+
+LOGISTIC REGRESSION ODDS RATIO RESULTS
+
+ ASB#1      ON
+    PGSPARENT          0.976
+    PGSPEER            1.112
+    PGSSCHOOL          0.910
+    PGSNEIGHBO         0.781
+    PGSAGE             0.863
+    PGSSEX             0.272
+    PGSINC             1.001
+    PGSPARED           0.873
+    SUB_HI_DUM         3.180
+    SUB_LO_DUM         0.000
+    AGE                0.259
+    SEX                0.721
+    INCOME             0.715
+    PARED              1.666
+    PGS                1.074
+    PARENT             0.867
+    PEER               2.885
+    SCHOOL             0.836
+    NEIGHBOR           0.923
+
+ ASB#2      ON
+    PGSPARENT          0.976
+    PGSPEER            1.203
+    PGSSCHOOL          1.049
+    PGSNEIGHBO         1.073
+    PGSAGE             1.041
+    PGSSEX             1.113
+    PGSINC             0.816
+    PGSPARED           1.203
+    SUB_HI_DUM         2.024
+    SUB_LO_DUM         0.352
+    AGE                0.365
+    SEX                0.939
+    INCOME             0.996
+    PARED              0.918
+    PGS                0.906
+    PARENT             0.892
+    PEER               1.357
+    SCHOOL             0.892
+    NEIGHBOR           1.024
+
+ ASB#3      ON
+    PGSPARENT          1.260
+    PGSPEER            0.928
+    PGSSCHOOL          1.048
+    PGSNEIGHBO         1.051
+    PGSAGE             1.055
+    PGSSEX             1.277
+    PGSINC             0.764
+    PGSPARED           1.139
+    SUB_HI_DUM         1.001
+    SUB_LO_DUM         0.409
+    AGE                0.246
+    SEX                0.636
+    INCOME             1.050
+    PARED              1.120
+    PGS                1.242
+    PARENT             0.822
+    PEER               2.547
+    SCHOOL             0.775
+    NEIGHBOR           0.981
+
+ SUB#1      ON
+    PGSPARENT          1.016
+    PGSPEER            1.031
+    PGSSCHOOL          0.918
+    PGSNEIGHBO         0.929
+    PGSAGE             1.032
+    PGSSEX             1.065
+    PGSINC             0.996
+    PGSPARED           0.998
+    ASB_HI_DUM         2.968
+    ASB_MOD_DU         2.027
+    ASB_ADO_DU         1.034
+    AGE                0.508
+    SEX                0.961
+    INCOME             0.865
+    PARED              0.956
+    PGS                1.143
+    PARENT             1.026
+    PEER               1.476
+    SCHOOL             0.869
+    NEIGHBOR           0.985
+
+ SUB#2      ON
+    PGSPARENT          0.884
+    PGSPEER            1.073
+    PGSSCHOOL          0.928
+    PGSNEIGHBO         1.022
+    PGSAGE             0.955
+    PGSSEX             0.998
+    PGSINC             0.812
+    PGSPARED           1.005
+    ASB_HI_DUM         0.000
+    ASB_MOD_DU         0.359
+    ASB_ADO_DU         0.458
+    AGE                1.570
+    SEX                1.199
+    INCOME             0.894
+    PARED              1.042
+    PGS                0.994
+    PARENT             1.143
+    PEER               0.683
+    SCHOOL             1.069
+    NEIGHBOR           0.921
+
+
+CONFIDENCE INTERVALS OF MODEL RESULTS
+
+                  Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
+
+ PARENT   ON
+    AGE             -0.425      -0.384      -0.365      -0.284      -0.195      -0.182      -0.164
+    SEX             -0.235      -0.223      -0.217      -0.173      -0.131      -0.126      -0.112
+    INCOME          -0.019      -0.004       0.006       0.048       0.092       0.105       0.121
+    PARED           -0.016       0.013       0.020       0.069       0.121       0.130       0.142
+    PGS             -0.120      -0.106      -0.090      -0.037       0.016       0.025       0.047
+
+ PEER     ON
+    AGE             -0.255      -0.231      -0.215      -0.136      -0.055      -0.039      -0.018
+    SEX              0.115       0.132       0.138       0.177       0.215       0.221       0.232
+    INCOME          -0.108      -0.096      -0.087      -0.052      -0.015      -0.010       0.005
+    PARED           -0.159      -0.142      -0.132      -0.094      -0.051      -0.044      -0.026
+    PGS             -0.018      -0.001       0.006       0.060       0.110       0.121       0.135
+
+ SCHOOL   ON
+    AGE             -0.280      -0.253      -0.238      -0.148      -0.062      -0.045       0.005
+    SEX             -0.153      -0.134      -0.129      -0.087      -0.047      -0.039      -0.026
+    INCOME          -0.110      -0.092      -0.087      -0.050      -0.011      -0.002       0.009
+    PARED           -0.042      -0.032      -0.025       0.016       0.059       0.068       0.085
+    PGS             -0.148      -0.116      -0.109      -0.055       0.002       0.012       0.035
+
+ NEIGHBOR ON
+    AGE             -0.395      -0.378      -0.358      -0.283      -0.200      -0.185      -0.132
+    SEX             -0.183      -0.169      -0.163      -0.125      -0.089      -0.079      -0.059
+    INCOME          -0.024      -0.006       0.004       0.041       0.082       0.089       0.101
+    PARED           -0.071      -0.058      -0.050      -0.007       0.037       0.044       0.062
+    PGS             -0.079      -0.059      -0.048       0.004       0.055       0.063       0.087
+
+ ASB#1    ON
+    PGSPARENT       -1.089      -0.546      -0.463      -0.024       0.364       0.437       0.612
+    PGSPEER         -0.585      -0.383      -0.289       0.106       0.590       0.656       1.057
+    PGSSCHOOL       -0.795      -0.580      -0.530      -0.094       0.252       0.352       0.645
+    PGSNEIGHBO      -1.649      -1.046      -0.909      -0.247       0.328       0.416       0.551
+    PGSAGE          -1.053      -0.865      -0.709      -0.148       0.270       0.351       0.634
+    PGSSEX          -3.890      -3.063      -2.770      -1.300      -0.081       0.163       7.816
+    PGSINC          -0.552      -0.460      -0.379       0.001       0.366       0.526       0.638
+    PGSPARED        -0.959      -0.765      -0.657      -0.136       0.412       0.551       0.836
+    SUB_HI_DUM      -0.424      -0.042       0.226       1.157       2.357       2.754       3.815
+    SUB_LO_DUM     -21.351     -15.409     -14.963      -9.474     -12.329     -12.111     -11.583
+    AGE            -12.960      -3.999      -3.416      -1.351      -0.443      -0.237       0.110
+    SEX             -1.268      -1.012      -0.883      -0.327       0.126       0.295       0.758
+    INCOME          -0.967      -0.796      -0.717      -0.336       0.144       0.257       0.600
+    PARED           -0.185      -0.025       0.061       0.510       0.980       1.119       1.351
+    PGS             -1.144      -0.915      -0.770       0.071       0.899       1.208       4.017
+    PARENT          -0.899      -0.758      -0.621      -0.143       0.531       0.632       1.357
+    PEER             0.416       0.624       0.727       1.059       1.625       1.708       2.245
+    SCHOOL          -0.918      -0.712      -0.600      -0.179       0.313       0.435       0.685
+    NEIGHBOR        -0.979      -0.772      -0.649      -0.080       0.799       1.004       1.585
+
+ ASB#2    ON
+    PGSPARENT       -0.317      -0.210      -0.186      -0.024       0.130       0.146       0.177
+    PGSPEER         -0.111      -0.023       0.005       0.185       0.364       0.405       0.478
+    PGSSCHOOL       -0.245      -0.147      -0.115       0.048       0.215       0.242       0.294
+    PGSNEIGHBO      -0.230      -0.148      -0.102       0.070       0.267       0.293       0.341
+    PGSAGE          -0.207      -0.160      -0.130       0.040       0.214       0.234       0.272
+    PGSSEX          -0.420      -0.239      -0.211       0.107       0.453       0.530       0.603
+    PGSINC          -0.452      -0.395      -0.369      -0.203      -0.056      -0.015       0.050
+    PGSPARED        -0.123      -0.020       0.013       0.184       0.364       0.402       0.529
+    SUB_HI_DUM       0.303       0.409       0.484       0.705       1.001       1.050       1.139
+    SUB_LO_DUM      -1.768      -1.556      -1.442      -1.044      -0.692      -0.583      -0.388
+    AGE             -1.451      -1.342      -1.283      -1.007      -0.775      -0.721      -0.667
+    SEX             -0.295      -0.207      -0.192      -0.063       0.078       0.099       0.171
+    INCOME          -0.184      -0.146      -0.124      -0.004       0.110       0.145       0.248
+    PARED           -0.274      -0.249      -0.231      -0.086       0.058       0.079       0.137
+    PGS             -0.357      -0.302      -0.279      -0.099       0.092       0.138       0.209
+    PARENT          -0.303      -0.252      -0.233      -0.115       0.015       0.025       0.050
+    PEER             0.090       0.150       0.172       0.305       0.442       0.453       0.537
+    SCHOOL          -0.322      -0.280      -0.249      -0.115       0.022       0.045       0.101
+    NEIGHBOR        -0.146      -0.128      -0.106       0.024       0.180       0.204       0.231
+
+ ASB#3    ON
+    PGSPARENT       -0.245      -0.110      -0.071       0.231       0.480       0.536       0.592
+    PGSPEER         -0.548      -0.389      -0.336      -0.075       0.158       0.209       0.266
+    PGSSCHOOL       -0.338      -0.237      -0.197       0.047       0.294       0.333       0.444
+    PGSNEIGHBO      -0.358      -0.294      -0.262       0.049       0.352       0.437       0.554
+    PGSAGE          -0.364      -0.295      -0.261       0.053       0.309       0.366       0.482
+    PGSSEX          -0.596      -0.407      -0.312       0.244       0.829       0.950       1.258
+    PGSINC          -0.662      -0.596      -0.552      -0.269      -0.032       0.014       0.135
+    PGSPARED        -0.294      -0.204      -0.158       0.130       0.439       0.506       0.559
+    SUB_HI_DUM      -0.760      -0.578      -0.501       0.001       0.425       0.541       0.661
+    SUB_LO_DUM      -1.841      -1.615      -1.542      -0.893      -0.331      -0.217      -0.096
+    AGE             -2.293      -2.006      -1.931      -1.401      -0.977      -0.883      -0.709
+    SEX             -0.825      -0.723      -0.689      -0.453      -0.259      -0.225      -0.120
+    INCOME          -0.204      -0.159      -0.128       0.049       0.261       0.300       0.454
+    PARED           -0.268      -0.142      -0.117       0.113       0.349       0.389       0.458
+    PGS             -0.365      -0.142      -0.080       0.217       0.544       0.655       0.773
+    PARENT          -0.489      -0.397      -0.348      -0.196       0.031       0.063       0.123
+    PEER             0.685       0.749       0.782       0.935       1.178       1.233       1.296
+    SCHOOL          -0.563      -0.486      -0.454      -0.255      -0.047       0.000       0.097
+    NEIGHBOR        -0.292      -0.227      -0.200      -0.019       0.200       0.239       0.319
+
+ SUB#1    ON
+    PGSPARENT       -0.228      -0.183      -0.161       0.016       0.165       0.186       0.228
+    PGSPEER         -0.184      -0.140      -0.108       0.030       0.170       0.196       0.219
+    PGSSCHOOL       -0.346      -0.271      -0.245      -0.086       0.044       0.066       0.126
+    PGSNEIGHBO      -0.317      -0.257      -0.232      -0.073       0.098       0.135       0.176
+    PGSAGE          -0.228      -0.168      -0.117       0.031       0.178       0.207       0.281
+    PGSSEX          -0.359      -0.276      -0.243       0.063       0.350       0.428       0.564
+    PGSINC          -0.211      -0.160      -0.142      -0.004       0.121       0.161       0.193
+    PGSPARED        -0.258      -0.195      -0.156      -0.002       0.155       0.189       0.224
+    ASB_HI_DUM      -0.459       0.040       0.211       1.088       2.210       2.524       3.180
+    ASB_MOD_DU       0.285       0.412       0.482       0.707       0.999       1.052       1.148
+    ASB_ADO_DU      -0.632      -0.502      -0.434       0.033       0.443       0.550       0.705
+    AGE             -1.081      -1.005      -0.936      -0.676      -0.461      -0.425      -0.343
+    SEX             -0.209      -0.179      -0.162      -0.039       0.069       0.088       0.119
+    INCOME          -0.333      -0.274      -0.259      -0.145      -0.034      -0.014       0.016
+    PARED           -0.215      -0.171      -0.161      -0.045       0.080       0.097       0.129
+    PGS             -0.110      -0.055      -0.022       0.133       0.293       0.325       0.408
+    PARENT          -0.133      -0.099      -0.081       0.026       0.138       0.155       0.201
+    PEER             0.224       0.273       0.287       0.389       0.519       0.552       0.598
+    SCHOOL          -0.335      -0.293      -0.270      -0.140      -0.039      -0.020       0.047
+    NEIGHBOR        -0.193      -0.161      -0.128      -0.015       0.102       0.119       0.197
+
+ SUB#2    ON
+    PGSPARENT       -0.383      -0.286      -0.269      -0.124       0.008       0.032       0.064
+    PGSPEER         -0.215      -0.148      -0.120       0.070       0.252       0.305       0.377
+    PGSSCHOOL       -0.329      -0.280      -0.241      -0.075       0.061       0.101       0.123
+    PGSNEIGHBO      -0.194      -0.137      -0.117       0.022       0.180       0.209       0.244
+    PGSAGE          -0.276      -0.227      -0.192      -0.046       0.086       0.110       0.180
+    PGSSEX          -0.469      -0.389      -0.334      -0.002       0.278       0.316       0.421
+    PGSINC          -0.420      -0.365      -0.344      -0.208      -0.084      -0.060       0.024
+    PGSPARED        -0.260      -0.175      -0.152       0.005       0.175       0.204       0.252
+    ASB_HI_DUM     -19.332     -17.213     -16.627     -10.764     -14.231     -14.014     -13.557
+    ASB_MOD_DU      -1.733      -1.527      -1.427      -1.024      -0.664      -0.555      -0.359
+    ASB_ADO_DU      -1.654      -1.489      -1.419      -0.781      -0.240      -0.158       0.021
+    AGE              0.085       0.170       0.210       0.451       0.682       0.724       0.800
+    SEX              0.028       0.064       0.081       0.182       0.304       0.339       0.377
+    INCOME          -0.283      -0.235      -0.211      -0.112      -0.018       0.006       0.053
+    PARED           -0.164      -0.084      -0.065       0.042       0.164       0.195       0.241
+    PGS             -0.249      -0.199      -0.156      -0.006       0.144       0.184       0.245
+    PARENT          -0.028       0.015       0.034       0.134       0.244       0.269       0.289
+    PEER            -0.608      -0.551      -0.525      -0.381      -0.257      -0.229      -0.179
+    SCHOOL          -0.082      -0.065      -0.053       0.067       0.181       0.208       0.251
+    NEIGHBOR        -0.279      -0.214      -0.198      -0.083       0.020       0.048       0.080
+
+ PARENT   WITH
+    PEER            -0.192      -0.174      -0.168      -0.128      -0.088      -0.083      -0.066
+    SCHOOL           0.123       0.154       0.166       0.210       0.263       0.275       0.286
+    NEIGHBOR         0.050       0.052       0.060       0.107       0.149       0.157       0.167
+
+ PEER     WITH
+    SCHOOL          -0.237      -0.219      -0.210      -0.162      -0.120      -0.110      -0.094
+    NEIGHBOR        -0.053      -0.036      -0.027       0.008       0.042       0.051       0.062
+
+ SCHOOL   WITH
+    NEIGHBOR         0.134       0.148       0.156       0.196       0.236       0.247       0.262
+
+ Intercepts
+    PARENT          -0.071      -0.054      -0.045       0.002       0.045       0.055       0.068
+    PEER            -0.156      -0.141      -0.129      -0.091      -0.053      -0.045      -0.034
+    SCHOOL          -0.148      -0.137      -0.130      -0.088      -0.048      -0.039      -0.025
+    NEIGHBOR        -0.120      -0.104      -0.097      -0.061      -0.021      -0.012      -0.001
+    ASB#1          -15.577      -7.948      -7.360      -5.120      -4.829      -4.737      -4.569
+    ASB#2           -1.964      -1.891      -1.849      -1.610      -1.450      -1.418      -1.343
+    ASB#3           -3.440      -3.218      -3.155      -2.706      -2.477      -2.429      -2.369
+    SUB#1           -0.973      -0.894      -0.873      -0.693      -0.568      -0.550      -0.503
+    SUB#2           -0.543      -0.473      -0.445      -0.295      -0.173      -0.148      -0.060
+
+ Residual Variances
+    PARENT           0.905       0.971       0.999       1.096       1.204       1.239       1.267
+    PEER             0.804       0.819       0.827       0.891       0.953       0.968       0.992
+    SCHOOL           0.882       0.904       0.912       0.977       1.039       1.054       1.084
+    NEIGHBOR         0.853       0.878       0.887       0.945       0.993       1.007       1.026
+
+New/Additional Parameters
+    INDASB11        -0.063      -0.037      -0.022       0.005       0.035       0.041       0.058
+    INDASB12        -0.023      -0.001       0.006       0.063       0.136       0.152       0.174
+    INDASB13        -0.041      -0.026      -0.018       0.010       0.040       0.048       0.071
+    INDASB14        -0.067      -0.029      -0.023       0.000       0.024       0.039       0.083
+    TOTALASB        -1.076      -0.808      -0.678       0.149       1.005       1.312       4.116
+    INDASB21        -0.007      -0.004      -0.003       0.004       0.013       0.015       0.021
+    INDASB22        -0.007      -0.001       0.001       0.018       0.040       0.044       0.048
+    INDASB23        -0.006      -0.003      -0.002       0.006       0.019       0.023       0.027
+    INDASB24        -0.013      -0.006      -0.004       0.000       0.005       0.007       0.012
+    TOTALASB        -0.328      -0.285      -0.258      -0.070       0.117       0.161       0.244
+    INDASB31        -0.016      -0.005      -0.004       0.007       0.019       0.024       0.030
+    INDASB32        -0.016      -0.001       0.005       0.056       0.107       0.119       0.142
+    INDASB33        -0.010      -0.004      -0.002       0.014       0.036       0.041       0.046
+    INDASB34        -0.015      -0.008      -0.006       0.000       0.007       0.009       0.017
+    TOTALASB        -0.295      -0.083      -0.004       0.294       0.623       0.721       0.895
+    INDSUB11        -0.015      -0.009      -0.008      -0.001       0.003       0.005       0.007
+    INDSUB12        -0.009      -0.001       0.002       0.023       0.047       0.052       0.060
+    INDSUB13        -0.008      -0.002      -0.001       0.008       0.020       0.023       0.031
+    INDSUB14        -0.010      -0.006      -0.004       0.000       0.003       0.005       0.010
+    TOTALSUB        -0.088      -0.032       0.008       0.163       0.333       0.356       0.442
+    INDSUB21        -0.026      -0.018      -0.015      -0.005       0.002       0.004       0.008
+    INDSUB22        -0.061      -0.051      -0.045      -0.023      -0.002       0.001       0.006
+    INDSUB23        -0.026      -0.016      -0.014      -0.004       0.003       0.004       0.008
+    INDSUB24        -0.013      -0.008      -0.007       0.000       0.005       0.007       0.016
+    TOTALSUB        -0.274      -0.233      -0.188      -0.038       0.114       0.145       0.205
+
+
+     Beginning Time:  07:45:41
+        Ending Time:  09:23:18
+       Elapsed Time:  01:37:37
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2015 Muthen & Muthen

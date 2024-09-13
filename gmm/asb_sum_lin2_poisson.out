@@ -1,0 +1,847 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+09/17/2021   5:18 PM
+
+INPUT INSTRUCTIONS
+
+  Title: Add Health GMM for ASB Sum Scores Linear 2 classes
+  Data:
+  File is
+  C:/Sasia_AddHealth_GMM_ASB_Sum.csv;
+
+  Variable:
+  Names are
+  AID	BIO_SEX	asb_s12	asb_s13	asb_s14	asb_s15	asb_s16
+  asb_s17	asb_s18	asb_s19	asb_s20	asb_s21	asb_s22	asb_s23
+  asb_s24	asb_s25	asb_s26	asb_s27	asb_s28	asb_s29	asb_s30
+  asb_s31	asb_s32	asb_s33	asb_s34	asb_s35	asb_s36	asb_s37	
+  asb_s38	asb_s39	asb_s40	asb_s41	asb_s42	asb_s43	asb_s44;
+
+  usevariables =
+  asb_s13	asb_s14	asb_s15	asb_s16	asb_s17	asb_s18	asb_s19
+  asb_s20	asb_s21	asb_s22	asb_s23	asb_s24	asb_s25	asb_s26
+  asb_s27	asb_s28	asb_s29	asb_s30	asb_s31	asb_s32	asb_s33
+  asb_s34	asb_s35	asb_s36	asb_s37	asb_s38	asb_s39	asb_s40
+  asb_s41;
+
+  count = asb_s13-asb_s41 (i);
+  IDVARIABLE IS AID;
+  Missing are  all (-999);
+  classes = c(2);
+
+  ANALYSIS:
+  TYPE=MIXTURE;
+  !iteration=50000;
+  !convergence=.000001;
+  !coverage=.0000001;
+  !h1convergence=.000001;
+  !estimator=MLR;
+  !INTEGRATION = 7;
+  !ALGORITHM = INTEGRATION;
+  !starts = 20 4;
+
+  MODEL:
+  %OVERALL%
+
+  i s | asb_s13@0	asb_s14@1		asb_s15@2		asb_s16@3	
+  asb_s17@4		asb_s18@5		asb_s19@6		asb_s20@7	
+  asb_s21@8		asb_s22@9		asb_s23@10		asb_s24@11		
+  asb_s25@12		asb_s26@13		asb_s27@14		asb_s28@15		
+  asb_s29@16		asb_s30@17		asb_s31@18		asb_s32@19
+  asb_s33@20		asb_s34@21		asb_s35@22		asb_s36@23
+  asb_s37@24		asb_s38@25		asb_s39@26		asb_s40@27
+  asb_s41@28;
+
+  ii si | asb_s13#1@0	asb_s14#1@1		asb_s15#1@2		asb_s16#1@3	
+  asb_s17#1@4		asb_s18#1@5		asb_s19#1@6		asb_s20#1@7	
+  asb_s21#1@8		asb_s22#1@9		asb_s23#1@10		asb_s24#1@11		
+  asb_s25#1@12		asb_s26#1@13		asb_s27#1@14		asb_s28#1@15		
+  asb_s29#1@16		asb_s30#1@17		asb_s31#1@18		asb_s32#1@19
+  asb_s33#1@20		asb_s34#1@21		asb_s35#1@22		asb_s36#1@23
+  asb_s37#1@24		asb_s38#1@25		asb_s39#1@26		asb_s40#1@27
+  asb_s41#1@28;	
+
+  OUTPUT:
+  TECH11 TECH14;
+
+  PLOT:
+  type = plot3;
+  series = asb_s13-asb_s41(*);
+
+  SAVEDATA:
+  file is ASB_sum_lin2_poisson.csv;
+  save is cprob;
+  format is free;
+
+
+
+
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  70319
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Add Health GMM for ASB Sum Scores Linear 2 classes
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                       20722
+
+Number of dependent variables                                   29
+Number of independent variables                                  0
+Number of continuous latent variables                            4
+Number of categorical latent variables                           1
+
+Observed dependent variables
+
+  Count
+   ASB_S13     ASB_S14     ASB_S15     ASB_S16     ASB_S17     ASB_S18
+   ASB_S19     ASB_S20     ASB_S21     ASB_S22     ASB_S23     ASB_S24
+   ASB_S25     ASB_S26     ASB_S27     ASB_S28     ASB_S29     ASB_S30
+   ASB_S31     ASB_S32     ASB_S33     ASB_S34     ASB_S35     ASB_S36
+   ASB_S37     ASB_S38     ASB_S39     ASB_S40     ASB_S41
+
+Continuous latent variables
+   I           S           II          SI
+
+Categorical latent variables
+   C
+
+Variables with special functions
+
+  ID variable           AID
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-06
+    Relative loglikelihood change                        0.100D-06
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Random Starts Specifications
+  Number of initial stage random starts                         20
+  Number of final stage optimizations                            4
+  Number of initial stage iterations                            10
+  Initial stage convergence criterion                    0.100D+01
+  Random starts scale                                    0.500D+01
+  Random seed for generating random starts                       0
+
+Input data file(s)
+  C:/Sasia_AddHealth_GMM_ASB_Sum.csv
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+COUNT PROPORTION OF ZERO, MINIMUM AND MAXIMUM VALUES
+
+      ASB_S13     0.794         0         5
+      ASB_S14     0.768         0         5
+      ASB_S15     0.749         0         5
+      ASB_S16     0.749         0         5
+      ASB_S17     0.767         0         5
+      ASB_S18     0.778         0         5
+      ASB_S19     0.793         0         5
+      ASB_S20     0.804         0         4
+      ASB_S21     0.840         0         4
+      ASB_S22     0.838         0         4
+      ASB_S23     0.864         0         5
+      ASB_S24     0.883         0         5
+      ASB_S25     0.880         0         3
+      ASB_S26     0.868         0         4
+      ASB_S27     0.869         0         5
+      ASB_S28     0.876         0         5
+      ASB_S29     0.901         0         3
+      ASB_S30     0.901         0         4
+      ASB_S31     0.917         0         4
+      ASB_S32     0.918         0         4
+      ASB_S33     0.896         0         4
+      ASB_S34     0.950         0         3
+      ASB_S35     0.957         0         5
+      ASB_S36     0.951         0         4
+      ASB_S37     0.964         0         3
+      ASB_S38     0.966         0         3
+      ASB_S39     0.968         0         3
+      ASB_S40     0.963         0         3
+      ASB_S41     0.961         0         3
+
+
+RANDOM STARTS RESULTS RANKED FROM THE BEST TO THE WORST LOGLIKELIHOOD VALUES
+
+3 perturbed starting value run(s) did not converge in the initial stage
+optimizations.
+
+Final stage loglikelihood values at local maxima, seeds, and initial stage start numbers:
+
+          -35482.333  399671           13
+          -35482.333  27071            15
+          -35482.333  285380           1
+          -35482.333  68985            17
+
+
+
+THE BEST LOGLIKELIHOOD VALUE HAS BEEN REPLICATED.  RERUN WITH AT LEAST TWICE THE
+RANDOM STARTS TO CHECK THAT THE BEST LOGLIKELIHOOD IS STILL OBTAINED AND REPLICATED.
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     THE CHI-SQUARE TEST CANNOT BE COMPUTED BECAUSE THE FREQUENCY TABLE FOR THE
+     LATENT CLASS INDICATOR MODEL PART IS TOO LARGE.
+
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        7
+
+Loglikelihood
+
+          H0 Value                      -35482.333
+          H0 Scaling Correction Factor      1.1705
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   70978.667
+          Bayesian (BIC)                 71034.239
+          Sample-Size Adjusted BIC       71011.993
+            (n* = (n + 2) / 24)
+
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THE ESTIMATED MODEL
+
+    Latent
+   Classes
+
+       1      15644.47637          0.75497
+       2       5077.52363          0.24503
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+    Latent
+   Classes
+
+       1      15644.47637          0.75497
+       2       5077.52363          0.24503
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THEIR MOST LIKELY LATENT CLASS MEMBERSHIP
+
+Class Counts and Proportions
+
+    Latent
+   Classes
+
+       1            17059          0.82323
+       2             3663          0.17677
+
+
+CLASSIFICATION QUALITY
+
+     Entropy                         0.548
+
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2
+
+    1   0.884    0.116
+    2   0.152    0.848
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+           1        2
+
+    1   0.964    0.036
+    2   0.388    0.612
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+              1        2
+
+    1      3.300    0.000
+    2     -0.455    0.000
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ I        |
+    ASB_S13            1.000      0.000    999.000    999.000
+    ASB_S14            1.000      0.000    999.000    999.000
+    ASB_S15            1.000      0.000    999.000    999.000
+    ASB_S16            1.000      0.000    999.000    999.000
+    ASB_S17            1.000      0.000    999.000    999.000
+    ASB_S18            1.000      0.000    999.000    999.000
+    ASB_S19            1.000      0.000    999.000    999.000
+    ASB_S20            1.000      0.000    999.000    999.000
+    ASB_S21            1.000      0.000    999.000    999.000
+    ASB_S22            1.000      0.000    999.000    999.000
+    ASB_S23            1.000      0.000    999.000    999.000
+    ASB_S24            1.000      0.000    999.000    999.000
+    ASB_S25            1.000      0.000    999.000    999.000
+    ASB_S26            1.000      0.000    999.000    999.000
+    ASB_S27            1.000      0.000    999.000    999.000
+    ASB_S28            1.000      0.000    999.000    999.000
+    ASB_S29            1.000      0.000    999.000    999.000
+    ASB_S30            1.000      0.000    999.000    999.000
+    ASB_S31            1.000      0.000    999.000    999.000
+    ASB_S32            1.000      0.000    999.000    999.000
+    ASB_S33            1.000      0.000    999.000    999.000
+    ASB_S34            1.000      0.000    999.000    999.000
+    ASB_S35            1.000      0.000    999.000    999.000
+    ASB_S36            1.000      0.000    999.000    999.000
+    ASB_S37            1.000      0.000    999.000    999.000
+    ASB_S38            1.000      0.000    999.000    999.000
+    ASB_S39            1.000      0.000    999.000    999.000
+    ASB_S40            1.000      0.000    999.000    999.000
+    ASB_S41            1.000      0.000    999.000    999.000
+
+ S        |
+    ASB_S13            0.000      0.000    999.000    999.000
+    ASB_S14            1.000      0.000    999.000    999.000
+    ASB_S15            2.000      0.000    999.000    999.000
+    ASB_S16            3.000      0.000    999.000    999.000
+    ASB_S17            4.000      0.000    999.000    999.000
+    ASB_S18            5.000      0.000    999.000    999.000
+    ASB_S19            6.000      0.000    999.000    999.000
+    ASB_S20            7.000      0.000    999.000    999.000
+    ASB_S21            8.000      0.000    999.000    999.000
+    ASB_S22            9.000      0.000    999.000    999.000
+    ASB_S23           10.000      0.000    999.000    999.000
+    ASB_S24           11.000      0.000    999.000    999.000
+    ASB_S25           12.000      0.000    999.000    999.000
+    ASB_S26           13.000      0.000    999.000    999.000
+    ASB_S27           14.000      0.000    999.000    999.000
+    ASB_S28           15.000      0.000    999.000    999.000
+    ASB_S29           16.000      0.000    999.000    999.000
+    ASB_S30           17.000      0.000    999.000    999.000
+    ASB_S31           18.000      0.000    999.000    999.000
+    ASB_S32           19.000      0.000    999.000    999.000
+    ASB_S33           20.000      0.000    999.000    999.000
+    ASB_S34           21.000      0.000    999.000    999.000
+    ASB_S35           22.000      0.000    999.000    999.000
+    ASB_S36           23.000      0.000    999.000    999.000
+    ASB_S37           24.000      0.000    999.000    999.000
+    ASB_S38           25.000      0.000    999.000    999.000
+    ASB_S39           26.000      0.000    999.000    999.000
+    ASB_S40           27.000      0.000    999.000    999.000
+    ASB_S41           28.000      0.000    999.000    999.000
+
+ II       |
+    ASB_S13#1          1.000      0.000    999.000    999.000
+    ASB_S14#1          1.000      0.000    999.000    999.000
+    ASB_S15#1          1.000      0.000    999.000    999.000
+    ASB_S16#1          1.000      0.000    999.000    999.000
+    ASB_S17#1          1.000      0.000    999.000    999.000
+    ASB_S18#1          1.000      0.000    999.000    999.000
+    ASB_S19#1          1.000      0.000    999.000    999.000
+    ASB_S20#1          1.000      0.000    999.000    999.000
+    ASB_S21#1          1.000      0.000    999.000    999.000
+    ASB_S22#1          1.000      0.000    999.000    999.000
+    ASB_S23#1          1.000      0.000    999.000    999.000
+    ASB_S24#1          1.000      0.000    999.000    999.000
+    ASB_S25#1          1.000      0.000    999.000    999.000
+    ASB_S26#1          1.000      0.000    999.000    999.000
+    ASB_S27#1          1.000      0.000    999.000    999.000
+    ASB_S28#1          1.000      0.000    999.000    999.000
+    ASB_S29#1          1.000      0.000    999.000    999.000
+    ASB_S30#1          1.000      0.000    999.000    999.000
+    ASB_S31#1          1.000      0.000    999.000    999.000
+    ASB_S32#1          1.000      0.000    999.000    999.000
+    ASB_S33#1          1.000      0.000    999.000    999.000
+    ASB_S34#1          1.000      0.000    999.000    999.000
+    ASB_S35#1          1.000      0.000    999.000    999.000
+    ASB_S36#1          1.000      0.000    999.000    999.000
+    ASB_S37#1          1.000      0.000    999.000    999.000
+    ASB_S38#1          1.000      0.000    999.000    999.000
+    ASB_S39#1          1.000      0.000    999.000    999.000
+    ASB_S40#1          1.000      0.000    999.000    999.000
+    ASB_S41#1          1.000      0.000    999.000    999.000
+
+ SI       |
+    ASB_S13#1          0.000      0.000    999.000    999.000
+    ASB_S14#1          1.000      0.000    999.000    999.000
+    ASB_S15#1          2.000      0.000    999.000    999.000
+    ASB_S16#1          3.000      0.000    999.000    999.000
+    ASB_S17#1          4.000      0.000    999.000    999.000
+    ASB_S18#1          5.000      0.000    999.000    999.000
+    ASB_S19#1          6.000      0.000    999.000    999.000
+    ASB_S20#1          7.000      0.000    999.000    999.000
+    ASB_S21#1          8.000      0.000    999.000    999.000
+    ASB_S22#1          9.000      0.000    999.000    999.000
+    ASB_S23#1         10.000      0.000    999.000    999.000
+    ASB_S24#1         11.000      0.000    999.000    999.000
+    ASB_S25#1         12.000      0.000    999.000    999.000
+    ASB_S26#1         13.000      0.000    999.000    999.000
+    ASB_S27#1         14.000      0.000    999.000    999.000
+    ASB_S28#1         15.000      0.000    999.000    999.000
+    ASB_S29#1         16.000      0.000    999.000    999.000
+    ASB_S30#1         17.000      0.000    999.000    999.000
+    ASB_S31#1         18.000      0.000    999.000    999.000
+    ASB_S32#1         19.000      0.000    999.000    999.000
+    ASB_S33#1         20.000      0.000    999.000    999.000
+    ASB_S34#1         21.000      0.000    999.000    999.000
+    ASB_S35#1         22.000      0.000    999.000    999.000
+    ASB_S36#1         23.000      0.000    999.000    999.000
+    ASB_S37#1         24.000      0.000    999.000    999.000
+    ASB_S38#1         25.000      0.000    999.000    999.000
+    ASB_S39#1         26.000      0.000    999.000    999.000
+    ASB_S40#1         27.000      0.000    999.000    999.000
+    ASB_S41#1         28.000      0.000    999.000    999.000
+
+ Intercepts
+    ASB_S13#1         -2.155      0.103    -20.925      0.000
+    ASB_S13            0.000      0.000    999.000    999.000
+    ASB_S14#1         -2.155      0.103    -20.925      0.000
+    ASB_S14            0.000      0.000    999.000    999.000
+    ASB_S15#1         -2.155      0.103    -20.925      0.000
+    ASB_S15            0.000      0.000    999.000    999.000
+    ASB_S16#1         -2.155      0.103    -20.925      0.000
+    ASB_S16            0.000      0.000    999.000    999.000
+    ASB_S17#1         -2.155      0.103    -20.925      0.000
+    ASB_S17            0.000      0.000    999.000    999.000
+    ASB_S18#1         -2.155      0.103    -20.925      0.000
+    ASB_S18            0.000      0.000    999.000    999.000
+    ASB_S19#1         -2.155      0.103    -20.925      0.000
+    ASB_S19            0.000      0.000    999.000    999.000
+    ASB_S20#1         -2.155      0.103    -20.925      0.000
+    ASB_S20            0.000      0.000    999.000    999.000
+    ASB_S21#1         -2.155      0.103    -20.925      0.000
+    ASB_S21            0.000      0.000    999.000    999.000
+    ASB_S22#1         -2.155      0.103    -20.925      0.000
+    ASB_S22            0.000      0.000    999.000    999.000
+    ASB_S23#1         -2.155      0.103    -20.925      0.000
+    ASB_S23            0.000      0.000    999.000    999.000
+    ASB_S24#1         -2.155      0.103    -20.925      0.000
+    ASB_S24            0.000      0.000    999.000    999.000
+    ASB_S25#1         -2.155      0.103    -20.925      0.000
+    ASB_S25            0.000      0.000    999.000    999.000
+    ASB_S26#1         -2.155      0.103    -20.925      0.000
+    ASB_S26            0.000      0.000    999.000    999.000
+    ASB_S27#1         -2.155      0.103    -20.925      0.000
+    ASB_S27            0.000      0.000    999.000    999.000
+    ASB_S28#1         -2.155      0.103    -20.925      0.000
+    ASB_S28            0.000      0.000    999.000    999.000
+    ASB_S29#1         -2.155      0.103    -20.925      0.000
+    ASB_S29            0.000      0.000    999.000    999.000
+    ASB_S30#1         -2.155      0.103    -20.925      0.000
+    ASB_S30            0.000      0.000    999.000    999.000
+    ASB_S31#1         -2.155      0.103    -20.925      0.000
+    ASB_S31            0.000      0.000    999.000    999.000
+    ASB_S32#1         -2.155      0.103    -20.925      0.000
+    ASB_S32            0.000      0.000    999.000    999.000
+    ASB_S33#1         -2.155      0.103    -20.925      0.000
+    ASB_S33            0.000      0.000    999.000    999.000
+    ASB_S34#1         -2.155      0.103    -20.925      0.000
+    ASB_S34            0.000      0.000    999.000    999.000
+    ASB_S35#1         -2.155      0.103    -20.925      0.000
+    ASB_S35            0.000      0.000    999.000    999.000
+    ASB_S36#1         -2.155      0.103    -20.925      0.000
+    ASB_S36            0.000      0.000    999.000    999.000
+    ASB_S37#1         -2.155      0.103    -20.925      0.000
+    ASB_S37            0.000      0.000    999.000    999.000
+    ASB_S38#1         -2.155      0.103    -20.925      0.000
+    ASB_S38            0.000      0.000    999.000    999.000
+    ASB_S39#1         -2.155      0.103    -20.925      0.000
+    ASB_S39            0.000      0.000    999.000    999.000
+    ASB_S40#1         -2.155      0.103    -20.925      0.000
+    ASB_S40            0.000      0.000    999.000    999.000
+    ASB_S41#1         -2.155      0.103    -20.925      0.000
+    ASB_S41            0.000      0.000    999.000    999.000
+
+ Means
+    I                 -1.800      0.053    -33.646      0.000
+    S                 -0.052      0.006     -9.053      0.000
+    II                 0.000      0.000    999.000    999.000
+    SI                 0.126      0.006     20.015      0.000
+
+Latent Class 2
+
+ I        |
+    ASB_S13            1.000      0.000    999.000    999.000
+    ASB_S14            1.000      0.000    999.000    999.000
+    ASB_S15            1.000      0.000    999.000    999.000
+    ASB_S16            1.000      0.000    999.000    999.000
+    ASB_S17            1.000      0.000    999.000    999.000
+    ASB_S18            1.000      0.000    999.000    999.000
+    ASB_S19            1.000      0.000    999.000    999.000
+    ASB_S20            1.000      0.000    999.000    999.000
+    ASB_S21            1.000      0.000    999.000    999.000
+    ASB_S22            1.000      0.000    999.000    999.000
+    ASB_S23            1.000      0.000    999.000    999.000
+    ASB_S24            1.000      0.000    999.000    999.000
+    ASB_S25            1.000      0.000    999.000    999.000
+    ASB_S26            1.000      0.000    999.000    999.000
+    ASB_S27            1.000      0.000    999.000    999.000
+    ASB_S28            1.000      0.000    999.000    999.000
+    ASB_S29            1.000      0.000    999.000    999.000
+    ASB_S30            1.000      0.000    999.000    999.000
+    ASB_S31            1.000      0.000    999.000    999.000
+    ASB_S32            1.000      0.000    999.000    999.000
+    ASB_S33            1.000      0.000    999.000    999.000
+    ASB_S34            1.000      0.000    999.000    999.000
+    ASB_S35            1.000      0.000    999.000    999.000
+    ASB_S36            1.000      0.000    999.000    999.000
+    ASB_S37            1.000      0.000    999.000    999.000
+    ASB_S38            1.000      0.000    999.000    999.000
+    ASB_S39            1.000      0.000    999.000    999.000
+    ASB_S40            1.000      0.000    999.000    999.000
+    ASB_S41            1.000      0.000    999.000    999.000
+
+ S        |
+    ASB_S13            0.000      0.000    999.000    999.000
+    ASB_S14            1.000      0.000    999.000    999.000
+    ASB_S15            2.000      0.000    999.000    999.000
+    ASB_S16            3.000      0.000    999.000    999.000
+    ASB_S17            4.000      0.000    999.000    999.000
+    ASB_S18            5.000      0.000    999.000    999.000
+    ASB_S19            6.000      0.000    999.000    999.000
+    ASB_S20            7.000      0.000    999.000    999.000
+    ASB_S21            8.000      0.000    999.000    999.000
+    ASB_S22            9.000      0.000    999.000    999.000
+    ASB_S23           10.000      0.000    999.000    999.000
+    ASB_S24           11.000      0.000    999.000    999.000
+    ASB_S25           12.000      0.000    999.000    999.000
+    ASB_S26           13.000      0.000    999.000    999.000
+    ASB_S27           14.000      0.000    999.000    999.000
+    ASB_S28           15.000      0.000    999.000    999.000
+    ASB_S29           16.000      0.000    999.000    999.000
+    ASB_S30           17.000      0.000    999.000    999.000
+    ASB_S31           18.000      0.000    999.000    999.000
+    ASB_S32           19.000      0.000    999.000    999.000
+    ASB_S33           20.000      0.000    999.000    999.000
+    ASB_S34           21.000      0.000    999.000    999.000
+    ASB_S35           22.000      0.000    999.000    999.000
+    ASB_S36           23.000      0.000    999.000    999.000
+    ASB_S37           24.000      0.000    999.000    999.000
+    ASB_S38           25.000      0.000    999.000    999.000
+    ASB_S39           26.000      0.000    999.000    999.000
+    ASB_S40           27.000      0.000    999.000    999.000
+    ASB_S41           28.000      0.000    999.000    999.000
+
+ II       |
+    ASB_S13#1          1.000      0.000    999.000    999.000
+    ASB_S14#1          1.000      0.000    999.000    999.000
+    ASB_S15#1          1.000      0.000    999.000    999.000
+    ASB_S16#1          1.000      0.000    999.000    999.000
+    ASB_S17#1          1.000      0.000    999.000    999.000
+    ASB_S18#1          1.000      0.000    999.000    999.000
+    ASB_S19#1          1.000      0.000    999.000    999.000
+    ASB_S20#1          1.000      0.000    999.000    999.000
+    ASB_S21#1          1.000      0.000    999.000    999.000
+    ASB_S22#1          1.000      0.000    999.000    999.000
+    ASB_S23#1          1.000      0.000    999.000    999.000
+    ASB_S24#1          1.000      0.000    999.000    999.000
+    ASB_S25#1          1.000      0.000    999.000    999.000
+    ASB_S26#1          1.000      0.000    999.000    999.000
+    ASB_S27#1          1.000      0.000    999.000    999.000
+    ASB_S28#1          1.000      0.000    999.000    999.000
+    ASB_S29#1          1.000      0.000    999.000    999.000
+    ASB_S30#1          1.000      0.000    999.000    999.000
+    ASB_S31#1          1.000      0.000    999.000    999.000
+    ASB_S32#1          1.000      0.000    999.000    999.000
+    ASB_S33#1          1.000      0.000    999.000    999.000
+    ASB_S34#1          1.000      0.000    999.000    999.000
+    ASB_S35#1          1.000      0.000    999.000    999.000
+    ASB_S36#1          1.000      0.000    999.000    999.000
+    ASB_S37#1          1.000      0.000    999.000    999.000
+    ASB_S38#1          1.000      0.000    999.000    999.000
+    ASB_S39#1          1.000      0.000    999.000    999.000
+    ASB_S40#1          1.000      0.000    999.000    999.000
+    ASB_S41#1          1.000      0.000    999.000    999.000
+
+ SI       |
+    ASB_S13#1          0.000      0.000    999.000    999.000
+    ASB_S14#1          1.000      0.000    999.000    999.000
+    ASB_S15#1          2.000      0.000    999.000    999.000
+    ASB_S16#1          3.000      0.000    999.000    999.000
+    ASB_S17#1          4.000      0.000    999.000    999.000
+    ASB_S18#1          5.000      0.000    999.000    999.000
+    ASB_S19#1          6.000      0.000    999.000    999.000
+    ASB_S20#1          7.000      0.000    999.000    999.000
+    ASB_S21#1          8.000      0.000    999.000    999.000
+    ASB_S22#1          9.000      0.000    999.000    999.000
+    ASB_S23#1         10.000      0.000    999.000    999.000
+    ASB_S24#1         11.000      0.000    999.000    999.000
+    ASB_S25#1         12.000      0.000    999.000    999.000
+    ASB_S26#1         13.000      0.000    999.000    999.000
+    ASB_S27#1         14.000      0.000    999.000    999.000
+    ASB_S28#1         15.000      0.000    999.000    999.000
+    ASB_S29#1         16.000      0.000    999.000    999.000
+    ASB_S30#1         17.000      0.000    999.000    999.000
+    ASB_S31#1         18.000      0.000    999.000    999.000
+    ASB_S32#1         19.000      0.000    999.000    999.000
+    ASB_S33#1         20.000      0.000    999.000    999.000
+    ASB_S34#1         21.000      0.000    999.000    999.000
+    ASB_S35#1         22.000      0.000    999.000    999.000
+    ASB_S36#1         23.000      0.000    999.000    999.000
+    ASB_S37#1         24.000      0.000    999.000    999.000
+    ASB_S38#1         25.000      0.000    999.000    999.000
+    ASB_S39#1         26.000      0.000    999.000    999.000
+    ASB_S40#1         27.000      0.000    999.000    999.000
+    ASB_S41#1         28.000      0.000    999.000    999.000
+
+ Intercepts
+    ASB_S13#1         -2.155      0.103    -20.925      0.000
+    ASB_S13            0.000      0.000    999.000    999.000
+    ASB_S14#1         -2.155      0.103    -20.925      0.000
+    ASB_S14            0.000      0.000    999.000    999.000
+    ASB_S15#1         -2.155      0.103    -20.925      0.000
+    ASB_S15            0.000      0.000    999.000    999.000
+    ASB_S16#1         -2.155      0.103    -20.925      0.000
+    ASB_S16            0.000      0.000    999.000    999.000
+    ASB_S17#1         -2.155      0.103    -20.925      0.000
+    ASB_S17            0.000      0.000    999.000    999.000
+    ASB_S18#1         -2.155      0.103    -20.925      0.000
+    ASB_S18            0.000      0.000    999.000    999.000
+    ASB_S19#1         -2.155      0.103    -20.925      0.000
+    ASB_S19            0.000      0.000    999.000    999.000
+    ASB_S20#1         -2.155      0.103    -20.925      0.000
+    ASB_S20            0.000      0.000    999.000    999.000
+    ASB_S21#1         -2.155      0.103    -20.925      0.000
+    ASB_S21            0.000      0.000    999.000    999.000
+    ASB_S22#1         -2.155      0.103    -20.925      0.000
+    ASB_S22            0.000      0.000    999.000    999.000
+    ASB_S23#1         -2.155      0.103    -20.925      0.000
+    ASB_S23            0.000      0.000    999.000    999.000
+    ASB_S24#1         -2.155      0.103    -20.925      0.000
+    ASB_S24            0.000      0.000    999.000    999.000
+    ASB_S25#1         -2.155      0.103    -20.925      0.000
+    ASB_S25            0.000      0.000    999.000    999.000
+    ASB_S26#1         -2.155      0.103    -20.925      0.000
+    ASB_S26            0.000      0.000    999.000    999.000
+    ASB_S27#1         -2.155      0.103    -20.925      0.000
+    ASB_S27            0.000      0.000    999.000    999.000
+    ASB_S28#1         -2.155      0.103    -20.925      0.000
+    ASB_S28            0.000      0.000    999.000    999.000
+    ASB_S29#1         -2.155      0.103    -20.925      0.000
+    ASB_S29            0.000      0.000    999.000    999.000
+    ASB_S30#1         -2.155      0.103    -20.925      0.000
+    ASB_S30            0.000      0.000    999.000    999.000
+    ASB_S31#1         -2.155      0.103    -20.925      0.000
+    ASB_S31            0.000      0.000    999.000    999.000
+    ASB_S32#1         -2.155      0.103    -20.925      0.000
+    ASB_S32            0.000      0.000    999.000    999.000
+    ASB_S33#1         -2.155      0.103    -20.925      0.000
+    ASB_S33            0.000      0.000    999.000    999.000
+    ASB_S34#1         -2.155      0.103    -20.925      0.000
+    ASB_S34            0.000      0.000    999.000    999.000
+    ASB_S35#1         -2.155      0.103    -20.925      0.000
+    ASB_S35            0.000      0.000    999.000    999.000
+    ASB_S36#1         -2.155      0.103    -20.925      0.000
+    ASB_S36            0.000      0.000    999.000    999.000
+    ASB_S37#1         -2.155      0.103    -20.925      0.000
+    ASB_S37            0.000      0.000    999.000    999.000
+    ASB_S38#1         -2.155      0.103    -20.925      0.000
+    ASB_S38            0.000      0.000    999.000    999.000
+    ASB_S39#1         -2.155      0.103    -20.925      0.000
+    ASB_S39            0.000      0.000    999.000    999.000
+    ASB_S40#1         -2.155      0.103    -20.925      0.000
+    ASB_S40            0.000      0.000    999.000    999.000
+    ASB_S41#1         -2.155      0.103    -20.925      0.000
+    ASB_S41            0.000      0.000    999.000    999.000
+
+ Means
+    I                  0.273      0.032      8.635      0.000
+    S                 -0.029      0.003    -11.234      0.000
+    II                 0.000      0.000    999.000    999.000
+    SI                 0.126      0.006     20.015      0.000
+
+Categorical Latent Variables
+
+ Means
+    C#1                1.125      0.052     21.818      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.119E-03
+       (ratio of smallest to largest eigenvalue)
+
+
+TECHNICAL 11 OUTPUT
+
+     Random Starts Specifications for the k-1 Class Analysis Model
+        Number of initial stage random starts                  20
+        Number of final stage optimizations                     4
+
+
+
+     VUONG-LO-MENDELL-RUBIN LIKELIHOOD RATIO TEST FOR 1 (H0) VERSUS 2 CLASSES
+
+          H0 Loglikelihood Value                       -36888.065
+          2 Times the Loglikelihood Difference           2811.464
+          Difference in the Number of Parameters                3
+          Mean                                              2.626
+          Standard Deviation                                5.004
+          P-Value                                          0.0000
+
+     LO-MENDELL-RUBIN ADJUSTED LRT TEST
+
+          Value                                          2720.233
+          P-Value                                          0.0000
+
+
+TECHNICAL 14 OUTPUT
+
+     Random Starts Specifications for the k-1 Class Analysis Model
+        Number of initial stage random starts                  20
+        Number of final stage optimizations                     4
+
+     Random Starts Specification for the k-1 Class Model for Generated Data
+        Number of initial stage random starts                   0
+        Number of final stage optimizations for the
+           initial stage random starts                          0
+     Random Starts Specification for the k Class Model for Generated Data
+        Number of initial stage random starts                  40
+        Number of final stage optimizations                     8
+     Number of bootstrap draws requested                   Varies
+
+
+     PARAMETRIC BOOTSTRAPPED LIKELIHOOD RATIO TEST FOR 1 (H0) VERSUS 2 CLASSES
+
+          H0 Loglikelihood Value                       -36888.065
+          2 Times the Loglikelihood Difference           2811.464
+          Difference in the Number of Parameters                3
+          Approximate P-Value                              0.0000
+          Successful Bootstrap Draws                            5
+
+     WARNING:  OF THE 5 BOOTSTRAP DRAWS, 4 DRAWS HAD BOTH A SMALLER LRT VALUE THAN THE
+     OBSERVED LRT VALUE AND NOT A REPLICATED BEST LOGLIKELIHOOD VALUE FOR THE 2-CLASS MODEL.
+     THIS MEANS THAT THE P-VALUE MAY NOT BE TRUSTWORTHY DUE TO LOCAL MAXIMA.
+     INCREASE THE NUMBER OF RANDOM STARTS USING THE LRTSTARTS OPTION.
+
+
+
+PLOT INFORMATION
+
+The following plots are available:
+
+  Histograms (sample values)
+  Scatterplots (sample values)
+  Sample means
+  Estimated means, medians, modes, and percentiles
+  Sample and estimated means
+  Sample proportions and estimated probabilities
+  Observed individual values
+  Estimated means and observed individual values
+
+SAVEDATA INFORMATION
+
+
+  Save file
+    ASB_sum_lin2_poisson.csv
+
+  Order of variables
+
+    ASB_S13
+    ASB_S14
+    ASB_S15
+    ASB_S16
+    ASB_S17
+    ASB_S18
+    ASB_S19
+    ASB_S20
+    ASB_S21
+    ASB_S22
+    ASB_S23
+    ASB_S24
+    ASB_S25
+    ASB_S26
+    ASB_S27
+    ASB_S28
+    ASB_S29
+    ASB_S30
+    ASB_S31
+    ASB_S32
+    ASB_S33
+    ASB_S34
+    ASB_S35
+    ASB_S36
+    ASB_S37
+    ASB_S38
+    ASB_S39
+    ASB_S40
+    ASB_S41
+    AID
+    CPROB1
+    CPROB2
+    C
+
+  Save file format           Free
+
+  Save file record length    10000
+
+
+DIAGRAM INFORMATION
+
+  Mplus diagrams are currently not available for Mixture analysis.
+  No diagram output was produced.
+
+
+     Beginning Time:  17:18:47
+        Ending Time:  17:28:53
+       Elapsed Time:  00:10:06
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2015 Muthen & Muthen

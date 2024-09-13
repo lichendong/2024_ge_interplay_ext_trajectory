@@ -1,0 +1,3370 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+02/10/2023  12:33 PM
+
+INPUT INSTRUCTIONS
+
+  Title: Add Health GMM for SUB Sum Scores Quadratic 4 classes
+  Data:
+  File is
+  C:/AddHealth_SUB_SumScores_Jan2023.csv;
+
+  Variable:
+  Names are
+  AID	BIO_SEX	sub_s12	sub_s13	sub_s14	sub_s15	sub_s16
+  sub_s17	sub_s18	sub_s19	sub_s20	sub_s21	sub_s22	sub_s23
+  sub_s24	sub_s25	sub_s26	sub_s27	sub_s28	sub_s29	sub_s30
+  sub_s31	sub_s32	sub_s33	sub_s34	sub_s35	sub_s36	sub_s37	
+  sub_s38	sub_s39	sub_s40	sub_s41	sub_s42	sub_s43	sub_s44;
+
+  usevariables =
+  sub_s13	sub_s14	sub_s15	sub_s16	sub_s17	sub_s18	sub_s19
+  sub_s20	sub_s21	sub_s22	sub_s23	sub_s24	sub_s25	sub_s26
+  sub_s27	sub_s28	sub_s29	sub_s30	sub_s31	sub_s32	sub_s33
+  sub_s34	sub_s35	sub_s36	sub_s37	sub_s38	sub_s39	sub_s40
+  sub_s41;
+
+  count = sub_s13-sub_s41 (i);
+  IDVARIABLE IS AID;
+  Missing are  all (-999);
+  classes = c(4);
+
+  ANALYSIS:
+  TYPE = MIXTURE;
+  PROCESSORS = 14;
+  !iteration=50000;
+  !convergence=.000001;
+  !coverage=.0000001;
+  !h1convergence=.000001;
+  !estimator=MLR;
+  !INTEGRATION = 7;
+  !ALGORITHM = INTEGRATION;
+  !starts = 20 4;
+
+  MODEL:
+  %OVERALL%
+
+  i s q | sub_s13@0	sub_s14@1		sub_s15@2		sub_s16@3	
+  sub_s17@4		sub_s18@5		sub_s19@6		sub_s20@7	
+  sub_s21@8		sub_s22@9		sub_s23@10		sub_s24@11		
+  sub_s25@12		sub_s26@13		sub_s27@14		sub_s28@15		
+  sub_s29@16		sub_s30@17		sub_s31@18		sub_s32@19
+  sub_s33@20		sub_s34@21		sub_s35@22		sub_s36@23
+  sub_s37@24		sub_s38@25		sub_s39@26		sub_s40@27
+  sub_s41@28;
+
+  ii si qi | sub_s13#1@0	sub_s14#1@1		sub_s15#1@2		sub_s16#1@3	
+  sub_s17#1@4		sub_s18#1@5		sub_s19#1@6		sub_s20#1@7	
+  sub_s21#1@8		sub_s22#1@9		sub_s23#1@10		sub_s24#1@11		
+  sub_s25#1@12		sub_s26#1@13		sub_s27#1@14		sub_s28#1@15		
+  sub_s29#1@16		sub_s30#1@17		sub_s31#1@18		sub_s32#1@19
+  sub_s33#1@20		sub_s34#1@21		sub_s35#1@22		sub_s36#1@23
+  sub_s37#1@24		sub_s38#1@25		sub_s39#1@26		sub_s40#1@27
+  sub_s41#1@28;	
+
+  OUTPUT:
+  TECH11 TECH14;
+
+  PLOT:
+  type = plot3;
+  series = sub_s13-sub_s41(*);
+
+  SAVEDATA:
+  file is SUB_sum_quad4_poisson.csv;
+  save is cprob;
+  format is free;
+
+
+
+
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  70349
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Add Health GMM for SUB Sum Scores Quadratic 4 classes
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                       20692
+
+Number of dependent variables                                   29
+Number of independent variables                                  0
+Number of continuous latent variables                            6
+Number of categorical latent variables                           1
+
+Observed dependent variables
+
+  Count
+   SUB_S13     SUB_S14     SUB_S15     SUB_S16     SUB_S17     SUB_S18
+   SUB_S19     SUB_S20     SUB_S21     SUB_S22     SUB_S23     SUB_S24
+   SUB_S25     SUB_S26     SUB_S27     SUB_S28     SUB_S29     SUB_S30
+   SUB_S31     SUB_S32     SUB_S33     SUB_S34     SUB_S35     SUB_S36
+   SUB_S37     SUB_S38     SUB_S39     SUB_S40     SUB_S41
+
+Continuous latent variables
+   I           S           Q           II          SI          QI
+
+Categorical latent variables
+   C
+
+Variables with special functions
+
+  ID variable           AID
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-06
+    Relative loglikelihood change                        0.100D-06
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Random Starts Specifications
+  Number of initial stage random starts                         20
+  Number of final stage optimizations                            4
+  Number of initial stage iterations                            10
+  Initial stage convergence criterion                    0.100D+01
+  Random starts scale                                    0.500D+01
+  Random seed for generating random starts                       0
+
+Input data file(s)
+  C:/AddHealth_SUB_SumScores_Jan2023.csv
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+COUNT PROPORTION OF ZERO, MINIMUM AND MAXIMUM VALUES
+
+      SUB_S13     0.720         0        18
+      SUB_S14     0.617         0        18
+      SUB_S15     0.499         0        18
+      SUB_S16     0.455         0        18
+      SUB_S17     0.407         0        18
+      SUB_S18     0.346         0        18
+      SUB_S19     0.312         0        18
+      SUB_S20     0.264         0        18
+      SUB_S21     0.221         0        18
+      SUB_S22     0.211         0        18
+      SUB_S23     0.208         0        18
+      SUB_S24     0.202         0        18
+      SUB_S25     0.262         0        18
+      SUB_S26     0.163         0        18
+      SUB_S27     0.157         0        18
+      SUB_S28     0.157         0        18
+      SUB_S29     0.180         0        18
+      SUB_S30     0.189         0        18
+      SUB_S31     0.197         0        18
+      SUB_S32     0.264         0        18
+      SUB_S33     0.356         0        17
+      SUB_S34     0.130         0        18
+      SUB_S35     0.087         0        18
+      SUB_S36     0.104         0        18
+      SUB_S37     0.099         0        18
+      SUB_S38     0.108         0        18
+      SUB_S39     0.105         0        18
+      SUB_S40     0.117         0        18
+      SUB_S41     0.133         0        18
+
+
+RANDOM STARTS RESULTS RANKED FROM THE BEST TO THE WORST LOGLIKELIHOOD VALUES
+
+
+7 perturbed starting value run(s) did not converge.
+Final stage loglikelihood values at local maxima, seeds, and initial stage start numbers:
+
+         -171206.150  608496           4
+         -171206.150  399671           13
+
+2 perturbed starting value run(s) did not converge.
+
+
+
+THE BEST LOGLIKELIHOOD VALUE HAS BEEN REPLICATED.  RERUN WITH AT LEAST TWICE THE
+RANDOM STARTS TO CHECK THAT THE BEST LOGLIKELIHOOD IS STILL OBTAINED AND REPLICATED.
+
+     IN THE OPTIMIZATION, ONE OR MORE LOGIT SCALE PARAMETERS APPROACHED AND WERE
+     SET AT THE EXTREME VALUES.  EXTREME VALUES ARE -15.000 AND 15.000.
+     THE FOLLOWING PARAMETERS WERE SET AT THESE VALUES:
+     * MEAN OF SUB_S13#1 FOR CLASS 1
+     * MEAN OF SUB_S14#1 FOR CLASS 1
+     * MEAN OF SUB_S15#1 FOR CLASS 1
+     * MEAN OF SUB_S16#1 FOR CLASS 1
+     * MEAN OF SUB_S17#1 FOR CLASS 1
+     * MEAN OF SUB_S18#1 FOR CLASS 1
+     * MEAN OF SUB_S19#1 FOR CLASS 1
+     * MEAN OF SUB_S20#1 FOR CLASS 1
+     * MEAN OF SUB_S21#1 FOR CLASS 1
+     * MEAN OF SUB_S22#1 FOR CLASS 1
+     * MEAN OF SUB_S23#1 FOR CLASS 1
+     * MEAN OF SUB_S24#1 FOR CLASS 1
+     * MEAN OF SUB_S25#1 FOR CLASS 1
+     * MEAN OF SUB_S26#1 FOR CLASS 1
+     * MEAN OF SUB_S27#1 FOR CLASS 1
+     * MEAN OF SUB_S28#1 FOR CLASS 1
+     * MEAN OF SUB_S29#1 FOR CLASS 1
+     * MEAN OF SUB_S30#1 FOR CLASS 1
+     * MEAN OF SUB_S31#1 FOR CLASS 1
+     * MEAN OF SUB_S32#1 FOR CLASS 1
+     * MEAN OF SUB_S33#1 FOR CLASS 1
+     * MEAN OF SUB_S34#1 FOR CLASS 1
+     * MEAN OF SUB_S35#1 FOR CLASS 1
+     * MEAN OF SUB_S36#1 FOR CLASS 1
+     * MEAN OF SUB_S37#1 FOR CLASS 1
+     * MEAN OF SUB_S38#1 FOR CLASS 1
+     * MEAN OF SUB_S39#1 FOR CLASS 1
+     * MEAN OF SUB_S40#1 FOR CLASS 1
+     * MEAN OF SUB_S41#1 FOR CLASS 1
+     * MEAN OF SUB_S13#1 FOR CLASS 2
+     * MEAN OF SUB_S14#1 FOR CLASS 2
+     * MEAN OF SUB_S15#1 FOR CLASS 2
+     * MEAN OF SUB_S16#1 FOR CLASS 2
+     * MEAN OF SUB_S17#1 FOR CLASS 2
+     * MEAN OF SUB_S18#1 FOR CLASS 2
+     * MEAN OF SUB_S19#1 FOR CLASS 2
+     * MEAN OF SUB_S20#1 FOR CLASS 2
+     * MEAN OF SUB_S21#1 FOR CLASS 2
+     * MEAN OF SUB_S22#1 FOR CLASS 2
+     * MEAN OF SUB_S23#1 FOR CLASS 2
+     * MEAN OF SUB_S24#1 FOR CLASS 2
+     * MEAN OF SUB_S25#1 FOR CLASS 2
+     * MEAN OF SUB_S26#1 FOR CLASS 2
+     * MEAN OF SUB_S27#1 FOR CLASS 2
+     * MEAN OF SUB_S28#1 FOR CLASS 2
+     * MEAN OF SUB_S29#1 FOR CLASS 2
+     * MEAN OF SUB_S30#1 FOR CLASS 2
+     * MEAN OF SUB_S31#1 FOR CLASS 2
+     * MEAN OF SUB_S32#1 FOR CLASS 2
+     * MEAN OF SUB_S33#1 FOR CLASS 2
+     * MEAN OF SUB_S34#1 FOR CLASS 2
+     * MEAN OF SUB_S35#1 FOR CLASS 2
+     * MEAN OF SUB_S36#1 FOR CLASS 2
+     * MEAN OF SUB_S37#1 FOR CLASS 2
+     * MEAN OF SUB_S38#1 FOR CLASS 2
+     * MEAN OF SUB_S39#1 FOR CLASS 2
+     * MEAN OF SUB_S40#1 FOR CLASS 2
+     * MEAN OF SUB_S41#1 FOR CLASS 2
+     * MEAN OF SUB_S13#1 FOR CLASS 3
+     * MEAN OF SUB_S14#1 FOR CLASS 3
+     * MEAN OF SUB_S15#1 FOR CLASS 3
+     * MEAN OF SUB_S16#1 FOR CLASS 3
+     * MEAN OF SUB_S17#1 FOR CLASS 3
+     * MEAN OF SUB_S18#1 FOR CLASS 3
+     * MEAN OF SUB_S19#1 FOR CLASS 3
+     * MEAN OF SUB_S20#1 FOR CLASS 3
+     * MEAN OF SUB_S21#1 FOR CLASS 3
+     * MEAN OF SUB_S22#1 FOR CLASS 3
+     * MEAN OF SUB_S23#1 FOR CLASS 3
+     * MEAN OF SUB_S24#1 FOR CLASS 3
+     * MEAN OF SUB_S25#1 FOR CLASS 3
+     * MEAN OF SUB_S26#1 FOR CLASS 3
+     * MEAN OF SUB_S27#1 FOR CLASS 3
+     * MEAN OF SUB_S28#1 FOR CLASS 3
+     * MEAN OF SUB_S29#1 FOR CLASS 3
+     * MEAN OF SUB_S30#1 FOR CLASS 3
+     * MEAN OF SUB_S31#1 FOR CLASS 3
+     * MEAN OF SUB_S32#1 FOR CLASS 3
+     * MEAN OF SUB_S33#1 FOR CLASS 3
+     * MEAN OF SUB_S34#1 FOR CLASS 3
+     * MEAN OF SUB_S35#1 FOR CLASS 3
+     * MEAN OF SUB_S36#1 FOR CLASS 3
+     * MEAN OF SUB_S37#1 FOR CLASS 3
+     * MEAN OF SUB_S38#1 FOR CLASS 3
+     * MEAN OF SUB_S39#1 FOR CLASS 3
+     * MEAN OF SUB_S40#1 FOR CLASS 3
+     * MEAN OF SUB_S41#1 FOR CLASS 3
+     * MEAN OF SUB_S13#1 FOR CLASS 4
+     * MEAN OF SUB_S14#1 FOR CLASS 4
+     * MEAN OF SUB_S15#1 FOR CLASS 4
+     * MEAN OF SUB_S16#1 FOR CLASS 4
+     * MEAN OF SUB_S17#1 FOR CLASS 4
+     * MEAN OF SUB_S18#1 FOR CLASS 4
+     * MEAN OF SUB_S19#1 FOR CLASS 4
+     * MEAN OF SUB_S20#1 FOR CLASS 4
+     * MEAN OF SUB_S21#1 FOR CLASS 4
+     * MEAN OF SUB_S22#1 FOR CLASS 4
+     * MEAN OF SUB_S23#1 FOR CLASS 4
+     * MEAN OF SUB_S24#1 FOR CLASS 4
+     * MEAN OF SUB_S25#1 FOR CLASS 4
+     * MEAN OF SUB_S26#1 FOR CLASS 4
+     * MEAN OF SUB_S27#1 FOR CLASS 4
+     * MEAN OF SUB_S28#1 FOR CLASS 4
+     * MEAN OF SUB_S29#1 FOR CLASS 4
+     * MEAN OF SUB_S30#1 FOR CLASS 4
+     * MEAN OF SUB_S31#1 FOR CLASS 4
+     * MEAN OF SUB_S32#1 FOR CLASS 4
+     * MEAN OF SUB_S33#1 FOR CLASS 4
+     * MEAN OF SUB_S34#1 FOR CLASS 4
+     * MEAN OF SUB_S35#1 FOR CLASS 4
+     * MEAN OF SUB_S36#1 FOR CLASS 4
+     * MEAN OF SUB_S37#1 FOR CLASS 4
+     * MEAN OF SUB_S38#1 FOR CLASS 4
+     * MEAN OF SUB_S39#1 FOR CLASS 4
+     * MEAN OF SUB_S40#1 FOR CLASS 4
+     * MEAN OF SUB_S41#1 FOR CLASS 4
+
+
+     THE STANDARD ERRORS OF THE MODEL PARAMETER ESTIMATES MAY NOT BE
+     TRUSTWORTHY FOR SOME PARAMETERS DUE TO A NON-POSITIVE DEFINITE
+     FIRST-ORDER DERIVATIVE PRODUCT MATRIX.  THIS MAY BE DUE TO THE STARTING
+     VALUES BUT MAY ALSO BE AN INDICATION OF MODEL NONIDENTIFICATION.  THE
+     CONDITION NUMBER IS       0.426D-10.  PROBLEM INVOLVING THE FOLLOWING PARAMETER:
+     Parameter 4, %C#1%: [ SUB_S13#1 ] (equality/label)
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     THE CHI-SQUARE TEST CANNOT BE COMPUTED BECAUSE THE FREQUENCY TABLE FOR THE
+     LATENT CLASS INDICATOR MODEL PART IS TOO LARGE.
+
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       18
+
+Loglikelihood
+
+          H0 Value                     -171206.150
+          H0 Scaling Correction Factor      2.7999
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                  342448.300
+          Bayesian (BIC)                342591.175
+          Sample-Size Adjusted BIC      342533.971
+            (n* = (n + 2) / 24)
+
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THE ESTIMATED MODEL
+
+    Latent
+   Classes
+
+       1       5511.09866          0.26634
+       2       4980.00276          0.24067
+       3       6916.30922          0.33425
+       4       3284.58936          0.15874
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+    Latent
+   Classes
+
+       1       5511.09866          0.26634
+       2       4980.00276          0.24067
+       3       6916.30922          0.33425
+       4       3284.58936          0.15874
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THEIR MOST LIKELY LATENT CLASS MEMBERSHIP
+
+Class Counts and Proportions
+
+    Latent
+   Classes
+
+       1             5385          0.26025
+       2             5020          0.24261
+       3             7323          0.35390
+       4             2964          0.14324
+
+
+CLASSIFICATION QUALITY
+
+     Entropy                         0.772
+
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2        3        4
+
+    1   0.828    0.031    0.065    0.075
+    2   0.029    0.913    0.000    0.057
+    3   0.083    0.006    0.887    0.024
+    4   0.099    0.062    0.025    0.814
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+           1        2        3        4
+
+    1   0.810    0.027    0.111    0.053
+    2   0.034    0.921    0.009    0.037
+    3   0.050    0.000    0.939    0.011
+    4   0.124    0.088    0.054    0.735
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+              1        2        3        4
+
+    1      2.724   -0.685    0.734    0.000
+    2     -0.087    3.216   -1.448    0.000
+    3      1.550   -6.779    4.473    0.000
+    4     -1.782   -2.126   -2.612    0.000
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ I        |
+    SUB_S13            1.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            1.000      0.000    999.000    999.000
+    SUB_S16            1.000      0.000    999.000    999.000
+    SUB_S17            1.000      0.000    999.000    999.000
+    SUB_S18            1.000      0.000    999.000    999.000
+    SUB_S19            1.000      0.000    999.000    999.000
+    SUB_S20            1.000      0.000    999.000    999.000
+    SUB_S21            1.000      0.000    999.000    999.000
+    SUB_S22            1.000      0.000    999.000    999.000
+    SUB_S23            1.000      0.000    999.000    999.000
+    SUB_S24            1.000      0.000    999.000    999.000
+    SUB_S25            1.000      0.000    999.000    999.000
+    SUB_S26            1.000      0.000    999.000    999.000
+    SUB_S27            1.000      0.000    999.000    999.000
+    SUB_S28            1.000      0.000    999.000    999.000
+    SUB_S29            1.000      0.000    999.000    999.000
+    SUB_S30            1.000      0.000    999.000    999.000
+    SUB_S31            1.000      0.000    999.000    999.000
+    SUB_S32            1.000      0.000    999.000    999.000
+    SUB_S33            1.000      0.000    999.000    999.000
+    SUB_S34            1.000      0.000    999.000    999.000
+    SUB_S35            1.000      0.000    999.000    999.000
+    SUB_S36            1.000      0.000    999.000    999.000
+    SUB_S37            1.000      0.000    999.000    999.000
+    SUB_S38            1.000      0.000    999.000    999.000
+    SUB_S39            1.000      0.000    999.000    999.000
+    SUB_S40            1.000      0.000    999.000    999.000
+    SUB_S41            1.000      0.000    999.000    999.000
+
+ S        |
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            2.000      0.000    999.000    999.000
+    SUB_S16            3.000      0.000    999.000    999.000
+    SUB_S17            4.000      0.000    999.000    999.000
+    SUB_S18            5.000      0.000    999.000    999.000
+    SUB_S19            6.000      0.000    999.000    999.000
+    SUB_S20            7.000      0.000    999.000    999.000
+    SUB_S21            8.000      0.000    999.000    999.000
+    SUB_S22            9.000      0.000    999.000    999.000
+    SUB_S23           10.000      0.000    999.000    999.000
+    SUB_S24           11.000      0.000    999.000    999.000
+    SUB_S25           12.000      0.000    999.000    999.000
+    SUB_S26           13.000      0.000    999.000    999.000
+    SUB_S27           14.000      0.000    999.000    999.000
+    SUB_S28           15.000      0.000    999.000    999.000
+    SUB_S29           16.000      0.000    999.000    999.000
+    SUB_S30           17.000      0.000    999.000    999.000
+    SUB_S31           18.000      0.000    999.000    999.000
+    SUB_S32           19.000      0.000    999.000    999.000
+    SUB_S33           20.000      0.000    999.000    999.000
+    SUB_S34           21.000      0.000    999.000    999.000
+    SUB_S35           22.000      0.000    999.000    999.000
+    SUB_S36           23.000      0.000    999.000    999.000
+    SUB_S37           24.000      0.000    999.000    999.000
+    SUB_S38           25.000      0.000    999.000    999.000
+    SUB_S39           26.000      0.000    999.000    999.000
+    SUB_S40           27.000      0.000    999.000    999.000
+    SUB_S41           28.000      0.000    999.000    999.000
+
+ Q        |
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            4.000      0.000    999.000    999.000
+    SUB_S16            9.000      0.000    999.000    999.000
+    SUB_S17           16.000      0.000    999.000    999.000
+    SUB_S18           25.000      0.000    999.000    999.000
+    SUB_S19           36.000      0.000    999.000    999.000
+    SUB_S20           49.000      0.000    999.000    999.000
+    SUB_S21           64.000      0.000    999.000    999.000
+    SUB_S22           81.000      0.000    999.000    999.000
+    SUB_S23          100.000      0.000    999.000    999.000
+    SUB_S24          121.000      0.000    999.000    999.000
+    SUB_S25          144.000      0.000    999.000    999.000
+    SUB_S26          169.000      0.000    999.000    999.000
+    SUB_S27          196.000      0.000    999.000    999.000
+    SUB_S28          225.000      0.000    999.000    999.000
+    SUB_S29          256.000      0.000    999.000    999.000
+    SUB_S30          289.000      0.000    999.000    999.000
+    SUB_S31          324.000      0.000    999.000    999.000
+    SUB_S32          361.000      0.000    999.000    999.000
+    SUB_S33          400.000      0.000    999.000    999.000
+    SUB_S34          441.000      0.000    999.000    999.000
+    SUB_S35          484.000      0.000    999.000    999.000
+    SUB_S36          529.000      0.000    999.000    999.000
+    SUB_S37          576.000      0.000    999.000    999.000
+    SUB_S38          625.000      0.000    999.000    999.000
+    SUB_S39          676.000      0.000    999.000    999.000
+    SUB_S40          729.000      0.000    999.000    999.000
+    SUB_S41          784.000      0.000    999.000    999.000
+
+ II       |
+    SUB_S13#1          1.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          1.000      0.000    999.000    999.000
+    SUB_S16#1          1.000      0.000    999.000    999.000
+    SUB_S17#1          1.000      0.000    999.000    999.000
+    SUB_S18#1          1.000      0.000    999.000    999.000
+    SUB_S19#1          1.000      0.000    999.000    999.000
+    SUB_S20#1          1.000      0.000    999.000    999.000
+    SUB_S21#1          1.000      0.000    999.000    999.000
+    SUB_S22#1          1.000      0.000    999.000    999.000
+    SUB_S23#1          1.000      0.000    999.000    999.000
+    SUB_S24#1          1.000      0.000    999.000    999.000
+    SUB_S25#1          1.000      0.000    999.000    999.000
+    SUB_S26#1          1.000      0.000    999.000    999.000
+    SUB_S27#1          1.000      0.000    999.000    999.000
+    SUB_S28#1          1.000      0.000    999.000    999.000
+    SUB_S29#1          1.000      0.000    999.000    999.000
+    SUB_S30#1          1.000      0.000    999.000    999.000
+    SUB_S31#1          1.000      0.000    999.000    999.000
+    SUB_S32#1          1.000      0.000    999.000    999.000
+    SUB_S33#1          1.000      0.000    999.000    999.000
+    SUB_S34#1          1.000      0.000    999.000    999.000
+    SUB_S35#1          1.000      0.000    999.000    999.000
+    SUB_S36#1          1.000      0.000    999.000    999.000
+    SUB_S37#1          1.000      0.000    999.000    999.000
+    SUB_S38#1          1.000      0.000    999.000    999.000
+    SUB_S39#1          1.000      0.000    999.000    999.000
+    SUB_S40#1          1.000      0.000    999.000    999.000
+    SUB_S41#1          1.000      0.000    999.000    999.000
+
+ SI       |
+    SUB_S13#1          0.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          2.000      0.000    999.000    999.000
+    SUB_S16#1          3.000      0.000    999.000    999.000
+    SUB_S17#1          4.000      0.000    999.000    999.000
+    SUB_S18#1          5.000      0.000    999.000    999.000
+    SUB_S19#1          6.000      0.000    999.000    999.000
+    SUB_S20#1          7.000      0.000    999.000    999.000
+    SUB_S21#1          8.000      0.000    999.000    999.000
+    SUB_S22#1          9.000      0.000    999.000    999.000
+    SUB_S23#1         10.000      0.000    999.000    999.000
+    SUB_S24#1         11.000      0.000    999.000    999.000
+    SUB_S25#1         12.000      0.000    999.000    999.000
+    SUB_S26#1         13.000      0.000    999.000    999.000
+    SUB_S27#1         14.000      0.000    999.000    999.000
+    SUB_S28#1         15.000      0.000    999.000    999.000
+    SUB_S29#1         16.000      0.000    999.000    999.000
+    SUB_S30#1         17.000      0.000    999.000    999.000
+    SUB_S31#1         18.000      0.000    999.000    999.000
+    SUB_S32#1         19.000      0.000    999.000    999.000
+    SUB_S33#1         20.000      0.000    999.000    999.000
+    SUB_S34#1         21.000      0.000    999.000    999.000
+    SUB_S35#1         22.000      0.000    999.000    999.000
+    SUB_S36#1         23.000      0.000    999.000    999.000
+    SUB_S37#1         24.000      0.000    999.000    999.000
+    SUB_S38#1         25.000      0.000    999.000    999.000
+    SUB_S39#1         26.000      0.000    999.000    999.000
+    SUB_S40#1         27.000      0.000    999.000    999.000
+    SUB_S41#1         28.000      0.000    999.000    999.000
+
+ QI       |
+    SUB_S13#1          0.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          4.000      0.000    999.000    999.000
+    SUB_S16#1          9.000      0.000    999.000    999.000
+    SUB_S17#1         16.000      0.000    999.000    999.000
+    SUB_S18#1         25.000      0.000    999.000    999.000
+    SUB_S19#1         36.000      0.000    999.000    999.000
+    SUB_S20#1         49.000      0.000    999.000    999.000
+    SUB_S21#1         64.000      0.000    999.000    999.000
+    SUB_S22#1         81.000      0.000    999.000    999.000
+    SUB_S23#1        100.000      0.000    999.000    999.000
+    SUB_S24#1        121.000      0.000    999.000    999.000
+    SUB_S25#1        144.000      0.000    999.000    999.000
+    SUB_S26#1        169.000      0.000    999.000    999.000
+    SUB_S27#1        196.000      0.000    999.000    999.000
+    SUB_S28#1        225.000      0.000    999.000    999.000
+    SUB_S29#1        256.000      0.000    999.000    999.000
+    SUB_S30#1        289.000      0.000    999.000    999.000
+    SUB_S31#1        324.000      0.000    999.000    999.000
+    SUB_S32#1        361.000      0.000    999.000    999.000
+    SUB_S33#1        400.000      0.000    999.000    999.000
+    SUB_S34#1        441.000      0.000    999.000    999.000
+    SUB_S35#1        484.000      0.000    999.000    999.000
+    SUB_S36#1        529.000      0.000    999.000    999.000
+    SUB_S37#1        576.000      0.000    999.000    999.000
+    SUB_S38#1        625.000      0.000    999.000    999.000
+    SUB_S39#1        676.000      0.000    999.000    999.000
+    SUB_S40#1        729.000      0.000    999.000    999.000
+    SUB_S41#1        784.000      0.000    999.000    999.000
+
+ Intercepts
+    SUB_S13#1         15.000      0.000    999.000    999.000
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14#1         15.000      0.000    999.000    999.000
+    SUB_S14            0.000      0.000    999.000    999.000
+    SUB_S15#1         15.000      0.000    999.000    999.000
+    SUB_S15            0.000      0.000    999.000    999.000
+    SUB_S16#1         15.000      0.000    999.000    999.000
+    SUB_S16            0.000      0.000    999.000    999.000
+    SUB_S17#1         15.000      0.000    999.000    999.000
+    SUB_S17            0.000      0.000    999.000    999.000
+    SUB_S18#1         15.000      0.000    999.000    999.000
+    SUB_S18            0.000      0.000    999.000    999.000
+    SUB_S19#1         15.000      0.000    999.000    999.000
+    SUB_S19            0.000      0.000    999.000    999.000
+    SUB_S20#1         15.000      0.000    999.000    999.000
+    SUB_S20            0.000      0.000    999.000    999.000
+    SUB_S21#1         15.000      0.000    999.000    999.000
+    SUB_S21            0.000      0.000    999.000    999.000
+    SUB_S22#1         15.000      0.000    999.000    999.000
+    SUB_S22            0.000      0.000    999.000    999.000
+    SUB_S23#1         15.000      0.000    999.000    999.000
+    SUB_S23            0.000      0.000    999.000    999.000
+    SUB_S24#1         15.000      0.000    999.000    999.000
+    SUB_S24            0.000      0.000    999.000    999.000
+    SUB_S25#1         15.000      0.000    999.000    999.000
+    SUB_S25            0.000      0.000    999.000    999.000
+    SUB_S26#1         15.000      0.000    999.000    999.000
+    SUB_S26            0.000      0.000    999.000    999.000
+    SUB_S27#1         15.000      0.000    999.000    999.000
+    SUB_S27            0.000      0.000    999.000    999.000
+    SUB_S28#1         15.000      0.000    999.000    999.000
+    SUB_S28            0.000      0.000    999.000    999.000
+    SUB_S29#1         15.000      0.000    999.000    999.000
+    SUB_S29            0.000      0.000    999.000    999.000
+    SUB_S30#1         15.000      0.000    999.000    999.000
+    SUB_S30            0.000      0.000    999.000    999.000
+    SUB_S31#1         15.000      0.000    999.000    999.000
+    SUB_S31            0.000      0.000    999.000    999.000
+    SUB_S32#1         15.000      0.000    999.000    999.000
+    SUB_S32            0.000      0.000    999.000    999.000
+    SUB_S33#1         15.000      0.000    999.000    999.000
+    SUB_S33            0.000      0.000    999.000    999.000
+    SUB_S34#1         15.000      0.000    999.000    999.000
+    SUB_S34            0.000      0.000    999.000    999.000
+    SUB_S35#1         15.000      0.000    999.000    999.000
+    SUB_S35            0.000      0.000    999.000    999.000
+    SUB_S36#1         15.000      0.000    999.000    999.000
+    SUB_S36            0.000      0.000    999.000    999.000
+    SUB_S37#1         15.000      0.000    999.000    999.000
+    SUB_S37            0.000      0.000    999.000    999.000
+    SUB_S38#1         15.000      0.000    999.000    999.000
+    SUB_S38            0.000      0.000    999.000    999.000
+    SUB_S39#1         15.000      0.000    999.000    999.000
+    SUB_S39            0.000      0.000    999.000    999.000
+    SUB_S40#1         15.000      0.000    999.000    999.000
+    SUB_S40            0.000      0.000    999.000    999.000
+    SUB_S41#1         15.000      0.000    999.000    999.000
+    SUB_S41            0.000      0.000    999.000    999.000
+
+ Means
+    I                 -0.361      0.053     -6.765      0.000
+    S                  0.239      0.008     31.319      0.000
+    Q                 -0.006      0.000    -28.761      0.000
+    II                 0.000      0.000    999.000    999.000
+    SI               -15.887      0.052   -307.179      0.000
+    QI                 0.545      0.002    291.018      0.000
+
+Latent Class 2
+
+ I        |
+    SUB_S13            1.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            1.000      0.000    999.000    999.000
+    SUB_S16            1.000      0.000    999.000    999.000
+    SUB_S17            1.000      0.000    999.000    999.000
+    SUB_S18            1.000      0.000    999.000    999.000
+    SUB_S19            1.000      0.000    999.000    999.000
+    SUB_S20            1.000      0.000    999.000    999.000
+    SUB_S21            1.000      0.000    999.000    999.000
+    SUB_S22            1.000      0.000    999.000    999.000
+    SUB_S23            1.000      0.000    999.000    999.000
+    SUB_S24            1.000      0.000    999.000    999.000
+    SUB_S25            1.000      0.000    999.000    999.000
+    SUB_S26            1.000      0.000    999.000    999.000
+    SUB_S27            1.000      0.000    999.000    999.000
+    SUB_S28            1.000      0.000    999.000    999.000
+    SUB_S29            1.000      0.000    999.000    999.000
+    SUB_S30            1.000      0.000    999.000    999.000
+    SUB_S31            1.000      0.000    999.000    999.000
+    SUB_S32            1.000      0.000    999.000    999.000
+    SUB_S33            1.000      0.000    999.000    999.000
+    SUB_S34            1.000      0.000    999.000    999.000
+    SUB_S35            1.000      0.000    999.000    999.000
+    SUB_S36            1.000      0.000    999.000    999.000
+    SUB_S37            1.000      0.000    999.000    999.000
+    SUB_S38            1.000      0.000    999.000    999.000
+    SUB_S39            1.000      0.000    999.000    999.000
+    SUB_S40            1.000      0.000    999.000    999.000
+    SUB_S41            1.000      0.000    999.000    999.000
+
+ S        |
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            2.000      0.000    999.000    999.000
+    SUB_S16            3.000      0.000    999.000    999.000
+    SUB_S17            4.000      0.000    999.000    999.000
+    SUB_S18            5.000      0.000    999.000    999.000
+    SUB_S19            6.000      0.000    999.000    999.000
+    SUB_S20            7.000      0.000    999.000    999.000
+    SUB_S21            8.000      0.000    999.000    999.000
+    SUB_S22            9.000      0.000    999.000    999.000
+    SUB_S23           10.000      0.000    999.000    999.000
+    SUB_S24           11.000      0.000    999.000    999.000
+    SUB_S25           12.000      0.000    999.000    999.000
+    SUB_S26           13.000      0.000    999.000    999.000
+    SUB_S27           14.000      0.000    999.000    999.000
+    SUB_S28           15.000      0.000    999.000    999.000
+    SUB_S29           16.000      0.000    999.000    999.000
+    SUB_S30           17.000      0.000    999.000    999.000
+    SUB_S31           18.000      0.000    999.000    999.000
+    SUB_S32           19.000      0.000    999.000    999.000
+    SUB_S33           20.000      0.000    999.000    999.000
+    SUB_S34           21.000      0.000    999.000    999.000
+    SUB_S35           22.000      0.000    999.000    999.000
+    SUB_S36           23.000      0.000    999.000    999.000
+    SUB_S37           24.000      0.000    999.000    999.000
+    SUB_S38           25.000      0.000    999.000    999.000
+    SUB_S39           26.000      0.000    999.000    999.000
+    SUB_S40           27.000      0.000    999.000    999.000
+    SUB_S41           28.000      0.000    999.000    999.000
+
+ Q        |
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            4.000      0.000    999.000    999.000
+    SUB_S16            9.000      0.000    999.000    999.000
+    SUB_S17           16.000      0.000    999.000    999.000
+    SUB_S18           25.000      0.000    999.000    999.000
+    SUB_S19           36.000      0.000    999.000    999.000
+    SUB_S20           49.000      0.000    999.000    999.000
+    SUB_S21           64.000      0.000    999.000    999.000
+    SUB_S22           81.000      0.000    999.000    999.000
+    SUB_S23          100.000      0.000    999.000    999.000
+    SUB_S24          121.000      0.000    999.000    999.000
+    SUB_S25          144.000      0.000    999.000    999.000
+    SUB_S26          169.000      0.000    999.000    999.000
+    SUB_S27          196.000      0.000    999.000    999.000
+    SUB_S28          225.000      0.000    999.000    999.000
+    SUB_S29          256.000      0.000    999.000    999.000
+    SUB_S30          289.000      0.000    999.000    999.000
+    SUB_S31          324.000      0.000    999.000    999.000
+    SUB_S32          361.000      0.000    999.000    999.000
+    SUB_S33          400.000      0.000    999.000    999.000
+    SUB_S34          441.000      0.000    999.000    999.000
+    SUB_S35          484.000      0.000    999.000    999.000
+    SUB_S36          529.000      0.000    999.000    999.000
+    SUB_S37          576.000      0.000    999.000    999.000
+    SUB_S38          625.000      0.000    999.000    999.000
+    SUB_S39          676.000      0.000    999.000    999.000
+    SUB_S40          729.000      0.000    999.000    999.000
+    SUB_S41          784.000      0.000    999.000    999.000
+
+ II       |
+    SUB_S13#1          1.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          1.000      0.000    999.000    999.000
+    SUB_S16#1          1.000      0.000    999.000    999.000
+    SUB_S17#1          1.000      0.000    999.000    999.000
+    SUB_S18#1          1.000      0.000    999.000    999.000
+    SUB_S19#1          1.000      0.000    999.000    999.000
+    SUB_S20#1          1.000      0.000    999.000    999.000
+    SUB_S21#1          1.000      0.000    999.000    999.000
+    SUB_S22#1          1.000      0.000    999.000    999.000
+    SUB_S23#1          1.000      0.000    999.000    999.000
+    SUB_S24#1          1.000      0.000    999.000    999.000
+    SUB_S25#1          1.000      0.000    999.000    999.000
+    SUB_S26#1          1.000      0.000    999.000    999.000
+    SUB_S27#1          1.000      0.000    999.000    999.000
+    SUB_S28#1          1.000      0.000    999.000    999.000
+    SUB_S29#1          1.000      0.000    999.000    999.000
+    SUB_S30#1          1.000      0.000    999.000    999.000
+    SUB_S31#1          1.000      0.000    999.000    999.000
+    SUB_S32#1          1.000      0.000    999.000    999.000
+    SUB_S33#1          1.000      0.000    999.000    999.000
+    SUB_S34#1          1.000      0.000    999.000    999.000
+    SUB_S35#1          1.000      0.000    999.000    999.000
+    SUB_S36#1          1.000      0.000    999.000    999.000
+    SUB_S37#1          1.000      0.000    999.000    999.000
+    SUB_S38#1          1.000      0.000    999.000    999.000
+    SUB_S39#1          1.000      0.000    999.000    999.000
+    SUB_S40#1          1.000      0.000    999.000    999.000
+    SUB_S41#1          1.000      0.000    999.000    999.000
+
+ SI       |
+    SUB_S13#1          0.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          2.000      0.000    999.000    999.000
+    SUB_S16#1          3.000      0.000    999.000    999.000
+    SUB_S17#1          4.000      0.000    999.000    999.000
+    SUB_S18#1          5.000      0.000    999.000    999.000
+    SUB_S19#1          6.000      0.000    999.000    999.000
+    SUB_S20#1          7.000      0.000    999.000    999.000
+    SUB_S21#1          8.000      0.000    999.000    999.000
+    SUB_S22#1          9.000      0.000    999.000    999.000
+    SUB_S23#1         10.000      0.000    999.000    999.000
+    SUB_S24#1         11.000      0.000    999.000    999.000
+    SUB_S25#1         12.000      0.000    999.000    999.000
+    SUB_S26#1         13.000      0.000    999.000    999.000
+    SUB_S27#1         14.000      0.000    999.000    999.000
+    SUB_S28#1         15.000      0.000    999.000    999.000
+    SUB_S29#1         16.000      0.000    999.000    999.000
+    SUB_S30#1         17.000      0.000    999.000    999.000
+    SUB_S31#1         18.000      0.000    999.000    999.000
+    SUB_S32#1         19.000      0.000    999.000    999.000
+    SUB_S33#1         20.000      0.000    999.000    999.000
+    SUB_S34#1         21.000      0.000    999.000    999.000
+    SUB_S35#1         22.000      0.000    999.000    999.000
+    SUB_S36#1         23.000      0.000    999.000    999.000
+    SUB_S37#1         24.000      0.000    999.000    999.000
+    SUB_S38#1         25.000      0.000    999.000    999.000
+    SUB_S39#1         26.000      0.000    999.000    999.000
+    SUB_S40#1         27.000      0.000    999.000    999.000
+    SUB_S41#1         28.000      0.000    999.000    999.000
+
+ QI       |
+    SUB_S13#1          0.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          4.000      0.000    999.000    999.000
+    SUB_S16#1          9.000      0.000    999.000    999.000
+    SUB_S17#1         16.000      0.000    999.000    999.000
+    SUB_S18#1         25.000      0.000    999.000    999.000
+    SUB_S19#1         36.000      0.000    999.000    999.000
+    SUB_S20#1         49.000      0.000    999.000    999.000
+    SUB_S21#1         64.000      0.000    999.000    999.000
+    SUB_S22#1         81.000      0.000    999.000    999.000
+    SUB_S23#1        100.000      0.000    999.000    999.000
+    SUB_S24#1        121.000      0.000    999.000    999.000
+    SUB_S25#1        144.000      0.000    999.000    999.000
+    SUB_S26#1        169.000      0.000    999.000    999.000
+    SUB_S27#1        196.000      0.000    999.000    999.000
+    SUB_S28#1        225.000      0.000    999.000    999.000
+    SUB_S29#1        256.000      0.000    999.000    999.000
+    SUB_S30#1        289.000      0.000    999.000    999.000
+    SUB_S31#1        324.000      0.000    999.000    999.000
+    SUB_S32#1        361.000      0.000    999.000    999.000
+    SUB_S33#1        400.000      0.000    999.000    999.000
+    SUB_S34#1        441.000      0.000    999.000    999.000
+    SUB_S35#1        484.000      0.000    999.000    999.000
+    SUB_S36#1        529.000      0.000    999.000    999.000
+    SUB_S37#1        576.000      0.000    999.000    999.000
+    SUB_S38#1        625.000      0.000    999.000    999.000
+    SUB_S39#1        676.000      0.000    999.000    999.000
+    SUB_S40#1        729.000      0.000    999.000    999.000
+    SUB_S41#1        784.000      0.000    999.000    999.000
+
+ Intercepts
+    SUB_S13#1         15.000      0.000    999.000    999.000
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14#1         15.000      0.000    999.000    999.000
+    SUB_S14            0.000      0.000    999.000    999.000
+    SUB_S15#1         15.000      0.000    999.000    999.000
+    SUB_S15            0.000      0.000    999.000    999.000
+    SUB_S16#1         15.000      0.000    999.000    999.000
+    SUB_S16            0.000      0.000    999.000    999.000
+    SUB_S17#1         15.000      0.000    999.000    999.000
+    SUB_S17            0.000      0.000    999.000    999.000
+    SUB_S18#1         15.000      0.000    999.000    999.000
+    SUB_S18            0.000      0.000    999.000    999.000
+    SUB_S19#1         15.000      0.000    999.000    999.000
+    SUB_S19            0.000      0.000    999.000    999.000
+    SUB_S20#1         15.000      0.000    999.000    999.000
+    SUB_S20            0.000      0.000    999.000    999.000
+    SUB_S21#1         15.000      0.000    999.000    999.000
+    SUB_S21            0.000      0.000    999.000    999.000
+    SUB_S22#1         15.000      0.000    999.000    999.000
+    SUB_S22            0.000      0.000    999.000    999.000
+    SUB_S23#1         15.000      0.000    999.000    999.000
+    SUB_S23            0.000      0.000    999.000    999.000
+    SUB_S24#1         15.000      0.000    999.000    999.000
+    SUB_S24            0.000      0.000    999.000    999.000
+    SUB_S25#1         15.000      0.000    999.000    999.000
+    SUB_S25            0.000      0.000    999.000    999.000
+    SUB_S26#1         15.000      0.000    999.000    999.000
+    SUB_S26            0.000      0.000    999.000    999.000
+    SUB_S27#1         15.000      0.000    999.000    999.000
+    SUB_S27            0.000      0.000    999.000    999.000
+    SUB_S28#1         15.000      0.000    999.000    999.000
+    SUB_S28            0.000      0.000    999.000    999.000
+    SUB_S29#1         15.000      0.000    999.000    999.000
+    SUB_S29            0.000      0.000    999.000    999.000
+    SUB_S30#1         15.000      0.000    999.000    999.000
+    SUB_S30            0.000      0.000    999.000    999.000
+    SUB_S31#1         15.000      0.000    999.000    999.000
+    SUB_S31            0.000      0.000    999.000    999.000
+    SUB_S32#1         15.000      0.000    999.000    999.000
+    SUB_S32            0.000      0.000    999.000    999.000
+    SUB_S33#1         15.000      0.000    999.000    999.000
+    SUB_S33            0.000      0.000    999.000    999.000
+    SUB_S34#1         15.000      0.000    999.000    999.000
+    SUB_S34            0.000      0.000    999.000    999.000
+    SUB_S35#1         15.000      0.000    999.000    999.000
+    SUB_S35            0.000      0.000    999.000    999.000
+    SUB_S36#1         15.000      0.000    999.000    999.000
+    SUB_S36            0.000      0.000    999.000    999.000
+    SUB_S37#1         15.000      0.000    999.000    999.000
+    SUB_S37            0.000      0.000    999.000    999.000
+    SUB_S38#1         15.000      0.000    999.000    999.000
+    SUB_S38            0.000      0.000    999.000    999.000
+    SUB_S39#1         15.000      0.000    999.000    999.000
+    SUB_S39            0.000      0.000    999.000    999.000
+    SUB_S40#1         15.000      0.000    999.000    999.000
+    SUB_S40            0.000      0.000    999.000    999.000
+    SUB_S41#1         15.000      0.000    999.000    999.000
+    SUB_S41            0.000      0.000    999.000    999.000
+
+ Means
+    I                  1.944      0.029     66.433      0.000
+    S                  0.049      0.004     12.618      0.000
+    Q                 -0.002      0.000    -14.728      0.000
+    II                 0.000      0.000    999.000    999.000
+    SI               -15.887      0.052   -307.179      0.000
+    QI                 0.545      0.002    291.018      0.000
+
+Latent Class 3
+
+ I        |
+    SUB_S13            1.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            1.000      0.000    999.000    999.000
+    SUB_S16            1.000      0.000    999.000    999.000
+    SUB_S17            1.000      0.000    999.000    999.000
+    SUB_S18            1.000      0.000    999.000    999.000
+    SUB_S19            1.000      0.000    999.000    999.000
+    SUB_S20            1.000      0.000    999.000    999.000
+    SUB_S21            1.000      0.000    999.000    999.000
+    SUB_S22            1.000      0.000    999.000    999.000
+    SUB_S23            1.000      0.000    999.000    999.000
+    SUB_S24            1.000      0.000    999.000    999.000
+    SUB_S25            1.000      0.000    999.000    999.000
+    SUB_S26            1.000      0.000    999.000    999.000
+    SUB_S27            1.000      0.000    999.000    999.000
+    SUB_S28            1.000      0.000    999.000    999.000
+    SUB_S29            1.000      0.000    999.000    999.000
+    SUB_S30            1.000      0.000    999.000    999.000
+    SUB_S31            1.000      0.000    999.000    999.000
+    SUB_S32            1.000      0.000    999.000    999.000
+    SUB_S33            1.000      0.000    999.000    999.000
+    SUB_S34            1.000      0.000    999.000    999.000
+    SUB_S35            1.000      0.000    999.000    999.000
+    SUB_S36            1.000      0.000    999.000    999.000
+    SUB_S37            1.000      0.000    999.000    999.000
+    SUB_S38            1.000      0.000    999.000    999.000
+    SUB_S39            1.000      0.000    999.000    999.000
+    SUB_S40            1.000      0.000    999.000    999.000
+    SUB_S41            1.000      0.000    999.000    999.000
+
+ S        |
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            2.000      0.000    999.000    999.000
+    SUB_S16            3.000      0.000    999.000    999.000
+    SUB_S17            4.000      0.000    999.000    999.000
+    SUB_S18            5.000      0.000    999.000    999.000
+    SUB_S19            6.000      0.000    999.000    999.000
+    SUB_S20            7.000      0.000    999.000    999.000
+    SUB_S21            8.000      0.000    999.000    999.000
+    SUB_S22            9.000      0.000    999.000    999.000
+    SUB_S23           10.000      0.000    999.000    999.000
+    SUB_S24           11.000      0.000    999.000    999.000
+    SUB_S25           12.000      0.000    999.000    999.000
+    SUB_S26           13.000      0.000    999.000    999.000
+    SUB_S27           14.000      0.000    999.000    999.000
+    SUB_S28           15.000      0.000    999.000    999.000
+    SUB_S29           16.000      0.000    999.000    999.000
+    SUB_S30           17.000      0.000    999.000    999.000
+    SUB_S31           18.000      0.000    999.000    999.000
+    SUB_S32           19.000      0.000    999.000    999.000
+    SUB_S33           20.000      0.000    999.000    999.000
+    SUB_S34           21.000      0.000    999.000    999.000
+    SUB_S35           22.000      0.000    999.000    999.000
+    SUB_S36           23.000      0.000    999.000    999.000
+    SUB_S37           24.000      0.000    999.000    999.000
+    SUB_S38           25.000      0.000    999.000    999.000
+    SUB_S39           26.000      0.000    999.000    999.000
+    SUB_S40           27.000      0.000    999.000    999.000
+    SUB_S41           28.000      0.000    999.000    999.000
+
+ Q        |
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            4.000      0.000    999.000    999.000
+    SUB_S16            9.000      0.000    999.000    999.000
+    SUB_S17           16.000      0.000    999.000    999.000
+    SUB_S18           25.000      0.000    999.000    999.000
+    SUB_S19           36.000      0.000    999.000    999.000
+    SUB_S20           49.000      0.000    999.000    999.000
+    SUB_S21           64.000      0.000    999.000    999.000
+    SUB_S22           81.000      0.000    999.000    999.000
+    SUB_S23          100.000      0.000    999.000    999.000
+    SUB_S24          121.000      0.000    999.000    999.000
+    SUB_S25          144.000      0.000    999.000    999.000
+    SUB_S26          169.000      0.000    999.000    999.000
+    SUB_S27          196.000      0.000    999.000    999.000
+    SUB_S28          225.000      0.000    999.000    999.000
+    SUB_S29          256.000      0.000    999.000    999.000
+    SUB_S30          289.000      0.000    999.000    999.000
+    SUB_S31          324.000      0.000    999.000    999.000
+    SUB_S32          361.000      0.000    999.000    999.000
+    SUB_S33          400.000      0.000    999.000    999.000
+    SUB_S34          441.000      0.000    999.000    999.000
+    SUB_S35          484.000      0.000    999.000    999.000
+    SUB_S36          529.000      0.000    999.000    999.000
+    SUB_S37          576.000      0.000    999.000    999.000
+    SUB_S38          625.000      0.000    999.000    999.000
+    SUB_S39          676.000      0.000    999.000    999.000
+    SUB_S40          729.000      0.000    999.000    999.000
+    SUB_S41          784.000      0.000    999.000    999.000
+
+ II       |
+    SUB_S13#1          1.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          1.000      0.000    999.000    999.000
+    SUB_S16#1          1.000      0.000    999.000    999.000
+    SUB_S17#1          1.000      0.000    999.000    999.000
+    SUB_S18#1          1.000      0.000    999.000    999.000
+    SUB_S19#1          1.000      0.000    999.000    999.000
+    SUB_S20#1          1.000      0.000    999.000    999.000
+    SUB_S21#1          1.000      0.000    999.000    999.000
+    SUB_S22#1          1.000      0.000    999.000    999.000
+    SUB_S23#1          1.000      0.000    999.000    999.000
+    SUB_S24#1          1.000      0.000    999.000    999.000
+    SUB_S25#1          1.000      0.000    999.000    999.000
+    SUB_S26#1          1.000      0.000    999.000    999.000
+    SUB_S27#1          1.000      0.000    999.000    999.000
+    SUB_S28#1          1.000      0.000    999.000    999.000
+    SUB_S29#1          1.000      0.000    999.000    999.000
+    SUB_S30#1          1.000      0.000    999.000    999.000
+    SUB_S31#1          1.000      0.000    999.000    999.000
+    SUB_S32#1          1.000      0.000    999.000    999.000
+    SUB_S33#1          1.000      0.000    999.000    999.000
+    SUB_S34#1          1.000      0.000    999.000    999.000
+    SUB_S35#1          1.000      0.000    999.000    999.000
+    SUB_S36#1          1.000      0.000    999.000    999.000
+    SUB_S37#1          1.000      0.000    999.000    999.000
+    SUB_S38#1          1.000      0.000    999.000    999.000
+    SUB_S39#1          1.000      0.000    999.000    999.000
+    SUB_S40#1          1.000      0.000    999.000    999.000
+    SUB_S41#1          1.000      0.000    999.000    999.000
+
+ SI       |
+    SUB_S13#1          0.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          2.000      0.000    999.000    999.000
+    SUB_S16#1          3.000      0.000    999.000    999.000
+    SUB_S17#1          4.000      0.000    999.000    999.000
+    SUB_S18#1          5.000      0.000    999.000    999.000
+    SUB_S19#1          6.000      0.000    999.000    999.000
+    SUB_S20#1          7.000      0.000    999.000    999.000
+    SUB_S21#1          8.000      0.000    999.000    999.000
+    SUB_S22#1          9.000      0.000    999.000    999.000
+    SUB_S23#1         10.000      0.000    999.000    999.000
+    SUB_S24#1         11.000      0.000    999.000    999.000
+    SUB_S25#1         12.000      0.000    999.000    999.000
+    SUB_S26#1         13.000      0.000    999.000    999.000
+    SUB_S27#1         14.000      0.000    999.000    999.000
+    SUB_S28#1         15.000      0.000    999.000    999.000
+    SUB_S29#1         16.000      0.000    999.000    999.000
+    SUB_S30#1         17.000      0.000    999.000    999.000
+    SUB_S31#1         18.000      0.000    999.000    999.000
+    SUB_S32#1         19.000      0.000    999.000    999.000
+    SUB_S33#1         20.000      0.000    999.000    999.000
+    SUB_S34#1         21.000      0.000    999.000    999.000
+    SUB_S35#1         22.000      0.000    999.000    999.000
+    SUB_S36#1         23.000      0.000    999.000    999.000
+    SUB_S37#1         24.000      0.000    999.000    999.000
+    SUB_S38#1         25.000      0.000    999.000    999.000
+    SUB_S39#1         26.000      0.000    999.000    999.000
+    SUB_S40#1         27.000      0.000    999.000    999.000
+    SUB_S41#1         28.000      0.000    999.000    999.000
+
+ QI       |
+    SUB_S13#1          0.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          4.000      0.000    999.000    999.000
+    SUB_S16#1          9.000      0.000    999.000    999.000
+    SUB_S17#1         16.000      0.000    999.000    999.000
+    SUB_S18#1         25.000      0.000    999.000    999.000
+    SUB_S19#1         36.000      0.000    999.000    999.000
+    SUB_S20#1         49.000      0.000    999.000    999.000
+    SUB_S21#1         64.000      0.000    999.000    999.000
+    SUB_S22#1         81.000      0.000    999.000    999.000
+    SUB_S23#1        100.000      0.000    999.000    999.000
+    SUB_S24#1        121.000      0.000    999.000    999.000
+    SUB_S25#1        144.000      0.000    999.000    999.000
+    SUB_S26#1        169.000      0.000    999.000    999.000
+    SUB_S27#1        196.000      0.000    999.000    999.000
+    SUB_S28#1        225.000      0.000    999.000    999.000
+    SUB_S29#1        256.000      0.000    999.000    999.000
+    SUB_S30#1        289.000      0.000    999.000    999.000
+    SUB_S31#1        324.000      0.000    999.000    999.000
+    SUB_S32#1        361.000      0.000    999.000    999.000
+    SUB_S33#1        400.000      0.000    999.000    999.000
+    SUB_S34#1        441.000      0.000    999.000    999.000
+    SUB_S35#1        484.000      0.000    999.000    999.000
+    SUB_S36#1        529.000      0.000    999.000    999.000
+    SUB_S37#1        576.000      0.000    999.000    999.000
+    SUB_S38#1        625.000      0.000    999.000    999.000
+    SUB_S39#1        676.000      0.000    999.000    999.000
+    SUB_S40#1        729.000      0.000    999.000    999.000
+    SUB_S41#1        784.000      0.000    999.000    999.000
+
+ Intercepts
+    SUB_S13#1         15.000      0.000    999.000    999.000
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14#1         15.000      0.000    999.000    999.000
+    SUB_S14            0.000      0.000    999.000    999.000
+    SUB_S15#1         15.000      0.000    999.000    999.000
+    SUB_S15            0.000      0.000    999.000    999.000
+    SUB_S16#1         15.000      0.000    999.000    999.000
+    SUB_S16            0.000      0.000    999.000    999.000
+    SUB_S17#1         15.000      0.000    999.000    999.000
+    SUB_S17            0.000      0.000    999.000    999.000
+    SUB_S18#1         15.000      0.000    999.000    999.000
+    SUB_S18            0.000      0.000    999.000    999.000
+    SUB_S19#1         15.000      0.000    999.000    999.000
+    SUB_S19            0.000      0.000    999.000    999.000
+    SUB_S20#1         15.000      0.000    999.000    999.000
+    SUB_S20            0.000      0.000    999.000    999.000
+    SUB_S21#1         15.000      0.000    999.000    999.000
+    SUB_S21            0.000      0.000    999.000    999.000
+    SUB_S22#1         15.000      0.000    999.000    999.000
+    SUB_S22            0.000      0.000    999.000    999.000
+    SUB_S23#1         15.000      0.000    999.000    999.000
+    SUB_S23            0.000      0.000    999.000    999.000
+    SUB_S24#1         15.000      0.000    999.000    999.000
+    SUB_S24            0.000      0.000    999.000    999.000
+    SUB_S25#1         15.000      0.000    999.000    999.000
+    SUB_S25            0.000      0.000    999.000    999.000
+    SUB_S26#1         15.000      0.000    999.000    999.000
+    SUB_S26            0.000      0.000    999.000    999.000
+    SUB_S27#1         15.000      0.000    999.000    999.000
+    SUB_S27            0.000      0.000    999.000    999.000
+    SUB_S28#1         15.000      0.000    999.000    999.000
+    SUB_S28            0.000      0.000    999.000    999.000
+    SUB_S29#1         15.000      0.000    999.000    999.000
+    SUB_S29            0.000      0.000    999.000    999.000
+    SUB_S30#1         15.000      0.000    999.000    999.000
+    SUB_S30            0.000      0.000    999.000    999.000
+    SUB_S31#1         15.000      0.000    999.000    999.000
+    SUB_S31            0.000      0.000    999.000    999.000
+    SUB_S32#1         15.000      0.000    999.000    999.000
+    SUB_S32            0.000      0.000    999.000    999.000
+    SUB_S33#1         15.000      0.000    999.000    999.000
+    SUB_S33            0.000      0.000    999.000    999.000
+    SUB_S34#1         15.000      0.000    999.000    999.000
+    SUB_S34            0.000      0.000    999.000    999.000
+    SUB_S35#1         15.000      0.000    999.000    999.000
+    SUB_S35            0.000      0.000    999.000    999.000
+    SUB_S36#1         15.000      0.000    999.000    999.000
+    SUB_S36            0.000      0.000    999.000    999.000
+    SUB_S37#1         15.000      0.000    999.000    999.000
+    SUB_S37            0.000      0.000    999.000    999.000
+    SUB_S38#1         15.000      0.000    999.000    999.000
+    SUB_S38            0.000      0.000    999.000    999.000
+    SUB_S39#1         15.000      0.000    999.000    999.000
+    SUB_S39            0.000      0.000    999.000    999.000
+    SUB_S40#1         15.000      0.000    999.000    999.000
+    SUB_S40            0.000      0.000    999.000    999.000
+    SUB_S41#1         15.000      0.000    999.000    999.000
+    SUB_S41            0.000      0.000    999.000    999.000
+
+ Means
+    I                 -1.615      0.065    -24.927      0.000
+    S                  0.179      0.009     19.602      0.000
+    Q                 -0.004      0.000    -12.461      0.000
+    II                 0.000      0.000    999.000    999.000
+    SI               -15.887      0.052   -307.179      0.000
+    QI                 0.545      0.002    291.018      0.000
+
+Latent Class 4
+
+ I        |
+    SUB_S13            1.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            1.000      0.000    999.000    999.000
+    SUB_S16            1.000      0.000    999.000    999.000
+    SUB_S17            1.000      0.000    999.000    999.000
+    SUB_S18            1.000      0.000    999.000    999.000
+    SUB_S19            1.000      0.000    999.000    999.000
+    SUB_S20            1.000      0.000    999.000    999.000
+    SUB_S21            1.000      0.000    999.000    999.000
+    SUB_S22            1.000      0.000    999.000    999.000
+    SUB_S23            1.000      0.000    999.000    999.000
+    SUB_S24            1.000      0.000    999.000    999.000
+    SUB_S25            1.000      0.000    999.000    999.000
+    SUB_S26            1.000      0.000    999.000    999.000
+    SUB_S27            1.000      0.000    999.000    999.000
+    SUB_S28            1.000      0.000    999.000    999.000
+    SUB_S29            1.000      0.000    999.000    999.000
+    SUB_S30            1.000      0.000    999.000    999.000
+    SUB_S31            1.000      0.000    999.000    999.000
+    SUB_S32            1.000      0.000    999.000    999.000
+    SUB_S33            1.000      0.000    999.000    999.000
+    SUB_S34            1.000      0.000    999.000    999.000
+    SUB_S35            1.000      0.000    999.000    999.000
+    SUB_S36            1.000      0.000    999.000    999.000
+    SUB_S37            1.000      0.000    999.000    999.000
+    SUB_S38            1.000      0.000    999.000    999.000
+    SUB_S39            1.000      0.000    999.000    999.000
+    SUB_S40            1.000      0.000    999.000    999.000
+    SUB_S41            1.000      0.000    999.000    999.000
+
+ S        |
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            2.000      0.000    999.000    999.000
+    SUB_S16            3.000      0.000    999.000    999.000
+    SUB_S17            4.000      0.000    999.000    999.000
+    SUB_S18            5.000      0.000    999.000    999.000
+    SUB_S19            6.000      0.000    999.000    999.000
+    SUB_S20            7.000      0.000    999.000    999.000
+    SUB_S21            8.000      0.000    999.000    999.000
+    SUB_S22            9.000      0.000    999.000    999.000
+    SUB_S23           10.000      0.000    999.000    999.000
+    SUB_S24           11.000      0.000    999.000    999.000
+    SUB_S25           12.000      0.000    999.000    999.000
+    SUB_S26           13.000      0.000    999.000    999.000
+    SUB_S27           14.000      0.000    999.000    999.000
+    SUB_S28           15.000      0.000    999.000    999.000
+    SUB_S29           16.000      0.000    999.000    999.000
+    SUB_S30           17.000      0.000    999.000    999.000
+    SUB_S31           18.000      0.000    999.000    999.000
+    SUB_S32           19.000      0.000    999.000    999.000
+    SUB_S33           20.000      0.000    999.000    999.000
+    SUB_S34           21.000      0.000    999.000    999.000
+    SUB_S35           22.000      0.000    999.000    999.000
+    SUB_S36           23.000      0.000    999.000    999.000
+    SUB_S37           24.000      0.000    999.000    999.000
+    SUB_S38           25.000      0.000    999.000    999.000
+    SUB_S39           26.000      0.000    999.000    999.000
+    SUB_S40           27.000      0.000    999.000    999.000
+    SUB_S41           28.000      0.000    999.000    999.000
+
+ Q        |
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14            1.000      0.000    999.000    999.000
+    SUB_S15            4.000      0.000    999.000    999.000
+    SUB_S16            9.000      0.000    999.000    999.000
+    SUB_S17           16.000      0.000    999.000    999.000
+    SUB_S18           25.000      0.000    999.000    999.000
+    SUB_S19           36.000      0.000    999.000    999.000
+    SUB_S20           49.000      0.000    999.000    999.000
+    SUB_S21           64.000      0.000    999.000    999.000
+    SUB_S22           81.000      0.000    999.000    999.000
+    SUB_S23          100.000      0.000    999.000    999.000
+    SUB_S24          121.000      0.000    999.000    999.000
+    SUB_S25          144.000      0.000    999.000    999.000
+    SUB_S26          169.000      0.000    999.000    999.000
+    SUB_S27          196.000      0.000    999.000    999.000
+    SUB_S28          225.000      0.000    999.000    999.000
+    SUB_S29          256.000      0.000    999.000    999.000
+    SUB_S30          289.000      0.000    999.000    999.000
+    SUB_S31          324.000      0.000    999.000    999.000
+    SUB_S32          361.000      0.000    999.000    999.000
+    SUB_S33          400.000      0.000    999.000    999.000
+    SUB_S34          441.000      0.000    999.000    999.000
+    SUB_S35          484.000      0.000    999.000    999.000
+    SUB_S36          529.000      0.000    999.000    999.000
+    SUB_S37          576.000      0.000    999.000    999.000
+    SUB_S38          625.000      0.000    999.000    999.000
+    SUB_S39          676.000      0.000    999.000    999.000
+    SUB_S40          729.000      0.000    999.000    999.000
+    SUB_S41          784.000      0.000    999.000    999.000
+
+ II       |
+    SUB_S13#1          1.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          1.000      0.000    999.000    999.000
+    SUB_S16#1          1.000      0.000    999.000    999.000
+    SUB_S17#1          1.000      0.000    999.000    999.000
+    SUB_S18#1          1.000      0.000    999.000    999.000
+    SUB_S19#1          1.000      0.000    999.000    999.000
+    SUB_S20#1          1.000      0.000    999.000    999.000
+    SUB_S21#1          1.000      0.000    999.000    999.000
+    SUB_S22#1          1.000      0.000    999.000    999.000
+    SUB_S23#1          1.000      0.000    999.000    999.000
+    SUB_S24#1          1.000      0.000    999.000    999.000
+    SUB_S25#1          1.000      0.000    999.000    999.000
+    SUB_S26#1          1.000      0.000    999.000    999.000
+    SUB_S27#1          1.000      0.000    999.000    999.000
+    SUB_S28#1          1.000      0.000    999.000    999.000
+    SUB_S29#1          1.000      0.000    999.000    999.000
+    SUB_S30#1          1.000      0.000    999.000    999.000
+    SUB_S31#1          1.000      0.000    999.000    999.000
+    SUB_S32#1          1.000      0.000    999.000    999.000
+    SUB_S33#1          1.000      0.000    999.000    999.000
+    SUB_S34#1          1.000      0.000    999.000    999.000
+    SUB_S35#1          1.000      0.000    999.000    999.000
+    SUB_S36#1          1.000      0.000    999.000    999.000
+    SUB_S37#1          1.000      0.000    999.000    999.000
+    SUB_S38#1          1.000      0.000    999.000    999.000
+    SUB_S39#1          1.000      0.000    999.000    999.000
+    SUB_S40#1          1.000      0.000    999.000    999.000
+    SUB_S41#1          1.000      0.000    999.000    999.000
+
+ SI       |
+    SUB_S13#1          0.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          2.000      0.000    999.000    999.000
+    SUB_S16#1          3.000      0.000    999.000    999.000
+    SUB_S17#1          4.000      0.000    999.000    999.000
+    SUB_S18#1          5.000      0.000    999.000    999.000
+    SUB_S19#1          6.000      0.000    999.000    999.000
+    SUB_S20#1          7.000      0.000    999.000    999.000
+    SUB_S21#1          8.000      0.000    999.000    999.000
+    SUB_S22#1          9.000      0.000    999.000    999.000
+    SUB_S23#1         10.000      0.000    999.000    999.000
+    SUB_S24#1         11.000      0.000    999.000    999.000
+    SUB_S25#1         12.000      0.000    999.000    999.000
+    SUB_S26#1         13.000      0.000    999.000    999.000
+    SUB_S27#1         14.000      0.000    999.000    999.000
+    SUB_S28#1         15.000      0.000    999.000    999.000
+    SUB_S29#1         16.000      0.000    999.000    999.000
+    SUB_S30#1         17.000      0.000    999.000    999.000
+    SUB_S31#1         18.000      0.000    999.000    999.000
+    SUB_S32#1         19.000      0.000    999.000    999.000
+    SUB_S33#1         20.000      0.000    999.000    999.000
+    SUB_S34#1         21.000      0.000    999.000    999.000
+    SUB_S35#1         22.000      0.000    999.000    999.000
+    SUB_S36#1         23.000      0.000    999.000    999.000
+    SUB_S37#1         24.000      0.000    999.000    999.000
+    SUB_S38#1         25.000      0.000    999.000    999.000
+    SUB_S39#1         26.000      0.000    999.000    999.000
+    SUB_S40#1         27.000      0.000    999.000    999.000
+    SUB_S41#1         28.000      0.000    999.000    999.000
+
+ QI       |
+    SUB_S13#1          0.000      0.000    999.000    999.000
+    SUB_S14#1          1.000      0.000    999.000    999.000
+    SUB_S15#1          4.000      0.000    999.000    999.000
+    SUB_S16#1          9.000      0.000    999.000    999.000
+    SUB_S17#1         16.000      0.000    999.000    999.000
+    SUB_S18#1         25.000      0.000    999.000    999.000
+    SUB_S19#1         36.000      0.000    999.000    999.000
+    SUB_S20#1         49.000      0.000    999.000    999.000
+    SUB_S21#1         64.000      0.000    999.000    999.000
+    SUB_S22#1         81.000      0.000    999.000    999.000
+    SUB_S23#1        100.000      0.000    999.000    999.000
+    SUB_S24#1        121.000      0.000    999.000    999.000
+    SUB_S25#1        144.000      0.000    999.000    999.000
+    SUB_S26#1        169.000      0.000    999.000    999.000
+    SUB_S27#1        196.000      0.000    999.000    999.000
+    SUB_S28#1        225.000      0.000    999.000    999.000
+    SUB_S29#1        256.000      0.000    999.000    999.000
+    SUB_S30#1        289.000      0.000    999.000    999.000
+    SUB_S31#1        324.000      0.000    999.000    999.000
+    SUB_S32#1        361.000      0.000    999.000    999.000
+    SUB_S33#1        400.000      0.000    999.000    999.000
+    SUB_S34#1        441.000      0.000    999.000    999.000
+    SUB_S35#1        484.000      0.000    999.000    999.000
+    SUB_S36#1        529.000      0.000    999.000    999.000
+    SUB_S37#1        576.000      0.000    999.000    999.000
+    SUB_S38#1        625.000      0.000    999.000    999.000
+    SUB_S39#1        676.000      0.000    999.000    999.000
+    SUB_S40#1        729.000      0.000    999.000    999.000
+    SUB_S41#1        784.000      0.000    999.000    999.000
+
+ Intercepts
+    SUB_S13#1         15.000      0.000    999.000    999.000
+    SUB_S13            0.000      0.000    999.000    999.000
+    SUB_S14#1         15.000      0.000    999.000    999.000
+    SUB_S14            0.000      0.000    999.000    999.000
+    SUB_S15#1         15.000      0.000    999.000    999.000
+    SUB_S15            0.000      0.000    999.000    999.000
+    SUB_S16#1         15.000      0.000    999.000    999.000
+    SUB_S16            0.000      0.000    999.000    999.000
+    SUB_S17#1         15.000      0.000    999.000    999.000
+    SUB_S17            0.000      0.000    999.000    999.000
+    SUB_S18#1         15.000      0.000    999.000    999.000
+    SUB_S18            0.000      0.000    999.000    999.000
+    SUB_S19#1         15.000      0.000    999.000    999.000
+    SUB_S19            0.000      0.000    999.000    999.000
+    SUB_S20#1         15.000      0.000    999.000    999.000
+    SUB_S20            0.000      0.000    999.000    999.000
+    SUB_S21#1         15.000      0.000    999.000    999.000
+    SUB_S21            0.000      0.000    999.000    999.000
+    SUB_S22#1         15.000      0.000    999.000    999.000
+    SUB_S22            0.000      0.000    999.000    999.000
+    SUB_S23#1         15.000      0.000    999.000    999.000
+    SUB_S23            0.000      0.000    999.000    999.000
+    SUB_S24#1         15.000      0.000    999.000    999.000
+    SUB_S24            0.000      0.000    999.000    999.000
+    SUB_S25#1         15.000      0.000    999.000    999.000
+    SUB_S25            0.000      0.000    999.000    999.000
+    SUB_S26#1         15.000      0.000    999.000    999.000
+    SUB_S26            0.000      0.000    999.000    999.000
+    SUB_S27#1         15.000      0.000    999.000    999.000
+    SUB_S27            0.000      0.000    999.000    999.000
+    SUB_S28#1         15.000      0.000    999.000    999.000
+    SUB_S28            0.000      0.000    999.000    999.000
+    SUB_S29#1         15.000      0.000    999.000    999.000
+    SUB_S29            0.000      0.000    999.000    999.000
+    SUB_S30#1         15.000      0.000    999.000    999.000
+    SUB_S30            0.000      0.000    999.000    999.000
+    SUB_S31#1         15.000      0.000    999.000    999.000
+    SUB_S31            0.000      0.000    999.000    999.000
+    SUB_S32#1         15.000      0.000    999.000    999.000
+    SUB_S32            0.000      0.000    999.000    999.000
+    SUB_S33#1         15.000      0.000    999.000    999.000
+    SUB_S33            0.000      0.000    999.000    999.000
+    SUB_S34#1         15.000      0.000    999.000    999.000
+    SUB_S34            0.000      0.000    999.000    999.000
+    SUB_S35#1         15.000      0.000    999.000    999.000
+    SUB_S35            0.000      0.000    999.000    999.000
+    SUB_S36#1         15.000      0.000    999.000    999.000
+    SUB_S36            0.000      0.000    999.000    999.000
+    SUB_S37#1         15.000      0.000    999.000    999.000
+    SUB_S37            0.000      0.000    999.000    999.000
+    SUB_S38#1         15.000      0.000    999.000    999.000
+    SUB_S38            0.000      0.000    999.000    999.000
+    SUB_S39#1         15.000      0.000    999.000    999.000
+    SUB_S39            0.000      0.000    999.000    999.000
+    SUB_S40#1         15.000      0.000    999.000    999.000
+    SUB_S40            0.000      0.000    999.000    999.000
+    SUB_S41#1         15.000      0.000    999.000    999.000
+    SUB_S41            0.000      0.000    999.000    999.000
+
+ Means
+    I                  1.996      0.078     25.676      0.000
+    S                 -0.091      0.011     -8.013      0.000
+    Q                  0.002      0.000      6.231      0.000
+    II                 0.000      0.000    999.000    999.000
+    SI               -15.887      0.052   -307.179      0.000
+    QI                 0.545      0.002    291.018      0.000
+
+Categorical Latent Variables
+
+ Means
+    C#1                0.518      0.106      4.867      0.000
+    C#2                0.416      0.071      5.878      0.000
+    C#3                0.745      0.049     15.123      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.426E-10
+       (ratio of smallest to largest eigenvalue)
+
+
+TECHNICAL 1 OUTPUT
+
+
+     PARAMETER SPECIFICATION FOR LATENT CLASS 1
+
+
+     PARAMETER SPECIFICATION FOR LATENT CLASS 2
+
+
+     PARAMETER SPECIFICATION FOR LATENT CLASS 3
+
+
+     PARAMETER SPECIFICATION FOR LATENT CLASS 4
+
+
+     PARAMETER SPECIFICATION FOR LATENT CLASS REGRESSION MODEL PART
+
+
+           ALPHA(C)
+              C#1           C#2           C#3           C#4
+              ________      ________      ________      ________
+ 1                  1             2             3             0
+
+
+     PARAMETER SPECIFICATION FOR THE CENSORED/NOMINAL/COUNT MODEL PART
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S13#      SUB_S13       SUB_S14#      SUB_S14       SUB_S15#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S15       SUB_S16#      SUB_S16       SUB_S17#      SUB_S17
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S18#      SUB_S18       SUB_S19#      SUB_S19       SUB_S20#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S20       SUB_S21#      SUB_S21       SUB_S22#      SUB_S22
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S23#      SUB_S23       SUB_S24#      SUB_S24       SUB_S25#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S25       SUB_S26#      SUB_S26       SUB_S27#      SUB_S27
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S28#      SUB_S28       SUB_S29#      SUB_S29       SUB_S30#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S30       SUB_S31#      SUB_S31       SUB_S32#      SUB_S32
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S33#      SUB_S33       SUB_S34#      SUB_S34       SUB_S35#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S35       SUB_S36#      SUB_S36       SUB_S37#      SUB_S37
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S38#      SUB_S38       SUB_S39#      SUB_S39       SUB_S40#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S40       SUB_S41#      SUB_S41
+              ________      ________      ________
+ 1                  0             4             0
+
+
+           LAMBDA(P) FOR LATENT CLASS 1
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ SUB_S13#           0             0             0             0             0
+ SUB_S13            0             0             0             0             0
+ SUB_S14#           0             0             0             0             0
+ SUB_S14            0             0             0             0             0
+ SUB_S15#           0             0             0             0             0
+ SUB_S15            0             0             0             0             0
+ SUB_S16#           0             0             0             0             0
+ SUB_S16            0             0             0             0             0
+ SUB_S17#           0             0             0             0             0
+ SUB_S17            0             0             0             0             0
+ SUB_S18#           0             0             0             0             0
+ SUB_S18            0             0             0             0             0
+ SUB_S19#           0             0             0             0             0
+ SUB_S19            0             0             0             0             0
+ SUB_S20#           0             0             0             0             0
+ SUB_S20            0             0             0             0             0
+ SUB_S21#           0             0             0             0             0
+ SUB_S21            0             0             0             0             0
+ SUB_S22#           0             0             0             0             0
+ SUB_S22            0             0             0             0             0
+ SUB_S23#           0             0             0             0             0
+ SUB_S23            0             0             0             0             0
+ SUB_S24#           0             0             0             0             0
+ SUB_S24            0             0             0             0             0
+ SUB_S25#           0             0             0             0             0
+ SUB_S25            0             0             0             0             0
+ SUB_S26#           0             0             0             0             0
+ SUB_S26            0             0             0             0             0
+ SUB_S27#           0             0             0             0             0
+ SUB_S27            0             0             0             0             0
+ SUB_S28#           0             0             0             0             0
+ SUB_S28            0             0             0             0             0
+ SUB_S29#           0             0             0             0             0
+ SUB_S29            0             0             0             0             0
+ SUB_S30#           0             0             0             0             0
+ SUB_S30            0             0             0             0             0
+ SUB_S31#           0             0             0             0             0
+ SUB_S31            0             0             0             0             0
+ SUB_S32#           0             0             0             0             0
+ SUB_S32            0             0             0             0             0
+ SUB_S33#           0             0             0             0             0
+ SUB_S33            0             0             0             0             0
+ SUB_S34#           0             0             0             0             0
+ SUB_S34            0             0             0             0             0
+ SUB_S35#           0             0             0             0             0
+ SUB_S35            0             0             0             0             0
+ SUB_S36#           0             0             0             0             0
+ SUB_S36            0             0             0             0             0
+ SUB_S37#           0             0             0             0             0
+ SUB_S37            0             0             0             0             0
+ SUB_S38#           0             0             0             0             0
+ SUB_S38            0             0             0             0             0
+ SUB_S39#           0             0             0             0             0
+ SUB_S39            0             0             0             0             0
+ SUB_S40#           0             0             0             0             0
+ SUB_S40            0             0             0             0             0
+ SUB_S41#           0             0             0             0             0
+ SUB_S41            0             0             0             0             0
+
+
+           LAMBDA(P) FOR LATENT CLASS 1
+              QI
+              ________
+ SUB_S13#           0
+ SUB_S13            0
+ SUB_S14#           0
+ SUB_S14            0
+ SUB_S15#           0
+ SUB_S15            0
+ SUB_S16#           0
+ SUB_S16            0
+ SUB_S17#           0
+ SUB_S17            0
+ SUB_S18#           0
+ SUB_S18            0
+ SUB_S19#           0
+ SUB_S19            0
+ SUB_S20#           0
+ SUB_S20            0
+ SUB_S21#           0
+ SUB_S21            0
+ SUB_S22#           0
+ SUB_S22            0
+ SUB_S23#           0
+ SUB_S23            0
+ SUB_S24#           0
+ SUB_S24            0
+ SUB_S25#           0
+ SUB_S25            0
+ SUB_S26#           0
+ SUB_S26            0
+ SUB_S27#           0
+ SUB_S27            0
+ SUB_S28#           0
+ SUB_S28            0
+ SUB_S29#           0
+ SUB_S29            0
+ SUB_S30#           0
+ SUB_S30            0
+ SUB_S31#           0
+ SUB_S31            0
+ SUB_S32#           0
+ SUB_S32            0
+ SUB_S33#           0
+ SUB_S33            0
+ SUB_S34#           0
+ SUB_S34            0
+ SUB_S35#           0
+ SUB_S35            0
+ SUB_S36#           0
+ SUB_S36            0
+ SUB_S37#           0
+ SUB_S37            0
+ SUB_S38#           0
+ SUB_S38            0
+ SUB_S39#           0
+ SUB_S39            0
+ SUB_S40#           0
+ SUB_S40            0
+ SUB_S41#           0
+ SUB_S41            0
+
+
+           ALPHA(P) FOR LATENT CLASS 1
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ 1                  5             6             7             0             8
+
+
+           ALPHA(P) FOR LATENT CLASS 1
+              QI
+              ________
+ 1                  9
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S13#      SUB_S13       SUB_S14#      SUB_S14       SUB_S15#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S15       SUB_S16#      SUB_S16       SUB_S17#      SUB_S17
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S18#      SUB_S18       SUB_S19#      SUB_S19       SUB_S20#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S20       SUB_S21#      SUB_S21       SUB_S22#      SUB_S22
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S23#      SUB_S23       SUB_S24#      SUB_S24       SUB_S25#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S25       SUB_S26#      SUB_S26       SUB_S27#      SUB_S27
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S28#      SUB_S28       SUB_S29#      SUB_S29       SUB_S30#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S30       SUB_S31#      SUB_S31       SUB_S32#      SUB_S32
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S33#      SUB_S33       SUB_S34#      SUB_S34       SUB_S35#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S35       SUB_S36#      SUB_S36       SUB_S37#      SUB_S37
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S38#      SUB_S38       SUB_S39#      SUB_S39       SUB_S40#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S40       SUB_S41#      SUB_S41
+              ________      ________      ________
+ 1                  0             4             0
+
+
+           LAMBDA(P) FOR LATENT CLASS 2
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ SUB_S13#           0             0             0             0             0
+ SUB_S13            0             0             0             0             0
+ SUB_S14#           0             0             0             0             0
+ SUB_S14            0             0             0             0             0
+ SUB_S15#           0             0             0             0             0
+ SUB_S15            0             0             0             0             0
+ SUB_S16#           0             0             0             0             0
+ SUB_S16            0             0             0             0             0
+ SUB_S17#           0             0             0             0             0
+ SUB_S17            0             0             0             0             0
+ SUB_S18#           0             0             0             0             0
+ SUB_S18            0             0             0             0             0
+ SUB_S19#           0             0             0             0             0
+ SUB_S19            0             0             0             0             0
+ SUB_S20#           0             0             0             0             0
+ SUB_S20            0             0             0             0             0
+ SUB_S21#           0             0             0             0             0
+ SUB_S21            0             0             0             0             0
+ SUB_S22#           0             0             0             0             0
+ SUB_S22            0             0             0             0             0
+ SUB_S23#           0             0             0             0             0
+ SUB_S23            0             0             0             0             0
+ SUB_S24#           0             0             0             0             0
+ SUB_S24            0             0             0             0             0
+ SUB_S25#           0             0             0             0             0
+ SUB_S25            0             0             0             0             0
+ SUB_S26#           0             0             0             0             0
+ SUB_S26            0             0             0             0             0
+ SUB_S27#           0             0             0             0             0
+ SUB_S27            0             0             0             0             0
+ SUB_S28#           0             0             0             0             0
+ SUB_S28            0             0             0             0             0
+ SUB_S29#           0             0             0             0             0
+ SUB_S29            0             0             0             0             0
+ SUB_S30#           0             0             0             0             0
+ SUB_S30            0             0             0             0             0
+ SUB_S31#           0             0             0             0             0
+ SUB_S31            0             0             0             0             0
+ SUB_S32#           0             0             0             0             0
+ SUB_S32            0             0             0             0             0
+ SUB_S33#           0             0             0             0             0
+ SUB_S33            0             0             0             0             0
+ SUB_S34#           0             0             0             0             0
+ SUB_S34            0             0             0             0             0
+ SUB_S35#           0             0             0             0             0
+ SUB_S35            0             0             0             0             0
+ SUB_S36#           0             0             0             0             0
+ SUB_S36            0             0             0             0             0
+ SUB_S37#           0             0             0             0             0
+ SUB_S37            0             0             0             0             0
+ SUB_S38#           0             0             0             0             0
+ SUB_S38            0             0             0             0             0
+ SUB_S39#           0             0             0             0             0
+ SUB_S39            0             0             0             0             0
+ SUB_S40#           0             0             0             0             0
+ SUB_S40            0             0             0             0             0
+ SUB_S41#           0             0             0             0             0
+ SUB_S41            0             0             0             0             0
+
+
+           LAMBDA(P) FOR LATENT CLASS 2
+              QI
+              ________
+ SUB_S13#           0
+ SUB_S13            0
+ SUB_S14#           0
+ SUB_S14            0
+ SUB_S15#           0
+ SUB_S15            0
+ SUB_S16#           0
+ SUB_S16            0
+ SUB_S17#           0
+ SUB_S17            0
+ SUB_S18#           0
+ SUB_S18            0
+ SUB_S19#           0
+ SUB_S19            0
+ SUB_S20#           0
+ SUB_S20            0
+ SUB_S21#           0
+ SUB_S21            0
+ SUB_S22#           0
+ SUB_S22            0
+ SUB_S23#           0
+ SUB_S23            0
+ SUB_S24#           0
+ SUB_S24            0
+ SUB_S25#           0
+ SUB_S25            0
+ SUB_S26#           0
+ SUB_S26            0
+ SUB_S27#           0
+ SUB_S27            0
+ SUB_S28#           0
+ SUB_S28            0
+ SUB_S29#           0
+ SUB_S29            0
+ SUB_S30#           0
+ SUB_S30            0
+ SUB_S31#           0
+ SUB_S31            0
+ SUB_S32#           0
+ SUB_S32            0
+ SUB_S33#           0
+ SUB_S33            0
+ SUB_S34#           0
+ SUB_S34            0
+ SUB_S35#           0
+ SUB_S35            0
+ SUB_S36#           0
+ SUB_S36            0
+ SUB_S37#           0
+ SUB_S37            0
+ SUB_S38#           0
+ SUB_S38            0
+ SUB_S39#           0
+ SUB_S39            0
+ SUB_S40#           0
+ SUB_S40            0
+ SUB_S41#           0
+ SUB_S41            0
+
+
+           ALPHA(P) FOR LATENT CLASS 2
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ 1                 10            11            12             0             8
+
+
+           ALPHA(P) FOR LATENT CLASS 2
+              QI
+              ________
+ 1                  9
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S13#      SUB_S13       SUB_S14#      SUB_S14       SUB_S15#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S15       SUB_S16#      SUB_S16       SUB_S17#      SUB_S17
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S18#      SUB_S18       SUB_S19#      SUB_S19       SUB_S20#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S20       SUB_S21#      SUB_S21       SUB_S22#      SUB_S22
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S23#      SUB_S23       SUB_S24#      SUB_S24       SUB_S25#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S25       SUB_S26#      SUB_S26       SUB_S27#      SUB_S27
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S28#      SUB_S28       SUB_S29#      SUB_S29       SUB_S30#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S30       SUB_S31#      SUB_S31       SUB_S32#      SUB_S32
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S33#      SUB_S33       SUB_S34#      SUB_S34       SUB_S35#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S35       SUB_S36#      SUB_S36       SUB_S37#      SUB_S37
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S38#      SUB_S38       SUB_S39#      SUB_S39       SUB_S40#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S40       SUB_S41#      SUB_S41
+              ________      ________      ________
+ 1                  0             4             0
+
+
+           LAMBDA(P) FOR LATENT CLASS 3
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ SUB_S13#           0             0             0             0             0
+ SUB_S13            0             0             0             0             0
+ SUB_S14#           0             0             0             0             0
+ SUB_S14            0             0             0             0             0
+ SUB_S15#           0             0             0             0             0
+ SUB_S15            0             0             0             0             0
+ SUB_S16#           0             0             0             0             0
+ SUB_S16            0             0             0             0             0
+ SUB_S17#           0             0             0             0             0
+ SUB_S17            0             0             0             0             0
+ SUB_S18#           0             0             0             0             0
+ SUB_S18            0             0             0             0             0
+ SUB_S19#           0             0             0             0             0
+ SUB_S19            0             0             0             0             0
+ SUB_S20#           0             0             0             0             0
+ SUB_S20            0             0             0             0             0
+ SUB_S21#           0             0             0             0             0
+ SUB_S21            0             0             0             0             0
+ SUB_S22#           0             0             0             0             0
+ SUB_S22            0             0             0             0             0
+ SUB_S23#           0             0             0             0             0
+ SUB_S23            0             0             0             0             0
+ SUB_S24#           0             0             0             0             0
+ SUB_S24            0             0             0             0             0
+ SUB_S25#           0             0             0             0             0
+ SUB_S25            0             0             0             0             0
+ SUB_S26#           0             0             0             0             0
+ SUB_S26            0             0             0             0             0
+ SUB_S27#           0             0             0             0             0
+ SUB_S27            0             0             0             0             0
+ SUB_S28#           0             0             0             0             0
+ SUB_S28            0             0             0             0             0
+ SUB_S29#           0             0             0             0             0
+ SUB_S29            0             0             0             0             0
+ SUB_S30#           0             0             0             0             0
+ SUB_S30            0             0             0             0             0
+ SUB_S31#           0             0             0             0             0
+ SUB_S31            0             0             0             0             0
+ SUB_S32#           0             0             0             0             0
+ SUB_S32            0             0             0             0             0
+ SUB_S33#           0             0             0             0             0
+ SUB_S33            0             0             0             0             0
+ SUB_S34#           0             0             0             0             0
+ SUB_S34            0             0             0             0             0
+ SUB_S35#           0             0             0             0             0
+ SUB_S35            0             0             0             0             0
+ SUB_S36#           0             0             0             0             0
+ SUB_S36            0             0             0             0             0
+ SUB_S37#           0             0             0             0             0
+ SUB_S37            0             0             0             0             0
+ SUB_S38#           0             0             0             0             0
+ SUB_S38            0             0             0             0             0
+ SUB_S39#           0             0             0             0             0
+ SUB_S39            0             0             0             0             0
+ SUB_S40#           0             0             0             0             0
+ SUB_S40            0             0             0             0             0
+ SUB_S41#           0             0             0             0             0
+ SUB_S41            0             0             0             0             0
+
+
+           LAMBDA(P) FOR LATENT CLASS 3
+              QI
+              ________
+ SUB_S13#           0
+ SUB_S13            0
+ SUB_S14#           0
+ SUB_S14            0
+ SUB_S15#           0
+ SUB_S15            0
+ SUB_S16#           0
+ SUB_S16            0
+ SUB_S17#           0
+ SUB_S17            0
+ SUB_S18#           0
+ SUB_S18            0
+ SUB_S19#           0
+ SUB_S19            0
+ SUB_S20#           0
+ SUB_S20            0
+ SUB_S21#           0
+ SUB_S21            0
+ SUB_S22#           0
+ SUB_S22            0
+ SUB_S23#           0
+ SUB_S23            0
+ SUB_S24#           0
+ SUB_S24            0
+ SUB_S25#           0
+ SUB_S25            0
+ SUB_S26#           0
+ SUB_S26            0
+ SUB_S27#           0
+ SUB_S27            0
+ SUB_S28#           0
+ SUB_S28            0
+ SUB_S29#           0
+ SUB_S29            0
+ SUB_S30#           0
+ SUB_S30            0
+ SUB_S31#           0
+ SUB_S31            0
+ SUB_S32#           0
+ SUB_S32            0
+ SUB_S33#           0
+ SUB_S33            0
+ SUB_S34#           0
+ SUB_S34            0
+ SUB_S35#           0
+ SUB_S35            0
+ SUB_S36#           0
+ SUB_S36            0
+ SUB_S37#           0
+ SUB_S37            0
+ SUB_S38#           0
+ SUB_S38            0
+ SUB_S39#           0
+ SUB_S39            0
+ SUB_S40#           0
+ SUB_S40            0
+ SUB_S41#           0
+ SUB_S41            0
+
+
+           ALPHA(P) FOR LATENT CLASS 3
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ 1                 13            14            15             0             8
+
+
+           ALPHA(P) FOR LATENT CLASS 3
+              QI
+              ________
+ 1                  9
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S13#      SUB_S13       SUB_S14#      SUB_S14       SUB_S15#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S15       SUB_S16#      SUB_S16       SUB_S17#      SUB_S17
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S18#      SUB_S18       SUB_S19#      SUB_S19       SUB_S20#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S20       SUB_S21#      SUB_S21       SUB_S22#      SUB_S22
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S23#      SUB_S23       SUB_S24#      SUB_S24       SUB_S25#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S25       SUB_S26#      SUB_S26       SUB_S27#      SUB_S27
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S28#      SUB_S28       SUB_S29#      SUB_S29       SUB_S30#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S30       SUB_S31#      SUB_S31       SUB_S32#      SUB_S32
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S33#      SUB_S33       SUB_S34#      SUB_S34       SUB_S35#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S35       SUB_S36#      SUB_S36       SUB_S37#      SUB_S37
+              ________      ________      ________      ________      ________
+ 1                  0             4             0             4             0
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S38#      SUB_S38       SUB_S39#      SUB_S39       SUB_S40#
+              ________      ________      ________      ________      ________
+ 1                  4             0             4             0             4
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S40       SUB_S41#      SUB_S41
+              ________      ________      ________
+ 1                  0             4             0
+
+
+           LAMBDA(P) FOR LATENT CLASS 4
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ SUB_S13#           0             0             0             0             0
+ SUB_S13            0             0             0             0             0
+ SUB_S14#           0             0             0             0             0
+ SUB_S14            0             0             0             0             0
+ SUB_S15#           0             0             0             0             0
+ SUB_S15            0             0             0             0             0
+ SUB_S16#           0             0             0             0             0
+ SUB_S16            0             0             0             0             0
+ SUB_S17#           0             0             0             0             0
+ SUB_S17            0             0             0             0             0
+ SUB_S18#           0             0             0             0             0
+ SUB_S18            0             0             0             0             0
+ SUB_S19#           0             0             0             0             0
+ SUB_S19            0             0             0             0             0
+ SUB_S20#           0             0             0             0             0
+ SUB_S20            0             0             0             0             0
+ SUB_S21#           0             0             0             0             0
+ SUB_S21            0             0             0             0             0
+ SUB_S22#           0             0             0             0             0
+ SUB_S22            0             0             0             0             0
+ SUB_S23#           0             0             0             0             0
+ SUB_S23            0             0             0             0             0
+ SUB_S24#           0             0             0             0             0
+ SUB_S24            0             0             0             0             0
+ SUB_S25#           0             0             0             0             0
+ SUB_S25            0             0             0             0             0
+ SUB_S26#           0             0             0             0             0
+ SUB_S26            0             0             0             0             0
+ SUB_S27#           0             0             0             0             0
+ SUB_S27            0             0             0             0             0
+ SUB_S28#           0             0             0             0             0
+ SUB_S28            0             0             0             0             0
+ SUB_S29#           0             0             0             0             0
+ SUB_S29            0             0             0             0             0
+ SUB_S30#           0             0             0             0             0
+ SUB_S30            0             0             0             0             0
+ SUB_S31#           0             0             0             0             0
+ SUB_S31            0             0             0             0             0
+ SUB_S32#           0             0             0             0             0
+ SUB_S32            0             0             0             0             0
+ SUB_S33#           0             0             0             0             0
+ SUB_S33            0             0             0             0             0
+ SUB_S34#           0             0             0             0             0
+ SUB_S34            0             0             0             0             0
+ SUB_S35#           0             0             0             0             0
+ SUB_S35            0             0             0             0             0
+ SUB_S36#           0             0             0             0             0
+ SUB_S36            0             0             0             0             0
+ SUB_S37#           0             0             0             0             0
+ SUB_S37            0             0             0             0             0
+ SUB_S38#           0             0             0             0             0
+ SUB_S38            0             0             0             0             0
+ SUB_S39#           0             0             0             0             0
+ SUB_S39            0             0             0             0             0
+ SUB_S40#           0             0             0             0             0
+ SUB_S40            0             0             0             0             0
+ SUB_S41#           0             0             0             0             0
+ SUB_S41            0             0             0             0             0
+
+
+           LAMBDA(P) FOR LATENT CLASS 4
+              QI
+              ________
+ SUB_S13#           0
+ SUB_S13            0
+ SUB_S14#           0
+ SUB_S14            0
+ SUB_S15#           0
+ SUB_S15            0
+ SUB_S16#           0
+ SUB_S16            0
+ SUB_S17#           0
+ SUB_S17            0
+ SUB_S18#           0
+ SUB_S18            0
+ SUB_S19#           0
+ SUB_S19            0
+ SUB_S20#           0
+ SUB_S20            0
+ SUB_S21#           0
+ SUB_S21            0
+ SUB_S22#           0
+ SUB_S22            0
+ SUB_S23#           0
+ SUB_S23            0
+ SUB_S24#           0
+ SUB_S24            0
+ SUB_S25#           0
+ SUB_S25            0
+ SUB_S26#           0
+ SUB_S26            0
+ SUB_S27#           0
+ SUB_S27            0
+ SUB_S28#           0
+ SUB_S28            0
+ SUB_S29#           0
+ SUB_S29            0
+ SUB_S30#           0
+ SUB_S30            0
+ SUB_S31#           0
+ SUB_S31            0
+ SUB_S32#           0
+ SUB_S32            0
+ SUB_S33#           0
+ SUB_S33            0
+ SUB_S34#           0
+ SUB_S34            0
+ SUB_S35#           0
+ SUB_S35            0
+ SUB_S36#           0
+ SUB_S36            0
+ SUB_S37#           0
+ SUB_S37            0
+ SUB_S38#           0
+ SUB_S38            0
+ SUB_S39#           0
+ SUB_S39            0
+ SUB_S40#           0
+ SUB_S40            0
+ SUB_S41#           0
+ SUB_S41            0
+
+
+           ALPHA(P) FOR LATENT CLASS 4
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ 1                 16            17            18             0             8
+
+
+           ALPHA(P) FOR LATENT CLASS 4
+              QI
+              ________
+ 1                  9
+
+
+     STARTING VALUES FOR LATENT CLASS 1
+
+
+     STARTING VALUES FOR LATENT CLASS 2
+
+
+     STARTING VALUES FOR LATENT CLASS 3
+
+
+     STARTING VALUES FOR LATENT CLASS 4
+
+
+     STARTING VALUES FOR LATENT CLASS REGRESSION MODEL PART
+
+
+           ALPHA(C)
+              C#1           C#2           C#3           C#4
+              ________      ________      ________      ________
+ 1              0.000         0.000         0.000         0.000
+
+
+     STARTING VALUES FOR THE CENSORED/NOMINAL/COUNT MODEL PART
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S13#      SUB_S13       SUB_S14#      SUB_S14       SUB_S15#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S15       SUB_S16#      SUB_S16       SUB_S17#      SUB_S17
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S18#      SUB_S18       SUB_S19#      SUB_S19       SUB_S20#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S20       SUB_S21#      SUB_S21       SUB_S22#      SUB_S22
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S23#      SUB_S23       SUB_S24#      SUB_S24       SUB_S25#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S25       SUB_S26#      SUB_S26       SUB_S27#      SUB_S27
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S28#      SUB_S28       SUB_S29#      SUB_S29       SUB_S30#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S30       SUB_S31#      SUB_S31       SUB_S32#      SUB_S32
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S33#      SUB_S33       SUB_S34#      SUB_S34       SUB_S35#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S35       SUB_S36#      SUB_S36       SUB_S37#      SUB_S37
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S38#      SUB_S38       SUB_S39#      SUB_S39       SUB_S40#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 1
+              SUB_S40       SUB_S41#      SUB_S41
+              ________      ________      ________
+ 1              0.000        -0.878         0.000
+
+
+           LAMBDA(P) FOR LATENT CLASS 1
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ SUB_S13#       0.000         0.000         0.000         1.000         0.000
+ SUB_S13        1.000         0.000         0.000         0.000         0.000
+ SUB_S14#       0.000         0.000         0.000         1.000         1.000
+ SUB_S14        1.000         1.000         1.000         0.000         0.000
+ SUB_S15#       0.000         0.000         0.000         1.000         2.000
+ SUB_S15        1.000         2.000         4.000         0.000         0.000
+ SUB_S16#       0.000         0.000         0.000         1.000         3.000
+ SUB_S16        1.000         3.000         9.000         0.000         0.000
+ SUB_S17#       0.000         0.000         0.000         1.000         4.000
+ SUB_S17        1.000         4.000        16.000         0.000         0.000
+ SUB_S18#       0.000         0.000         0.000         1.000         5.000
+ SUB_S18        1.000         5.000        25.000         0.000         0.000
+ SUB_S19#       0.000         0.000         0.000         1.000         6.000
+ SUB_S19        1.000         6.000        36.000         0.000         0.000
+ SUB_S20#       0.000         0.000         0.000         1.000         7.000
+ SUB_S20        1.000         7.000        49.000         0.000         0.000
+ SUB_S21#       0.000         0.000         0.000         1.000         8.000
+ SUB_S21        1.000         8.000        64.000         0.000         0.000
+ SUB_S22#       0.000         0.000         0.000         1.000         9.000
+ SUB_S22        1.000         9.000        81.000         0.000         0.000
+ SUB_S23#       0.000         0.000         0.000         1.000        10.000
+ SUB_S23        1.000        10.000       100.000         0.000         0.000
+ SUB_S24#       0.000         0.000         0.000         1.000        11.000
+ SUB_S24        1.000        11.000       121.000         0.000         0.000
+ SUB_S25#       0.000         0.000         0.000         1.000        12.000
+ SUB_S25        1.000        12.000       144.000         0.000         0.000
+ SUB_S26#       0.000         0.000         0.000         1.000        13.000
+ SUB_S26        1.000        13.000       169.000         0.000         0.000
+ SUB_S27#       0.000         0.000         0.000         1.000        14.000
+ SUB_S27        1.000        14.000       196.000         0.000         0.000
+ SUB_S28#       0.000         0.000         0.000         1.000        15.000
+ SUB_S28        1.000        15.000       225.000         0.000         0.000
+ SUB_S29#       0.000         0.000         0.000         1.000        16.000
+ SUB_S29        1.000        16.000       256.000         0.000         0.000
+ SUB_S30#       0.000         0.000         0.000         1.000        17.000
+ SUB_S30        1.000        17.000       289.000         0.000         0.000
+ SUB_S31#       0.000         0.000         0.000         1.000        18.000
+ SUB_S31        1.000        18.000       324.000         0.000         0.000
+ SUB_S32#       0.000         0.000         0.000         1.000        19.000
+ SUB_S32        1.000        19.000       361.000         0.000         0.000
+ SUB_S33#       0.000         0.000         0.000         1.000        20.000
+ SUB_S33        1.000        20.000       400.000         0.000         0.000
+ SUB_S34#       0.000         0.000         0.000         1.000        21.000
+ SUB_S34        1.000        21.000       441.000         0.000         0.000
+ SUB_S35#       0.000         0.000         0.000         1.000        22.000
+ SUB_S35        1.000        22.000       484.000         0.000         0.000
+ SUB_S36#       0.000         0.000         0.000         1.000        23.000
+ SUB_S36        1.000        23.000       529.000         0.000         0.000
+ SUB_S37#       0.000         0.000         0.000         1.000        24.000
+ SUB_S37        1.000        24.000       576.000         0.000         0.000
+ SUB_S38#       0.000         0.000         0.000         1.000        25.000
+ SUB_S38        1.000        25.000       625.000         0.000         0.000
+ SUB_S39#       0.000         0.000         0.000         1.000        26.000
+ SUB_S39        1.000        26.000       676.000         0.000         0.000
+ SUB_S40#       0.000         0.000         0.000         1.000        27.000
+ SUB_S40        1.000        27.000       729.000         0.000         0.000
+ SUB_S41#       0.000         0.000         0.000         1.000        28.000
+ SUB_S41        1.000        28.000       784.000         0.000         0.000
+
+
+           LAMBDA(P) FOR LATENT CLASS 1
+              QI
+              ________
+ SUB_S13#       0.000
+ SUB_S13        0.000
+ SUB_S14#       1.000
+ SUB_S14        0.000
+ SUB_S15#       4.000
+ SUB_S15        0.000
+ SUB_S16#       9.000
+ SUB_S16        0.000
+ SUB_S17#      16.000
+ SUB_S17        0.000
+ SUB_S18#      25.000
+ SUB_S18        0.000
+ SUB_S19#      36.000
+ SUB_S19        0.000
+ SUB_S20#      49.000
+ SUB_S20        0.000
+ SUB_S21#      64.000
+ SUB_S21        0.000
+ SUB_S22#      81.000
+ SUB_S22        0.000
+ SUB_S23#     100.000
+ SUB_S23        0.000
+ SUB_S24#     121.000
+ SUB_S24        0.000
+ SUB_S25#     144.000
+ SUB_S25        0.000
+ SUB_S26#     169.000
+ SUB_S26        0.000
+ SUB_S27#     196.000
+ SUB_S27        0.000
+ SUB_S28#     225.000
+ SUB_S28        0.000
+ SUB_S29#     256.000
+ SUB_S29        0.000
+ SUB_S30#     289.000
+ SUB_S30        0.000
+ SUB_S31#     324.000
+ SUB_S31        0.000
+ SUB_S32#     361.000
+ SUB_S32        0.000
+ SUB_S33#     400.000
+ SUB_S33        0.000
+ SUB_S34#     441.000
+ SUB_S34        0.000
+ SUB_S35#     484.000
+ SUB_S35        0.000
+ SUB_S36#     529.000
+ SUB_S36        0.000
+ SUB_S37#     576.000
+ SUB_S37        0.000
+ SUB_S38#     625.000
+ SUB_S38        0.000
+ SUB_S39#     676.000
+ SUB_S39        0.000
+ SUB_S40#     729.000
+ SUB_S40        0.000
+ SUB_S41#     784.000
+ SUB_S41        0.000
+
+
+           ALPHA(P) FOR LATENT CLASS 1
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ 1              0.000         0.000         0.000         0.000         0.000
+
+
+           ALPHA(P) FOR LATENT CLASS 1
+              QI
+              ________
+ 1              0.000
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S13#      SUB_S13       SUB_S14#      SUB_S14       SUB_S15#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S15       SUB_S16#      SUB_S16       SUB_S17#      SUB_S17
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S18#      SUB_S18       SUB_S19#      SUB_S19       SUB_S20#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S20       SUB_S21#      SUB_S21       SUB_S22#      SUB_S22
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S23#      SUB_S23       SUB_S24#      SUB_S24       SUB_S25#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S25       SUB_S26#      SUB_S26       SUB_S27#      SUB_S27
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S28#      SUB_S28       SUB_S29#      SUB_S29       SUB_S30#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S30       SUB_S31#      SUB_S31       SUB_S32#      SUB_S32
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S33#      SUB_S33       SUB_S34#      SUB_S34       SUB_S35#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S35       SUB_S36#      SUB_S36       SUB_S37#      SUB_S37
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S38#      SUB_S38       SUB_S39#      SUB_S39       SUB_S40#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 2
+              SUB_S40       SUB_S41#      SUB_S41
+              ________      ________      ________
+ 1              0.000        -0.878         0.000
+
+
+           LAMBDA(P) FOR LATENT CLASS 2
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ SUB_S13#       0.000         0.000         0.000         1.000         0.000
+ SUB_S13        1.000         0.000         0.000         0.000         0.000
+ SUB_S14#       0.000         0.000         0.000         1.000         1.000
+ SUB_S14        1.000         1.000         1.000         0.000         0.000
+ SUB_S15#       0.000         0.000         0.000         1.000         2.000
+ SUB_S15        1.000         2.000         4.000         0.000         0.000
+ SUB_S16#       0.000         0.000         0.000         1.000         3.000
+ SUB_S16        1.000         3.000         9.000         0.000         0.000
+ SUB_S17#       0.000         0.000         0.000         1.000         4.000
+ SUB_S17        1.000         4.000        16.000         0.000         0.000
+ SUB_S18#       0.000         0.000         0.000         1.000         5.000
+ SUB_S18        1.000         5.000        25.000         0.000         0.000
+ SUB_S19#       0.000         0.000         0.000         1.000         6.000
+ SUB_S19        1.000         6.000        36.000         0.000         0.000
+ SUB_S20#       0.000         0.000         0.000         1.000         7.000
+ SUB_S20        1.000         7.000        49.000         0.000         0.000
+ SUB_S21#       0.000         0.000         0.000         1.000         8.000
+ SUB_S21        1.000         8.000        64.000         0.000         0.000
+ SUB_S22#       0.000         0.000         0.000         1.000         9.000
+ SUB_S22        1.000         9.000        81.000         0.000         0.000
+ SUB_S23#       0.000         0.000         0.000         1.000        10.000
+ SUB_S23        1.000        10.000       100.000         0.000         0.000
+ SUB_S24#       0.000         0.000         0.000         1.000        11.000
+ SUB_S24        1.000        11.000       121.000         0.000         0.000
+ SUB_S25#       0.000         0.000         0.000         1.000        12.000
+ SUB_S25        1.000        12.000       144.000         0.000         0.000
+ SUB_S26#       0.000         0.000         0.000         1.000        13.000
+ SUB_S26        1.000        13.000       169.000         0.000         0.000
+ SUB_S27#       0.000         0.000         0.000         1.000        14.000
+ SUB_S27        1.000        14.000       196.000         0.000         0.000
+ SUB_S28#       0.000         0.000         0.000         1.000        15.000
+ SUB_S28        1.000        15.000       225.000         0.000         0.000
+ SUB_S29#       0.000         0.000         0.000         1.000        16.000
+ SUB_S29        1.000        16.000       256.000         0.000         0.000
+ SUB_S30#       0.000         0.000         0.000         1.000        17.000
+ SUB_S30        1.000        17.000       289.000         0.000         0.000
+ SUB_S31#       0.000         0.000         0.000         1.000        18.000
+ SUB_S31        1.000        18.000       324.000         0.000         0.000
+ SUB_S32#       0.000         0.000         0.000         1.000        19.000
+ SUB_S32        1.000        19.000       361.000         0.000         0.000
+ SUB_S33#       0.000         0.000         0.000         1.000        20.000
+ SUB_S33        1.000        20.000       400.000         0.000         0.000
+ SUB_S34#       0.000         0.000         0.000         1.000        21.000
+ SUB_S34        1.000        21.000       441.000         0.000         0.000
+ SUB_S35#       0.000         0.000         0.000         1.000        22.000
+ SUB_S35        1.000        22.000       484.000         0.000         0.000
+ SUB_S36#       0.000         0.000         0.000         1.000        23.000
+ SUB_S36        1.000        23.000       529.000         0.000         0.000
+ SUB_S37#       0.000         0.000         0.000         1.000        24.000
+ SUB_S37        1.000        24.000       576.000         0.000         0.000
+ SUB_S38#       0.000         0.000         0.000         1.000        25.000
+ SUB_S38        1.000        25.000       625.000         0.000         0.000
+ SUB_S39#       0.000         0.000         0.000         1.000        26.000
+ SUB_S39        1.000        26.000       676.000         0.000         0.000
+ SUB_S40#       0.000         0.000         0.000         1.000        27.000
+ SUB_S40        1.000        27.000       729.000         0.000         0.000
+ SUB_S41#       0.000         0.000         0.000         1.000        28.000
+ SUB_S41        1.000        28.000       784.000         0.000         0.000
+
+
+           LAMBDA(P) FOR LATENT CLASS 2
+              QI
+              ________
+ SUB_S13#       0.000
+ SUB_S13        0.000
+ SUB_S14#       1.000
+ SUB_S14        0.000
+ SUB_S15#       4.000
+ SUB_S15        0.000
+ SUB_S16#       9.000
+ SUB_S16        0.000
+ SUB_S17#      16.000
+ SUB_S17        0.000
+ SUB_S18#      25.000
+ SUB_S18        0.000
+ SUB_S19#      36.000
+ SUB_S19        0.000
+ SUB_S20#      49.000
+ SUB_S20        0.000
+ SUB_S21#      64.000
+ SUB_S21        0.000
+ SUB_S22#      81.000
+ SUB_S22        0.000
+ SUB_S23#     100.000
+ SUB_S23        0.000
+ SUB_S24#     121.000
+ SUB_S24        0.000
+ SUB_S25#     144.000
+ SUB_S25        0.000
+ SUB_S26#     169.000
+ SUB_S26        0.000
+ SUB_S27#     196.000
+ SUB_S27        0.000
+ SUB_S28#     225.000
+ SUB_S28        0.000
+ SUB_S29#     256.000
+ SUB_S29        0.000
+ SUB_S30#     289.000
+ SUB_S30        0.000
+ SUB_S31#     324.000
+ SUB_S31        0.000
+ SUB_S32#     361.000
+ SUB_S32        0.000
+ SUB_S33#     400.000
+ SUB_S33        0.000
+ SUB_S34#     441.000
+ SUB_S34        0.000
+ SUB_S35#     484.000
+ SUB_S35        0.000
+ SUB_S36#     529.000
+ SUB_S36        0.000
+ SUB_S37#     576.000
+ SUB_S37        0.000
+ SUB_S38#     625.000
+ SUB_S38        0.000
+ SUB_S39#     676.000
+ SUB_S39        0.000
+ SUB_S40#     729.000
+ SUB_S40        0.000
+ SUB_S41#     784.000
+ SUB_S41        0.000
+
+
+           ALPHA(P) FOR LATENT CLASS 2
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ 1              0.000         0.000         0.000         0.000         0.000
+
+
+           ALPHA(P) FOR LATENT CLASS 2
+              QI
+              ________
+ 1              0.000
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S13#      SUB_S13       SUB_S14#      SUB_S14       SUB_S15#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S15       SUB_S16#      SUB_S16       SUB_S17#      SUB_S17
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S18#      SUB_S18       SUB_S19#      SUB_S19       SUB_S20#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S20       SUB_S21#      SUB_S21       SUB_S22#      SUB_S22
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S23#      SUB_S23       SUB_S24#      SUB_S24       SUB_S25#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S25       SUB_S26#      SUB_S26       SUB_S27#      SUB_S27
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S28#      SUB_S28       SUB_S29#      SUB_S29       SUB_S30#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S30       SUB_S31#      SUB_S31       SUB_S32#      SUB_S32
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S33#      SUB_S33       SUB_S34#      SUB_S34       SUB_S35#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S35       SUB_S36#      SUB_S36       SUB_S37#      SUB_S37
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S38#      SUB_S38       SUB_S39#      SUB_S39       SUB_S40#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 3
+              SUB_S40       SUB_S41#      SUB_S41
+              ________      ________      ________
+ 1              0.000        -0.878         0.000
+
+
+           LAMBDA(P) FOR LATENT CLASS 3
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ SUB_S13#       0.000         0.000         0.000         1.000         0.000
+ SUB_S13        1.000         0.000         0.000         0.000         0.000
+ SUB_S14#       0.000         0.000         0.000         1.000         1.000
+ SUB_S14        1.000         1.000         1.000         0.000         0.000
+ SUB_S15#       0.000         0.000         0.000         1.000         2.000
+ SUB_S15        1.000         2.000         4.000         0.000         0.000
+ SUB_S16#       0.000         0.000         0.000         1.000         3.000
+ SUB_S16        1.000         3.000         9.000         0.000         0.000
+ SUB_S17#       0.000         0.000         0.000         1.000         4.000
+ SUB_S17        1.000         4.000        16.000         0.000         0.000
+ SUB_S18#       0.000         0.000         0.000         1.000         5.000
+ SUB_S18        1.000         5.000        25.000         0.000         0.000
+ SUB_S19#       0.000         0.000         0.000         1.000         6.000
+ SUB_S19        1.000         6.000        36.000         0.000         0.000
+ SUB_S20#       0.000         0.000         0.000         1.000         7.000
+ SUB_S20        1.000         7.000        49.000         0.000         0.000
+ SUB_S21#       0.000         0.000         0.000         1.000         8.000
+ SUB_S21        1.000         8.000        64.000         0.000         0.000
+ SUB_S22#       0.000         0.000         0.000         1.000         9.000
+ SUB_S22        1.000         9.000        81.000         0.000         0.000
+ SUB_S23#       0.000         0.000         0.000         1.000        10.000
+ SUB_S23        1.000        10.000       100.000         0.000         0.000
+ SUB_S24#       0.000         0.000         0.000         1.000        11.000
+ SUB_S24        1.000        11.000       121.000         0.000         0.000
+ SUB_S25#       0.000         0.000         0.000         1.000        12.000
+ SUB_S25        1.000        12.000       144.000         0.000         0.000
+ SUB_S26#       0.000         0.000         0.000         1.000        13.000
+ SUB_S26        1.000        13.000       169.000         0.000         0.000
+ SUB_S27#       0.000         0.000         0.000         1.000        14.000
+ SUB_S27        1.000        14.000       196.000         0.000         0.000
+ SUB_S28#       0.000         0.000         0.000         1.000        15.000
+ SUB_S28        1.000        15.000       225.000         0.000         0.000
+ SUB_S29#       0.000         0.000         0.000         1.000        16.000
+ SUB_S29        1.000        16.000       256.000         0.000         0.000
+ SUB_S30#       0.000         0.000         0.000         1.000        17.000
+ SUB_S30        1.000        17.000       289.000         0.000         0.000
+ SUB_S31#       0.000         0.000         0.000         1.000        18.000
+ SUB_S31        1.000        18.000       324.000         0.000         0.000
+ SUB_S32#       0.000         0.000         0.000         1.000        19.000
+ SUB_S32        1.000        19.000       361.000         0.000         0.000
+ SUB_S33#       0.000         0.000         0.000         1.000        20.000
+ SUB_S33        1.000        20.000       400.000         0.000         0.000
+ SUB_S34#       0.000         0.000         0.000         1.000        21.000
+ SUB_S34        1.000        21.000       441.000         0.000         0.000
+ SUB_S35#       0.000         0.000         0.000         1.000        22.000
+ SUB_S35        1.000        22.000       484.000         0.000         0.000
+ SUB_S36#       0.000         0.000         0.000         1.000        23.000
+ SUB_S36        1.000        23.000       529.000         0.000         0.000
+ SUB_S37#       0.000         0.000         0.000         1.000        24.000
+ SUB_S37        1.000        24.000       576.000         0.000         0.000
+ SUB_S38#       0.000         0.000         0.000         1.000        25.000
+ SUB_S38        1.000        25.000       625.000         0.000         0.000
+ SUB_S39#       0.000         0.000         0.000         1.000        26.000
+ SUB_S39        1.000        26.000       676.000         0.000         0.000
+ SUB_S40#       0.000         0.000         0.000         1.000        27.000
+ SUB_S40        1.000        27.000       729.000         0.000         0.000
+ SUB_S41#       0.000         0.000         0.000         1.000        28.000
+ SUB_S41        1.000        28.000       784.000         0.000         0.000
+
+
+           LAMBDA(P) FOR LATENT CLASS 3
+              QI
+              ________
+ SUB_S13#       0.000
+ SUB_S13        0.000
+ SUB_S14#       1.000
+ SUB_S14        0.000
+ SUB_S15#       4.000
+ SUB_S15        0.000
+ SUB_S16#       9.000
+ SUB_S16        0.000
+ SUB_S17#      16.000
+ SUB_S17        0.000
+ SUB_S18#      25.000
+ SUB_S18        0.000
+ SUB_S19#      36.000
+ SUB_S19        0.000
+ SUB_S20#      49.000
+ SUB_S20        0.000
+ SUB_S21#      64.000
+ SUB_S21        0.000
+ SUB_S22#      81.000
+ SUB_S22        0.000
+ SUB_S23#     100.000
+ SUB_S23        0.000
+ SUB_S24#     121.000
+ SUB_S24        0.000
+ SUB_S25#     144.000
+ SUB_S25        0.000
+ SUB_S26#     169.000
+ SUB_S26        0.000
+ SUB_S27#     196.000
+ SUB_S27        0.000
+ SUB_S28#     225.000
+ SUB_S28        0.000
+ SUB_S29#     256.000
+ SUB_S29        0.000
+ SUB_S30#     289.000
+ SUB_S30        0.000
+ SUB_S31#     324.000
+ SUB_S31        0.000
+ SUB_S32#     361.000
+ SUB_S32        0.000
+ SUB_S33#     400.000
+ SUB_S33        0.000
+ SUB_S34#     441.000
+ SUB_S34        0.000
+ SUB_S35#     484.000
+ SUB_S35        0.000
+ SUB_S36#     529.000
+ SUB_S36        0.000
+ SUB_S37#     576.000
+ SUB_S37        0.000
+ SUB_S38#     625.000
+ SUB_S38        0.000
+ SUB_S39#     676.000
+ SUB_S39        0.000
+ SUB_S40#     729.000
+ SUB_S40        0.000
+ SUB_S41#     784.000
+ SUB_S41        0.000
+
+
+           ALPHA(P) FOR LATENT CLASS 3
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ 1              0.000         0.000         0.000         0.000         0.000
+
+
+           ALPHA(P) FOR LATENT CLASS 3
+              QI
+              ________
+ 1              0.000
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S13#      SUB_S13       SUB_S14#      SUB_S14       SUB_S15#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S15       SUB_S16#      SUB_S16       SUB_S17#      SUB_S17
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S18#      SUB_S18       SUB_S19#      SUB_S19       SUB_S20#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S20       SUB_S21#      SUB_S21       SUB_S22#      SUB_S22
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S23#      SUB_S23       SUB_S24#      SUB_S24       SUB_S25#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S25       SUB_S26#      SUB_S26       SUB_S27#      SUB_S27
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S28#      SUB_S28       SUB_S29#      SUB_S29       SUB_S30#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S30       SUB_S31#      SUB_S31       SUB_S32#      SUB_S32
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S33#      SUB_S33       SUB_S34#      SUB_S34       SUB_S35#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S35       SUB_S36#      SUB_S36       SUB_S37#      SUB_S37
+              ________      ________      ________      ________      ________
+ 1              0.000        -0.878         0.000        -0.878         0.000
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S38#      SUB_S38       SUB_S39#      SUB_S39       SUB_S40#
+              ________      ________      ________      ________      ________
+ 1             -0.878         0.000        -0.878         0.000        -0.878
+
+
+           NU(P) FOR LATENT CLASS 4
+              SUB_S40       SUB_S41#      SUB_S41
+              ________      ________      ________
+ 1              0.000        -0.878         0.000
+
+
+           LAMBDA(P) FOR LATENT CLASS 4
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ SUB_S13#       0.000         0.000         0.000         1.000         0.000
+ SUB_S13        1.000         0.000         0.000         0.000         0.000
+ SUB_S14#       0.000         0.000         0.000         1.000         1.000
+ SUB_S14        1.000         1.000         1.000         0.000         0.000
+ SUB_S15#       0.000         0.000         0.000         1.000         2.000
+ SUB_S15        1.000         2.000         4.000         0.000         0.000
+ SUB_S16#       0.000         0.000         0.000         1.000         3.000
+ SUB_S16        1.000         3.000         9.000         0.000         0.000
+ SUB_S17#       0.000         0.000         0.000         1.000         4.000
+ SUB_S17        1.000         4.000        16.000         0.000         0.000
+ SUB_S18#       0.000         0.000         0.000         1.000         5.000
+ SUB_S18        1.000         5.000        25.000         0.000         0.000
+ SUB_S19#       0.000         0.000         0.000         1.000         6.000
+ SUB_S19        1.000         6.000        36.000         0.000         0.000
+ SUB_S20#       0.000         0.000         0.000         1.000         7.000
+ SUB_S20        1.000         7.000        49.000         0.000         0.000
+ SUB_S21#       0.000         0.000         0.000         1.000         8.000
+ SUB_S21        1.000         8.000        64.000         0.000         0.000
+ SUB_S22#       0.000         0.000         0.000         1.000         9.000
+ SUB_S22        1.000         9.000        81.000         0.000         0.000
+ SUB_S23#       0.000         0.000         0.000         1.000        10.000
+ SUB_S23        1.000        10.000       100.000         0.000         0.000
+ SUB_S24#       0.000         0.000         0.000         1.000        11.000
+ SUB_S24        1.000        11.000       121.000         0.000         0.000
+ SUB_S25#       0.000         0.000         0.000         1.000        12.000
+ SUB_S25        1.000        12.000       144.000         0.000         0.000
+ SUB_S26#       0.000         0.000         0.000         1.000        13.000
+ SUB_S26        1.000        13.000       169.000         0.000         0.000
+ SUB_S27#       0.000         0.000         0.000         1.000        14.000
+ SUB_S27        1.000        14.000       196.000         0.000         0.000
+ SUB_S28#       0.000         0.000         0.000         1.000        15.000
+ SUB_S28        1.000        15.000       225.000         0.000         0.000
+ SUB_S29#       0.000         0.000         0.000         1.000        16.000
+ SUB_S29        1.000        16.000       256.000         0.000         0.000
+ SUB_S30#       0.000         0.000         0.000         1.000        17.000
+ SUB_S30        1.000        17.000       289.000         0.000         0.000
+ SUB_S31#       0.000         0.000         0.000         1.000        18.000
+ SUB_S31        1.000        18.000       324.000         0.000         0.000
+ SUB_S32#       0.000         0.000         0.000         1.000        19.000
+ SUB_S32        1.000        19.000       361.000         0.000         0.000
+ SUB_S33#       0.000         0.000         0.000         1.000        20.000
+ SUB_S33        1.000        20.000       400.000         0.000         0.000
+ SUB_S34#       0.000         0.000         0.000         1.000        21.000
+ SUB_S34        1.000        21.000       441.000         0.000         0.000
+ SUB_S35#       0.000         0.000         0.000         1.000        22.000
+ SUB_S35        1.000        22.000       484.000         0.000         0.000
+ SUB_S36#       0.000         0.000         0.000         1.000        23.000
+ SUB_S36        1.000        23.000       529.000         0.000         0.000
+ SUB_S37#       0.000         0.000         0.000         1.000        24.000
+ SUB_S37        1.000        24.000       576.000         0.000         0.000
+ SUB_S38#       0.000         0.000         0.000         1.000        25.000
+ SUB_S38        1.000        25.000       625.000         0.000         0.000
+ SUB_S39#       0.000         0.000         0.000         1.000        26.000
+ SUB_S39        1.000        26.000       676.000         0.000         0.000
+ SUB_S40#       0.000         0.000         0.000         1.000        27.000
+ SUB_S40        1.000        27.000       729.000         0.000         0.000
+ SUB_S41#       0.000         0.000         0.000         1.000        28.000
+ SUB_S41        1.000        28.000       784.000         0.000         0.000
+
+
+           LAMBDA(P) FOR LATENT CLASS 4
+              QI
+              ________
+ SUB_S13#       0.000
+ SUB_S13        0.000
+ SUB_S14#       1.000
+ SUB_S14        0.000
+ SUB_S15#       4.000
+ SUB_S15        0.000
+ SUB_S16#       9.000
+ SUB_S16        0.000
+ SUB_S17#      16.000
+ SUB_S17        0.000
+ SUB_S18#      25.000
+ SUB_S18        0.000
+ SUB_S19#      36.000
+ SUB_S19        0.000
+ SUB_S20#      49.000
+ SUB_S20        0.000
+ SUB_S21#      64.000
+ SUB_S21        0.000
+ SUB_S22#      81.000
+ SUB_S22        0.000
+ SUB_S23#     100.000
+ SUB_S23        0.000
+ SUB_S24#     121.000
+ SUB_S24        0.000
+ SUB_S25#     144.000
+ SUB_S25        0.000
+ SUB_S26#     169.000
+ SUB_S26        0.000
+ SUB_S27#     196.000
+ SUB_S27        0.000
+ SUB_S28#     225.000
+ SUB_S28        0.000
+ SUB_S29#     256.000
+ SUB_S29        0.000
+ SUB_S30#     289.000
+ SUB_S30        0.000
+ SUB_S31#     324.000
+ SUB_S31        0.000
+ SUB_S32#     361.000
+ SUB_S32        0.000
+ SUB_S33#     400.000
+ SUB_S33        0.000
+ SUB_S34#     441.000
+ SUB_S34        0.000
+ SUB_S35#     484.000
+ SUB_S35        0.000
+ SUB_S36#     529.000
+ SUB_S36        0.000
+ SUB_S37#     576.000
+ SUB_S37        0.000
+ SUB_S38#     625.000
+ SUB_S38        0.000
+ SUB_S39#     676.000
+ SUB_S39        0.000
+ SUB_S40#     729.000
+ SUB_S40        0.000
+ SUB_S41#     784.000
+ SUB_S41        0.000
+
+
+           ALPHA(P) FOR LATENT CLASS 4
+              I             S             Q             II            SI
+              ________      ________      ________      ________      ________
+ 1              0.000         0.000         0.000         0.000         0.000
+
+
+           ALPHA(P) FOR LATENT CLASS 4
+              QI
+              ________
+ 1              0.000
+
+
+TECHNICAL 11 OUTPUT
+
+     Random Starts Specifications for the k-1 Class Analysis Model
+        Number of initial stage random starts                  20
+        Number of final stage optimizations                     4
+
+
+
+     VUONG-LO-MENDELL-RUBIN LIKELIHOOD RATIO TEST FOR 3 (H0) VERSUS 4 CLASSES
+
+
+
+     WARNING:  THE LIKELIHOOD RATIO TEST COMPUTATION FOR TECH11 DID NOT
+     TERMINATE NORMALLY BECAUSE THE LOGLIKELIHOOD VALUE FOR THE MODEL WITH ONE
+     LESS CLASS IS LARGER THAN THE LOGLIKELIHOOD VALUE FOR THE ESTIMATED MODEL.
+     USING MORE RANDOM STARTS MAY RESOLVE THE PROBLEM.
+
+          H0 Loglikelihood Value                      -159390.461
+          2 Times the Loglikelihood Difference         -23631.378
+          Difference in the Number of Parameters                4
+          Mean                                            125.727
+          Standard Deviation                              338.906
+          P-Value                                          1.0000
+
+     LO-MENDELL-RUBIN ADJUSTED LRT TEST
+
+          Value                                        -23051.467
+          P-Value                                          1.0000
+
+
+TECHNICAL 14 OUTPUT
+
+     Random Starts Specifications for the k-1 Class Analysis Model
+        Number of initial stage random starts                  20
+        Number of final stage optimizations                     4
+
+     Random Starts Specification for the k-1 Class Model for Generated Data
+        Number of initial stage random starts                   0
+        Number of final stage optimizations for the
+           initial stage random starts                          0
+     Random Starts Specification for the k Class Model for Generated Data
+        Number of initial stage random starts                  40
+        Number of final stage optimizations                     8
+     Number of bootstrap draws requested                   Varies
+
+
+     PARAMETRIC BOOTSTRAPPED LIKELIHOOD RATIO TEST FOR 3 (H0) VERSUS 4 CLASSES
+
+
+
+     WARNING:  THE LIKELIHOOD RATIO TEST COMPUTATION FOR TECH14 DID NOT
+     TERMINATE NORMALLY BECAUSE THE LOGLIKELIHOOD VALUE FOR THE MODEL WITH ONE
+     LESS CLASS IS LARGER THAN THE LOGLIKELIHOOD VALUE FOR THE ESTIMATED MODEL.
+     INCREASE THE NUMBER OF RANDOM STARTS USING THE LRTSTARTS OPTION.
+
+          H0 Loglikelihood Value                      -159390.461
+          2 Times the Loglikelihood Difference         -23631.378
+          Difference in the Number of Parameters                4
+          Approximate P-Value                              1.0000
+          Successful Bootstrap Draws                            0
+
+
+PLOT INFORMATION
+
+The following plots are available:
+
+  Histograms (sample values)
+  Scatterplots (sample values)
+  Sample means
+  Estimated means, medians, modes, and percentiles
+  Sample and estimated means
+  Sample proportions and estimated probabilities
+  Observed individual values
+  Estimated means and observed individual values
+
+SAVEDATA INFORMATION
+
+
+  Save file
+    SUB_sum_quad4_poisson.csv
+
+  Order of variables
+
+    SUB_S13
+    SUB_S14
+    SUB_S15
+    SUB_S16
+    SUB_S17
+    SUB_S18
+    SUB_S19
+    SUB_S20
+    SUB_S21
+    SUB_S22
+    SUB_S23
+    SUB_S24
+    SUB_S25
+    SUB_S26
+    SUB_S27
+    SUB_S28
+    SUB_S29
+    SUB_S30
+    SUB_S31
+    SUB_S32
+    SUB_S33
+    SUB_S34
+    SUB_S35
+    SUB_S36
+    SUB_S37
+    SUB_S38
+    SUB_S39
+    SUB_S40
+    SUB_S41
+    AID
+    CPROB1
+    CPROB2
+    CPROB3
+    CPROB4
+    C
+
+  Save file format           Free
+
+  Save file record length    10000
+
+
+DIAGRAM INFORMATION
+
+  Mplus diagrams are currently not available for Mixture analysis.
+  No diagram output was produced.
+
+
+     Beginning Time:  12:33:32
+        Ending Time:  12:36:19
+       Elapsed Time:  00:02:47
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2015 Muthen & Muthen
