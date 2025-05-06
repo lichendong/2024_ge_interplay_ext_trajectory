@@ -1,0 +1,178 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+05/06/2025  12:57 PM
+
+INPUT INSTRUCTIONS
+
+  Data:
+    File is "c:\Repo\data_local\gxe_ext_trajectory.csv";
+  Variable:
+   Names are
+      AID white african native asian other hispanic FAMID pgs
+      ANCESTRY parent single_par peer school neighbor age sex asb sub
+      income pared sub_hi_dum sub_lo_dum asb_hi_dum
+      asb_mod_dum asb_ado_dum pgsparent pgspeer pgsschool
+      pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar
+      pgsafrican pgsnative pgsasian pgsother pgshispanic;
+
+   usevariables are
+    sub asb
+    pgs parent peer school neighbor age sex
+    income pared
+    sub_hi_dum sub_lo_dum
+    asb_hi_dum asb_mod_dum asb_ado_dum
+    pgsparent pgspeer pgsschool pgsneighbor
+    pgsage pgssex pgsinc pgspared pgssingpar
+    !african
+    native !asian
+    other hispanic
+    single_par
+    ;
+
+    NOMINAL ARE
+     asb sub;
+
+    USEOBSERVATIONS ARE
+      ancestry == 0;
+
+    Missing are .;
+
+  Analysis:
+      process = 24;
+      estimator = ML;
+      Algorithm = INTEGRATION;
+      INTEGRATION = MONTECARLO (5000);
+      !LINK = PROBIT;
+      bootstrap=500;
+
+  Define:
+
+
+  MODEL:
+
+      parent peer school neighbor ON age sex income pared
+      !african
+      native !asian
+      other hispanic single_par;
+
+      parent ON pgs(a1);
+      peer ON pgs(a2);
+      school ON pgs(a3);
+      neighbor ON pgs(a4);
+
+
+      asb ON pgsparent pgspeer
+      pgsschool pgsneighbor
+      pgsage pgssex pgsinc pgspared pgssingpar
+      sub_hi_dum sub_lo_dum age sex
+      income pared
+      !african
+      native !asian
+      other hispanic single_par;
+
+      asb#1 ON pgs(cpasb1);
+      asb#1 ON parent(basb11);
+      asb#1 ON peer(basb12);
+      asb#1 ON school(basb13);
+      asb#1 ON neighbor(basb14);
+
+      asb#2 ON pgs(cpasb2);
+      asb#2 ON parent(basb21);
+      asb#2 ON peer(basb22);
+      asb#2 ON school(basb23);
+      asb#2 ON neighbor(basb24);
+
+      asb#3 ON pgs(cpasb3);
+      asb#3 ON parent(basb31);
+      asb#3 ON peer(basb32);
+      asb#3 ON school(basb33);
+      asb#3 ON neighbor(basb34);
+
+
+      sub ON pgsparent pgspeer pgsschool pgsneighbor
+      pgsage pgssex pgsinc pgspared pgssingpar
+      asb_hi_dum asb_mod_dum asb_ado_dum age sex
+      income pared
+      !african
+      native !asian
+      other hispanic single_par;
+
+      sub#1 ON pgs(cpsub1);
+      sub#1 ON parent(bsub11);
+      sub#1 ON peer(bsub12);
+      sub#1 ON school(bsub13);
+      sub#1 ON neighbor(bsub14);
+
+      sub#2 ON pgs(cpsub2);
+      sub#2 ON parent(bsub21);
+      sub#2 ON peer(bsub22);
+      sub#2 ON school(bsub23);
+      sub#2 ON neighbor(bsub24);
+
+
+      parent WITH peer school neighbor;
+
+      peer WITH parent school neighbor;
+
+      school WITH parent peer neighbor;
+
+      neighbor WITH parent peer school;
+
+
+  MODEL CONSTRAINT:
+      NEW (indasb11 indasb12 indasb13 indasb14 totalasb1
+      indasb21 indasb22 indasb23 indasb24 totalasb2
+      indasb31 indasb32 indasb33 indasb34 totalasb3
+      indsub11 indsub12 indsub13 indsub14 totalsub1
+      indsub21 indsub22 indsub23 indsub24 totalsub2);
+
+      indasb11 = a1*basb11;
+      indasb12 = a2*basb12;
+      indasb13 = a3*basb13;
+      indasb14 = a4*basb14;
+      totalasb1 = indasb11 + indasb12 + indasb13 +
+          indasb14 + cpasb1;
+
+      indasb21 = a1*basb21;
+      indasb22 = a2*basb22;
+      indasb23 = a3*basb23;
+      indasb24 = a4*basb24;
+      totalasb2 = indasb21 + indasb22 + indasb23 +
+          indasb24 + cpasb2;
+
+      indasb31 = a1*basb31;
+      indasb32 = a2*basb32;
+      indasb33 = a3*basb33;
+      indasb34 = a4*basb34;
+      totalasb3 = indasb31 + indasb32 + indasb33 +
+          indasb34 + cpasb3;
+
+      indsub11 = a1*bsub11;
+      indsub12 = a2*bsub12;
+      indsub13 = a3*bsub13;
+      indsub14 = a4*bsub14;
+      totalsub1 = indsub11 + indsub12 + indsub13 +
+          indsub14 + cpsub1;
+
+      indsub21 = a1*bsub21;
+      indsub22 = a2*bsub22;
+      indsub23 = a3*bsub23;
+      indsub24 = a4*bsub24;
+      totalsub2 = indsub21 + indsub22 + indsub23 +
+          indsub24 + cpsub2;
+
+
+      OUTPUT:
+      CINTERVAL(BOOTSTRAP)
+      ;
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+

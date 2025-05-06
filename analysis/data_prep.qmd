@@ -1,0 +1,336 @@
+---
+title: "Add Health Data Preparation for Within-Family Analysis of rGE"
+author: "LiChen Dong"
+date: "`r lubridate::today()`"
+format: 
+  html: 
+    embed-resources: true
+    toc: true 
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## Setup
+
+```{r}
+#| output: false
+
+options(conflicts.policy = "depends.ok")
+library(tidyverse)
+library(lavaan)
+
+path_data <- "../data_local"
+```
+
+
+## Read in data 
+
+### Add health in-home interview data
+
+```{r}
+load(here::here(path_data, "add_health_core.RData"))
+```
+
+### Genetic data ID - Phenotypic data ID linking file
+
+```{r}
+gid <- data.table::fread(here::here(path_data, "AddHealth dbGap ID Link File.dat")) |> as_tibble() |> mutate(AID = as.character(AID))
+```
+
+### Genetic ancestry
+
+```{r}
+ancestry <- foreign::read.xport(here::here(path_data, "PGS_AH1.xpt")) |> select(AID, ANCESTRY) |>  mutate(AID = as.character(AID))
+
+```
+
+### Polygenic score and genetic PCs
+
+```{r}
+ext_pgs <- read_csv(here::here(path_data, "8.14.24_EXT_PGS_PRSCS.csv")) |>
+          mutate(EXT_PGS = scale(EXT_PGS_PRSCS) |> as.vector(),
+                 AID = as.character(AID)) |> 
+          select(-EXT_PGS_PRSCS)
+
+genetic_pc <- data.table::fread(here::here(path_data, "ADDHPCA"))
+names(genetic_pc) <- c("GFAM","GID",paste0("PC",1:20))
+
+pgs_pc <- left_join(gid, ext_pgs) |>
+           left_join(ancestry) |> 
+           left_join(genetic_pc) |> 
+           mutate(AID = as.character(AID))
+```
+
+## Creating variables
+
+### AID
+
+```{r}
+data <- Wave1 |> select(AID)
+```
+
+### Participant Biological sex
+
+```{r}
+sex <- Wave1 |> select(AID, BIO_SEX) |> 
+       rename(sex = BIO_SEX) |> 
+       mutate(sex = replace(sex, sex > 5, NA),
+              sex = case_match(sex, 1 ~ -.5, 2 ~ .5))
+```
+
+### Age
+
+```{r}
+age <- Wave1 |> select(AID, H1GI1M, H1GI1Y, IMONTH, IYEAR) |> 
+                mutate(H1GI1M = replace(H1GI1M, H1GI1M == 96, NA), 
+                       H1GI1Y = replace(H1GI1Y, H1GI1Y == 96, NA)) |> 
+                mutate(age = IYEAR - H1GI1Y + (IMONTH - H1GI1M)/12) |> 
+                select(-H1GI1M, -H1GI1Y, -IMONTH, -IYEAR) 
+
+```
+
+### Race/ethnicity (for descriptive statistics)
+
+```{r}
+race <- Wave1 |> select(AID, H1GI6A, H1GI6B, H1GI6C, H1GI6D, H1GI6E, H1GI4) |> 
+        mutate(across(H1GI6A:H1GI4, ~ replace(.x, .x > 5, NA))) |> 
+        rename(white = H1GI6A, african = H1GI6B, native = H1GI6C, asian = H1GI6D, 
+               other = H1GI6E, hispanic = H1GI4)
+
+```
+
+### SES variables
+
+We use family income and adolescent reported parental education. Income will be further log-transformed in downstream analysis.
+
+```{r}
+ses <- Wave1 |> select(AID, PA55, H1RM1, H1RF1) |>
+       mutate(PA55 = na_if(PA55, 9996),
+              H1RM1 = if_else(H1RM1 %in% c(96:99, 11, 12), NA, H1RM1),
+              H1RF1 = if_else(H1RF1 %in% c(96:99, 11, 12), NA, H1RF1)) |> 
+       rename(income = PA55, edu_mum = H1RM1, edu_dad = H1RF1) |> 
+       mutate(edu_mum = dplyr::recode(edu_mum,'3' = 3,
+                        '4' = 3,
+                        '5' = 3,
+                        '6' = 4,
+                        '7' = 4,
+                        '8' = 5,
+                        '9' = 6,
+                        '10' = 0),
+              edu_dad = dplyr::recode(edu_dad, '3' = 3,
+                        '4' = 3,
+                        '5' = 3,
+                        '6' = 4,
+                        '7' = 4,
+                        '8' = 5,
+                        '9' = 6,
+                        '10' = 0),
+              income = replace_na(income, median(income, na.rm = T)),
+              income = log(income + 1)) |> 
+      rowwise() |> 
+      mutate(par_ed = mean(c(edu_mum, edu_dad), na.rm = T)) |> 
+      ungroup()
+
+ses <- ses |> select(AID, income, par_ed)
+
+```
+
+### Supportive Parenting
+
+```{r}
+parent <- Wave1 |> select(AID, H1WP9, H1WP10, H1PF1, H1PF2, 
+                            H1PF3, H1PF4, H1PF5, H1WP13, 
+                            H1WP14, H1PF23, H1PF24, H1PF25) |> 
+            mutate(across(H1WP9:H1PF25, ~ replace(.x, .x > 5, NA)),
+                   across(starts_with("H1PF"), ~ 6 - .x)) |> 
+            rowwise() |> 
+            mutate(parent_mum = if_else(sum(is.na(c(H1WP9, H1WP10, H1PF1, 
+                                        H1PF2, H1PF3, H1PF4, H1PF5))) <= 3,
+                                        mean(c(H1WP9, H1WP10, H1PF1, 
+                                        H1PF2, H1PF3, H1PF4, H1PF5), na.rm = T), NA),
+                   parent_dad = if_else(sum(is.na(c(H1WP13, H1WP14, H1PF23,
+                                        H1PF24, H1PF25))) <= 2,
+                                        mean(c(H1WP13, H1WP14, H1PF23,
+                                        H1PF24, H1PF25), na.rm = T), NA),
+                   parent = mean(c(parent_mum, parent_dad), na.rm = T)) |> 
+            ungroup() |> 
+            mutate(single_par = as.numeric(
+                                           (is.na(parent_mum)&!is.na(parent_dad))|
+                                           (!is.na(parent_mum)&is.na(parent_dad))
+                                           ) - .5)
+
+parent <- parent |> select(AID, parent, single_par)
+```
+
+### Delinquent peer affiliation
+
+```{r}
+del_peer <- Wave1 |> select(AID, H1TO29, H1TO33, H1TO9, H1DS14) |> 
+            mutate(across(H1TO29:H1DS14, ~ replace(.x, .x > 5, NA))) |> 
+            rowwise() |> 
+            mutate(peer = if_else(sum(is.na(c(H1TO29, H1TO33, H1TO9, H1DS14))) <= 2,
+                                  mean(c(H1TO29, H1TO33, H1TO9, H1DS14), na.rm = T),NA)) |> 
+            ungroup() 
+
+del_peer <- del_peer |> select(AID, peer)
+```
+
+### School connectedness
+
+```{r}
+school_con <- Wave1 |> select(AID, H1ED19, H1ED20, H1ED22, H1ED23,
+                              H1ED24, H1PR2) |> 
+              mutate(across(H1ED19:H1PR2, ~ replace(.x, .x > 5, NA)),
+                     across(starts_with("H1ED"), ~ 6 - .x)) |> 
+              rowwise() |> 
+              mutate(school = if_else(sum(is.na(c(H1ED19, H1ED20, H1ED22, H1ED23,
+                                      H1ED24, H1PR2))) <= 3,
+                                      mean(c(H1ED19, H1ED20, H1ED22, H1ED23,
+                                      H1ED24, H1PR2), na.rm = T), NA)) |> 
+              ungroup() 
+
+school_con <- school_con |> select(AID, school)
+```
+
+
+### Neighborhood connectedness
+
+```{r}
+neigh_con <- Wave1 |> select(AID, H1NB1, H1NB2, H1NB3, H1NB5,
+                              H1NB6, H1NB7) |> 
+              mutate(across(H1NB1:H1NB7, ~ replace(.x, .x > 5, NA)),
+                     across(H1NB1:H1NB3, ~ 3 - .x),
+                     H1NB7 = 6 - H1NB7) |> 
+              rowwise() |> 
+              mutate(neigh = if_else(sum(is.na(c(H1NB1, H1NB2, H1NB3, H1NB5,
+                                     H1NB6, H1NB7))) <= 3,
+                                     mean(c(H1NB1, H1NB2, H1NB3, H1NB5,
+                                     H1NB6, H1NB7), na.rm = T), NA)) |> 
+              ungroup()  
+
+neigh_con <- neigh_con |> select(AID, neigh)
+
+```
+
+
+### EXT PGS (residualized on PCs)
+
+```{r}
+pgs_ext <- pgs_pc |> mutate(
+  EXT_PGS = lm(EXT_PGS ~ PC1 + PC2 + PC3 + PC4 + PC5 + PC6 + PC7 + 
+                         PC8 + PC9 + PC10 + PC11 + PC12 + PC13 + PC14 +
+                         PC15 + PC16 + PC17 + PC18 + PC19 + PC20,
+               data = pgs_pc, na.action = "na.exclude") |>  residuals(),
+  EXT_PGS = scale(EXT_PGS)|> as.vector()) |> 
+  select(AID, FAMID, EXT_PGS, ANCESTRY)
+
+```
+
+### Trajectory
+
+```{r}
+traj <- read_csv(here::here(path_data,"Sasia_GMM_results.csv")) |> 
+        rename(asb = asb_class, sub = sub_class3) |> 
+        mutate(asb = case_match(asb,  1 ~ 2, 2 ~ 4, 3 ~ 1, 4 ~ 3),
+               sub = case_match(sub,  1 ~ 1, 2 ~ 3, 3 ~ 2),
+               AID = as.character(AID))
+
+```
+
+
+## Join Data
+
+```{r}
+data <- data |> 
+          left_join(race) |> 
+          left_join(pgs_ext) |> 
+          left_join(parent) |> 
+          left_join(del_peer) |> 
+          left_join(school_con) |> 
+          left_join(neigh_con) |> 
+          left_join(age) |> 
+          left_join(sex) |> 
+          left_join(traj) |> 
+          left_join(ses) 
+```
+
+
+## Select one from each family and remove NAs
+
+```{r}
+data <- data |> na.omit() |> group_by(FAMID) |> 
+        slice_sample(n = 1) |> ungroup()
+
+data |> skimr::skim()
+```
+
+## Preprocess
+
+### Standardize
+
+```{r}
+data |> names()
+data <- data |> group_by(ANCESTRY) |> 
+  mutate(
+         EXT_PGS = scale(EXT_PGS) |> as.vector(),
+         parent = scale(parent) |> as.vector(),
+         peer = scale(peer) |> as.vector(),
+         school = scale(school) |> as.vector(),
+         neigh = scale(neigh) |> as.vector(),
+         age = scale(age, scale = F) |> as.vector(),
+         income = scale(income, scale = F) |> as.vector(),
+         par_ed = scale(par_ed, scale = F) |> as.vector(),
+        ) |> 
+  ungroup()
+
+data |> skimr::skim()
+
+```
+
+
+### Dummy coded trajectories
+
+```{r}
+data <- data |> mutate(
+                          sub_hi_dum = if_else(sub == 1, 1, 0),
+                          sub_lo_dum = if_else(sub == 2, 1, 0), 
+                          asb_hi_dum = if_else(asb == 1, 1, 0),
+                          asb_mod_dum = if_else(asb == 2, 1, 0),
+                          asb_ado_dum = if_else(asb == 3, 1, 0) 
+                          )
+```
+
+
+### Interaction terms
+
+```{r}
+data <- data |> mutate(
+                       pgsparent = EXT_PGS*parent,
+                       pgspeer = EXT_PGS*peer,
+                       pgsschool = EXT_PGS*school,
+                       pgsneighbor = EXT_PGS*neigh,
+                       pgsage = EXT_PGS*age,
+                       pgssex = EXT_PGS*sex,
+                       pgsinc = EXT_PGS*income,
+                       pgspared = EXT_PGS*par_ed,
+                       pgssingpar = EXT_PGS*single_par,
+                       pgsafrican = EXT_PGS*white,
+                       pgsnative = EXT_PGS*native,
+                       pgsasian = EXT_PGS*asian,
+                       pgsother = EXT_PGS*other,
+                       pgshispanic = EXT_PGS*hispanic
+                       )
+
+```
+
+
+## Write data
+
+```{r}
+write.table(data,file = here::here(path_data, "gxe_ext_trajectory.csv"),sep = ",", na = ".",row.names = F,col.names  = F)
+
+names(data) |> cat()
+```
+
