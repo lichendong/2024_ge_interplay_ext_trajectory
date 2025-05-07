@@ -32,10 +32,10 @@ Variable:
   Missing are .; 
 
 Analysis: 
-    process = 24;
+    process = 20;
     estimator = ML;
     Algorithm = INTEGRATION;
-    INTEGRATION = MONTECARLO (5000);  
+    INTEGRATION = MONTECARLO (1000);  
     !LINK = PROBIT;
     bootstrap=500;
 
@@ -112,6 +112,13 @@ MODEL:
 
     neighbor WITH parent peer school;
 
+    [pgs parent peer school neighbor
+    age sex income pared !african 
+    native !asian 
+    other hispanic single_par
+    pgsparent pgspeer 
+    pgsschool pgsneighbor 
+    pgsage pgssex pgsinc pgspared pgssingpar];
 
 MODEL CONSTRAINT:
     NEW (indasb11 indasb12 indasb13 indasb14 totalasb1
