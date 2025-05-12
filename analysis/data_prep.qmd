@@ -127,7 +127,7 @@ ses <- Wave1 |> select(AID, PA55, H1RM1, H1RF1) |>
                         '8' = 5,
                         '9' = 6,
                         '10' = 0),
-              income = replace_na(income, median(income, na.rm = T)),
+              #income = replace_na(income, median(income, na.rm = T)),
               income = log(income + 1)) |> 
       rowwise() |> 
       mutate(par_ed = mean(c(edu_mum, edu_dad), na.rm = T)) |> 
@@ -257,10 +257,10 @@ data <- data |>
 ```
 
 
-## Select one from each family and remove NAs
+## Select one from each family
 
 ```{r}
-data <- data |> na.omit() |> group_by(FAMID) |> 
+data <- data |> group_by(FAMID) |> 
         slice_sample(n = 1) |> ungroup()
 
 data |> skimr::skim()
