@@ -1,0 +1,32 @@
+---
+title: "Classification Table Inspection"
+author: "LiChen Dong"
+date: "`r lubridate::today()`"
+format: 
+  html: 
+    embed-resources: true
+    toc: true 
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## Setup
+
+```{r}
+#| output: false
+
+options(conflicts.policy = "depends.ok")
+library(tidyverse)
+library(lavaan)
+```
+
+
+## Read in data 
+
+### Add health in-home interview data
+
+```{r}
+d_sub <- read_tsv("sub_sum_quad3_plotdata.dat")
+```
