@@ -1,6 +1,6 @@
 Mplus VERSION 7.4
 MUTHEN & MUTHEN
-05/12/2025  12:14 PM
+05/12/2025   4:19 PM
 
 INPUT INSTRUCTIONS
 
@@ -13,8 +13,12 @@ INPUT INSTRUCTIONS
     AID age1 age2 age3 age4 age5
     asb1 asb2 asb3 asb4 asb5;
 
+
     usevariables =
+    age1 age2 age3 age4 age5
     asb1 asb2 asb3 asb4 asb5;
+
+    TSCORES = age1-age5;
 
     count = asb1-asb5 (i);
     IDVARIABLE IS AID;
@@ -31,8 +35,8 @@ INPUT INSTRUCTIONS
     age5 = age5 - 12;
 
     ANALYSIS:
-    TYPE = MIXTURE;
-    PROCESSORS = 4;
+    TYPE = MIXTURE RANDOM;
+    PROCESSORS = 20;
     !iteration=50000;
     !convergence=.000001;
     !coverage=.0000001;
@@ -40,20 +44,20 @@ INPUT INSTRUCTIONS
     !estimator=MLR;
     ALGORITHM = INTEGRATION;
     !starts = 20 4;
+    INTEGRATION = MONTECARLO(5000);
 
     MODEL:
     %OVERALL%
 
-    fi by asb1@1 asb2@1 asb3@1 asb4@1 asb5@1;
+    i | asb1 asb2 asb3 asb4 asb5 AT age1 age2 age3 age4 age5;
 
-    fii by asb1#1@1 asb2#1@1 asb3#1@1
-         asb4#1@1 asb5#1@1;
+    ii | asb1#1 asb2#1 asb3#1 asb4#1 asb5#1 AT age1 age2 age3 age4 age5;
 
-    MODEL CONSTRAINT:
 
+    i-ii@0;
 
     OUTPUT:
-    TECH11 TECH14;
+    TECH7 TECH11 TECH14;
 
     SAVEDATA:
     !file is SUB_sum_int4_poisson.csv;
@@ -63,11 +67,18 @@ INPUT INSTRUCTIONS
 
 
 
+*** WARNING in MODEL command
+  All continuous latent variable covariances involving I have been fixed to 0
+  because the variance of I is fixed at 0.
 *** WARNING
   Data set contains cases with missing on all variables.
   These cases were not included in the analysis.
   Number of cases with missing on all variables:  39
-   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+*** WARNING
+  Data set contains cases with missing on time scores but non-missing on the
+  corresponding dependent variables.  These cases were not included in the analysis.
+  Number of such cases:  9
+   3 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
 
 
 

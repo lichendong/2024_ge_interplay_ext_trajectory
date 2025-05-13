@@ -17,8 +17,8 @@ Variable:
   asb_hi_dum asb_mod_dum asb_ado_dum 
   pgsparent pgspeer pgsschool pgsneighbor 
   pgsage pgssex pgsinc pgspared pgssingpar
-  white !african 
-  native !asian 
+  white african 
+  native asian 
   other hispanic
   single_par
   ;
@@ -27,7 +27,7 @@ Variable:
    asb sub;
   
   USEOBSERVATIONS ARE
-    ancestry == 0;
+    ancestry == 1;
 
   Missing are .; 
 
@@ -45,8 +45,8 @@ Define:
 MODEL:
     
     parent peer school neighbor ON age sex income pared 
-    white !african 
-    native !asian 
+    white african 
+    native asian 
     other hispanic single_par;
 
     parent ON pgs(a1);
@@ -60,8 +60,8 @@ MODEL:
     pgsage pgssex pgsinc pgspared pgssingpar
     sub_hi_dum sub_lo_dum age sex
     income pared
-    white !african 
-    native !asian 
+    white african 
+    native asian 
     other hispanic single_par;
 
     asb#1 ON pgs(cpasb1);
@@ -87,8 +87,8 @@ MODEL:
     pgsage pgssex pgsinc pgspared pgssingpar
     asb_hi_dum asb_mod_dum asb_ado_dum age sex
     income pared
-    white !african 
-    native !asian 
+    white african 
+    native asian 
     other hispanic single_par;
 
     sub#1 ON pgs(cpsub1);
@@ -113,8 +113,8 @@ MODEL:
     neighbor WITH parent peer school;
 
     [pgs parent peer school neighbor
-    age sex income pared white !african 
-    native !asian 
+    age sex income pared white african 
+    native asian 
     other hispanic single_par
     pgsparent pgspeer 
     pgsschool pgsneighbor 

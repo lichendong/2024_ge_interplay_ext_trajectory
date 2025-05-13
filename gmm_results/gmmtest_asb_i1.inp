@@ -1,0 +1,62 @@
+ TITLE: gmm on asb
+  
+  Data:
+  File is
+  data.csv;
+
+  Variable:
+  Names are
+  AID age1 age2 age3 age4 age5
+  asb1 asb2 asb3 asb4 asb5;
+
+
+  usevariables =
+  age1 age2 age3 age4 age5
+  asb1 asb2 asb3 asb4 asb5;
+
+  TSCORES = age1-age5; 
+
+  count = asb1-asb5 (i);
+  IDVARIABLE IS AID;
+  Missing are .;
+  classes = c(1);
+
+  !constraints = age1 age2 age3 age4 age5;
+
+  DEFINE:
+  age1 = age1 - 12;
+  age2 = age2 - 12;
+  age3 = age3 - 12;
+  age4 = age4 - 12;
+  age5 = age5 - 12;
+
+  ANALYSIS:
+  TYPE = MIXTURE RANDOM;
+  PROCESSORS = 20;
+  !iteration=50000;
+  !convergence=.000001;
+  !coverage=.0000001;
+  !h1convergence=.000001;
+  !estimator=MLR;
+  ALGORITHM = INTEGRATION;
+  !starts = 20 4;
+  INTEGRATION = MONTECARLO(5000);
+
+  MODEL:
+  %OVERALL%
+
+  i | asb1 asb2 asb3 asb4 asb5 AT age1 age2 age3 age4 age5;
+
+  ii | asb1#1 asb2#1 asb3#1 asb4#1 asb5#1 AT age1 age2 age3 age4 age5;
+
+
+  i-ii@0;  
+
+  OUTPUT:
+  TECH7 TECH11 TECH14;
+
+  SAVEDATA:
+  !file is SUB_sum_int4_poisson.csv;
+  !save is cprob;
+  !format is free;
+

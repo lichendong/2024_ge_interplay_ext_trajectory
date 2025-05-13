@@ -18,6 +18,7 @@ VARIABLE:
   asb_hi_dum asb_mod_dum asb_ado_dum
   pgsparent pgspeer pgsschool pgsneighbor
   pgsage pgssex pgsinc pgspared pgssingpar
+  white
   native
   other hispanic
   single_par
@@ -31,13 +32,14 @@ ANALYSIS:
     process = 20;
     estimator = ML;
     Algorithm = INTEGRATION;
-    INTEGRATION = MONTECARLO (1000);
+    INTEGRATION = MONTECARLO (2000);
     bootstrap=500;
 OUTPUT:
     CINTERVAL(BOOTSTRAP)
     ;
 MODEL:
     parent peer school neighbor ON age sex income pared
+    white
     native
     other hispanic single_par;
     parent ON pgs(a1);
@@ -49,6 +51,7 @@ MODEL:
     pgsage pgssex pgsinc pgspared pgssingpar
     sub_hi_dum sub_lo_dum age sex
     income pared
+    white
     native
     other hispanic single_par;
     asb#1 ON pgs(cpasb1);
@@ -70,6 +73,7 @@ MODEL:
     pgsage pgssex pgsinc pgspared pgssingpar
     asb_hi_dum asb_mod_dum asb_ado_dum age sex
     income pared
+    white
     native
     other hispanic single_par;
     sub#1 ON pgs(cpsub1);
@@ -87,7 +91,7 @@ MODEL:
     school WITH parent peer neighbor;
     neighbor WITH parent peer school;
     [pgs parent peer school neighbor
-    age sex income pared
+    age sex income pared white
     native
     other hispanic single_par
     pgsparent pgspeer
@@ -102,302 +106,325 @@ ML
 1
 GENERAL
 0
-27
+28
 0
 5
-asb#1 asb#2 asb#3 sub#1 sub#2 parent peer school neighbor pgs age sex income pared pgsparent pgspeer pgsschool pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar native other hispanic single_par sub_hi_dum sub_lo_dum asb_hi_dum asb_mod_dum asb_ado_dum
+asb#1 asb#2 asb#3 sub#1 sub#2 parent peer school neighbor pgs age sex income pared pgsparent pgspeer pgsschool pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar white native other hispanic single_par sub_hi_dum sub_lo_dum asb_hi_dum asb_mod_dum asb_ado_dum
 3
-2 2 2 2 2 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2 2 2 2 2 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0
 0
-1 1 age parent   -0.102    0.008   -0.117   -0.087
-1 1 sex parent   -0.168    0.028   -0.224   -0.113
-1 1 income parent    0.039    0.024   -0.008    0.086
-1 1 pared parent    0.022    0.015   -0.007    0.051
-1 1 native parent   -0.101    0.100   -0.298    0.096
-1 1 other parent   -0.199    0.211   -0.612    0.213
-1 1 hispanic parent    0.024    0.132   -0.235    0.283
-1 1 single_par parent   -0.015    0.039   -0.090    0.061
-1 1 pgs parent   -0.053    0.014   -0.081   -0.026
+1 1 age parent   -0.102    0.008   -0.117   -0.086
+1 1 sex parent   -0.167    0.028   -0.223   -0.112
+1 1 income parent    0.040    0.024   -0.007    0.087
+1 1 pared parent    0.022    0.015   -0.008    0.051
+1 1 white parent   -0.178    0.319   -0.804    0.447
+1 1 native parent   -0.110    0.100   -0.306    0.086
+1 1 other parent   -0.332    0.316   -0.952    0.287
+1 1 hispanic parent    0.021    0.132   -0.237    0.279
+1 1 single_par parent   -0.015    0.039   -0.091    0.060
+1 1 pgs parent   -0.053    0.014   -0.080   -0.025
 91 1 pgs parent a1
 1 1 age peer    0.176    0.007    0.162    0.190
 1 1 sex peer   -0.035    0.026   -0.086    0.016
-1 1 income peer    0.013    0.022   -0.030    0.056
-1 1 pared peer   -0.088    0.014   -0.114   -0.061
-1 1 native peer    0.196    0.100    0.000    0.392
-1 1 other peer    0.456    0.188    0.088    0.824
-1 1 hispanic peer   -0.138    0.133   -0.398    0.122
-1 1 single_par peer    0.222    0.033    0.156    0.287
+1 1 income peer    0.011    0.022   -0.032    0.054
+1 1 pared peer   -0.087    0.014   -0.114   -0.061
+1 1 white peer    0.287    0.335   -0.370    0.943
+1 1 native peer    0.210    0.102    0.011    0.409
+1 1 other peer    0.675    0.329    0.031    1.320
+1 1 hispanic peer   -0.133    0.133   -0.393    0.126
+1 1 single_par peer    0.221    0.033    0.156    0.286
 1 1 pgs peer    0.138    0.014    0.112    0.165
 91 1 pgs peer a2
-1 1 age school   -0.060    0.008   -0.076   -0.044
-1 1 sex school   -0.014    0.027   -0.066    0.039
-1 1 income school    0.035    0.024   -0.013    0.082
+1 1 age school   -0.060    0.008   -0.076   -0.043
+1 1 sex school   -0.014    0.027   -0.067    0.039
+1 1 income school    0.034    0.024   -0.014    0.081
 1 1 pared school    0.074    0.016    0.044    0.104
-1 1 native school   -0.130    0.103   -0.333    0.072
-1 1 other school   -0.229    0.200   -0.622    0.164
-1 1 hispanic school   -0.010    0.129   -0.263    0.244
-1 1 single_par school   -0.126    0.035   -0.194   -0.058
+1 1 white school   -0.282    0.302   -0.874    0.311
+1 1 native school   -0.144    0.105   -0.350    0.063
+1 1 other school   -0.440    0.269   -0.968    0.088
+1 1 hispanic school   -0.014    0.129   -0.268    0.239
+1 1 single_par school   -0.127    0.035   -0.195   -0.059
 1 1 pgs school   -0.106    0.013   -0.132   -0.080
 91 1 pgs school a3
 1 1 age neighbor   -0.058    0.008   -0.073   -0.042
-1 1 sex neighbor   -0.027    0.028   -0.082    0.027
-1 1 income neighbor    0.033    0.025   -0.015    0.082
+1 1 sex neighbor   -0.027    0.028   -0.081    0.028
+1 1 income neighbor    0.032    0.025   -0.017    0.080
 1 1 pared neighbor    0.012    0.015   -0.017    0.041
-1 1 native neighbor   -0.159    0.110   -0.374    0.056
-1 1 other neighbor   -0.172    0.200   -0.564    0.219
-1 1 hispanic neighbor   -0.207    0.117   -0.437    0.023
-1 1 single_par neighbor   -0.229    0.035   -0.299   -0.160
+1 1 white neighbor   -0.260    0.288   -0.825    0.306
+1 1 native neighbor   -0.172    0.112   -0.390    0.047
+1 1 other neighbor   -0.366    0.271   -0.897    0.164
+1 1 hispanic neighbor   -0.211    0.118   -0.442    0.020
+1 1 single_par neighbor   -0.230    0.035   -0.300   -0.161
 1 1 pgs neighbor   -0.047    0.014   -0.074   -0.020
 91 1 pgs neighbor a4
-1 1 pgsparent asb#1   -0.137    0.122   -0.377    0.102
-1 1 pgspeer asb#1   -0.201    0.107   -0.410    0.009
-1 1 pgsschool asb#1    0.096    0.137   -0.172    0.364
-1 1 pgsneighbor asb#1   -0.094    0.128   -0.346    0.158
-1 1 pgsage asb#1    0.024    0.077   -0.126    0.174
-1 1 pgssex asb#1    0.175    0.273   -0.361    0.711
-1 1 pgsinc asb#1   -0.042    0.188   -0.411    0.326
-1 1 pgspared asb#1   -0.121    0.122   -0.361    0.118
-1 1 pgssingpar asb#1   -0.119    0.270   -0.648    0.410
-1 1 sub_hi_dum asb#1    1.536    0.442    0.669    2.404
-1 1 sub_lo_dum asb#1   -0.950    4.739  -10.238    8.338
-1 1 age asb#1   -0.411    0.074   -0.555   -0.266
-1 1 sex asb#1   -2.839    0.416   -3.654   -2.024
-1 1 income asb#1   -0.127    0.174   -0.468    0.215
-1 1 pared asb#1    0.227    0.125   -0.017    0.471
-1 1 native asb#1    0.497    1.501   -2.445    3.439
-1 1 other asb#1    0.531    4.530   -8.349    9.411
-1 1 hispanic asb#1   -0.291    3.099   -6.364    5.782
-1 1 single_par asb#1   -0.102    0.293   -0.677    0.473
-1 1 pgs asb#1    0.528    0.191    0.153    0.903
+1 1 pgsparent asb#1   -0.123    0.122   -0.363    0.117
+1 1 pgspeer asb#1   -0.206    0.108   -0.418    0.005
+1 1 pgsschool asb#1    0.097    0.138   -0.173    0.367
+1 1 pgsneighbor asb#1   -0.102    0.128   -0.354    0.150
+1 1 pgsage asb#1    0.028    0.077   -0.122    0.179
+1 1 pgssex asb#1    0.194    0.272   -0.340    0.727
+1 1 pgsinc asb#1   -0.040    0.188   -0.409    0.329
+1 1 pgspared asb#1   -0.108    0.122   -0.348    0.133
+1 1 pgssingpar asb#1   -0.110    0.271   -0.640    0.421
+1 1 sub_hi_dum asb#1    1.527    0.441    0.662    2.392
+1 1 sub_lo_dum asb#1   -0.940    4.862  -10.470    8.591
+1 1 age asb#1   -0.412    0.074   -0.556   -0.267
+1 1 sex asb#1   -2.836    0.416   -3.653   -2.020
+1 1 income asb#1   -0.129    0.174   -0.471    0.213
+1 1 pared asb#1    0.231    0.125   -0.014    0.477
+1 1 white asb#1   -2.175    3.749   -9.522    5.172
+1 1 native asb#1    0.282    2.390   -4.404    4.967
+1 1 other asb#1   -1.644    5.052  -11.547    8.259
+1 1 hispanic asb#1   -0.202    3.089   -6.257    5.853
+1 1 single_par asb#1   -0.105    0.294   -0.682    0.473
+1 1 pgs asb#1    0.543    0.193    0.165    0.921
 91 1 pgs asb#1 cpasb1
-1 1 parent asb#1   -0.158    0.130   -0.413    0.098
+1 1 parent asb#1   -0.154    0.130   -0.409    0.101
 91 1 parent asb#1 basb11
-1 1 peer asb#1    1.267    0.137    1.000    1.535
+1 1 peer asb#1    1.272    0.137    1.004    1.540
 91 1 peer asb#1 basb12
-1 1 school asb#1   -0.329    0.144   -0.611   -0.046
+1 1 school asb#1   -0.325    0.145   -0.609   -0.041
 91 1 school asb#1 basb13
-1 1 neighbor asb#1   -0.034    0.138   -0.303    0.236
+1 1 neighbor asb#1   -0.040    0.138   -0.310    0.230
 91 1 neighbor asb#1 basb14
-1 1 pgsparent asb#2    0.074    0.050   -0.024    0.171
-1 1 pgspeer asb#2    0.005    0.045   -0.083    0.094
-1 1 pgsschool asb#2   -0.027    0.052   -0.129    0.074
+1 1 pgsparent asb#2    0.075    0.050   -0.023    0.172
+1 1 pgspeer asb#2    0.006    0.045   -0.083    0.094
+1 1 pgsschool asb#2   -0.028    0.052   -0.129    0.073
 1 1 pgsneighbor asb#2   -0.031    0.048   -0.125    0.062
-1 1 pgsage asb#2    0.007    0.030   -0.053    0.066
-1 1 pgssex asb#2    0.074    0.096   -0.113    0.262
-1 1 pgsinc asb#2   -0.020    0.082   -0.180    0.140
-1 1 pgspared asb#2    0.078    0.049   -0.019    0.175
-1 1 pgssingpar asb#2   -0.171    0.113   -0.392    0.050
-1 1 sub_hi_dum asb#2    0.733    0.103    0.530    0.935
-1 1 sub_lo_dum asb#2   -0.895    0.226   -1.338   -0.452
+1 1 pgsage asb#2    0.007    0.030   -0.052    0.066
+1 1 pgssex asb#2    0.075    0.096   -0.112    0.263
+1 1 pgsinc asb#2   -0.022    0.082   -0.182    0.138
+1 1 pgspared asb#2    0.080    0.049   -0.017    0.177
+1 1 pgssingpar asb#2   -0.173    0.113   -0.394    0.048
+1 1 sub_hi_dum asb#2    0.733    0.103    0.531    0.935
+1 1 sub_lo_dum asb#2   -0.894    0.226   -1.337   -0.450
 1 1 age asb#2   -0.107    0.031   -0.167   -0.047
-1 1 sex asb#2   -1.307    0.099   -1.502   -1.113
-1 1 income asb#2    0.048    0.082   -0.112    0.209
-1 1 pared asb#2    0.069    0.049   -0.027    0.165
-1 1 native asb#2    0.219    0.307   -0.382    0.820
-1 1 other asb#2    0.749    0.518   -0.267    1.764
-1 1 hispanic asb#2    0.289    0.380   -0.457    1.034
-1 1 single_par asb#2   -0.037    0.117   -0.266    0.192
+1 1 sex asb#2   -1.308    0.099   -1.502   -1.113
+1 1 income asb#2    0.055    0.082   -0.106    0.217
+1 1 pared asb#2    0.068    0.049   -0.028    0.165
+1 1 white asb#2    0.144    1.652   -3.094    3.382
+1 1 native asb#2    0.223    0.307   -0.378    0.824
+1 1 other asb#2    0.841    1.615   -2.325    4.007
+1 1 hispanic asb#2    0.295    0.386   -0.461    1.051
+1 1 single_par asb#2   -0.033    0.117   -0.263    0.196
 1 1 pgs asb#2    0.090    0.053   -0.015    0.195
 91 1 pgs asb#2 cpasb2
-1 1 parent asb#2   -0.222    0.051   -0.322   -0.122
+1 1 parent asb#2   -0.221    0.051   -0.321   -0.122
 91 1 parent asb#2 basb21
-1 1 peer asb#2    0.171    0.053    0.067    0.274
+1 1 peer asb#2    0.170    0.053    0.067    0.274
 91 1 peer asb#2 basb22
-1 1 school asb#2   -0.087    0.055   -0.196    0.022
+1 1 school asb#2   -0.088    0.056   -0.197    0.021
 91 1 school asb#2 basb23
-1 1 neighbor asb#2    0.011    0.052   -0.090    0.113
+1 1 neighbor asb#2    0.012    0.052   -0.090    0.113
 91 1 neighbor asb#2 basb24
-1 1 pgsparent asb#3   -0.081    0.062   -0.202    0.039
-1 1 pgspeer asb#3    0.000    0.060   -0.118    0.119
-1 1 pgsschool asb#3   -0.017    0.073   -0.160    0.125
-1 1 pgsneighbor asb#3    0.029    0.071   -0.111    0.169
-1 1 pgsage asb#3    0.004    0.041   -0.078    0.085
-1 1 pgssex asb#3    0.078    0.144   -0.205    0.361
-1 1 pgsinc asb#3   -0.041    0.106   -0.248    0.167
-1 1 pgspared asb#3    0.040    0.068   -0.093    0.173
-1 1 pgssingpar asb#3    0.258    0.169   -0.073    0.589
-1 1 sub_hi_dum asb#3    0.592    0.144    0.310    0.873
-1 1 sub_lo_dum asb#3   -0.568    0.320   -1.195    0.059
+1 1 pgsparent asb#3   -0.078    0.062   -0.200    0.043
+1 1 pgspeer asb#3   -0.002    0.060   -0.120    0.116
+1 1 pgsschool asb#3   -0.018    0.073   -0.160    0.125
+1 1 pgsneighbor asb#3    0.031    0.071   -0.109    0.171
+1 1 pgsage asb#3    0.003    0.041   -0.079    0.084
+1 1 pgssex asb#3    0.075    0.145   -0.210    0.359
+1 1 pgsinc asb#3   -0.038    0.106   -0.246    0.169
+1 1 pgspared asb#3    0.035    0.068   -0.099    0.168
+1 1 pgssingpar asb#3    0.269    0.169   -0.062    0.600
+1 1 sub_hi_dum asb#3    0.595    0.145    0.311    0.878
+1 1 sub_lo_dum asb#3   -0.562    0.320   -1.189    0.065
 1 1 age asb#3   -0.337    0.043   -0.422   -0.252
-1 1 sex asb#3   -1.040    0.133   -1.300   -0.780
-1 1 income asb#3    0.158    0.105   -0.048    0.363
-1 1 pared asb#3    0.029    0.068   -0.105    0.163
-1 1 native asb#3    0.056    0.411   -0.749    0.861
-1 1 other asb#3    0.571    0.919   -1.230    2.371
-1 1 hispanic asb#3    0.698    0.654   -0.583    1.979
-1 1 single_par asb#3    0.129    0.171   -0.206    0.465
-1 1 pgs asb#3    0.036    0.097   -0.153    0.225
+1 1 sex asb#3   -1.046    0.133   -1.306   -0.785
+1 1 income asb#3    0.152    0.105   -0.053    0.358
+1 1 pared asb#3    0.031    0.069   -0.104    0.165
+1 1 white asb#3    2.042    3.704   -5.219    9.303
+1 1 native asb#3    0.107    0.414   -0.704    0.918
+1 1 other asb#3    1.740    1.269   -0.749    4.228
+1 1 hispanic asb#3    0.827    0.650   -0.447    2.101
+1 1 single_par asb#3    0.125    0.172   -0.212    0.463
+1 1 pgs asb#3    0.042    0.097   -0.148    0.232
 91 1 pgs asb#3 cpasb3
-1 1 parent asb#3   -0.244    0.057   -0.356   -0.132
+1 1 parent asb#3   -0.247    0.058   -0.360   -0.134
 91 1 parent asb#3 basb31
-1 1 peer asb#3    0.731    0.066    0.602    0.859
+1 1 peer asb#3    0.730    0.066    0.601    0.859
 91 1 peer asb#3 basb32
-1 1 school asb#3   -0.263    0.070   -0.400   -0.126
+1 1 school asb#3   -0.260    0.070   -0.398   -0.123
 91 1 school asb#3 basb33
-1 1 neighbor asb#3    0.006    0.064   -0.120    0.132
+1 1 neighbor asb#3    0.005    0.064   -0.122    0.131
 91 1 neighbor asb#3 basb34
 1 1 pgsparent sub#1   -0.023    0.040   -0.101    0.054
-1 1 pgspeer sub#1   -0.083    0.039   -0.159   -0.007
-1 1 pgsschool sub#1    0.004    0.042   -0.078    0.087
+1 1 pgspeer sub#1   -0.083    0.039   -0.159   -0.006
+1 1 pgsschool sub#1    0.004    0.042   -0.079    0.087
 1 1 pgsneighbor sub#1    0.076    0.036    0.005    0.148
-1 1 pgsage sub#1    0.055    0.023    0.010    0.099
+1 1 pgsage sub#1    0.055    0.023    0.010    0.100
 1 1 pgssex sub#1    0.149    0.071    0.010    0.288
-1 1 pgsinc sub#1   -0.084    0.064   -0.210    0.042
-1 1 pgspared sub#1    0.054    0.040   -0.025    0.132
-1 1 pgssingpar sub#1   -0.004    0.099   -0.198    0.189
-1 1 asb_hi_dum sub#1    1.483    0.434    0.632    2.333
+1 1 pgsinc sub#1   -0.085    0.064   -0.211    0.041
+1 1 pgspared sub#1    0.055    0.040   -0.024    0.133
+1 1 pgssingpar sub#1   -0.006    0.099   -0.199    0.188
+1 1 asb_hi_dum sub#1    1.481    0.434    0.630    2.332
 1 1 asb_mod_dum sub#1    0.738    0.104    0.535    0.941
-1 1 asb_ado_dum sub#1    0.605    0.143    0.325    0.885
+1 1 asb_ado_dum sub#1    0.609    0.144    0.327    0.891
 1 1 age sub#1   -0.130    0.021   -0.172   -0.089
-1 1 sex sub#1   -0.194    0.071   -0.332   -0.056
-1 1 income sub#1   -0.059    0.059   -0.175    0.058
-1 1 pared sub#1   -0.103    0.036   -0.173   -0.033
-1 1 native sub#1    0.005    0.248   -0.482    0.492
-1 1 other sub#1   -0.746    0.412   -1.553    0.060
-1 1 hispanic sub#1   -0.158    0.306   -0.758    0.442
-1 1 single_par sub#1    0.215    0.087    0.045    0.384
-1 1 pgs sub#1    0.284    0.045    0.196    0.373
+1 1 sex sub#1   -0.194    0.071   -0.332   -0.055
+1 1 income sub#1   -0.057    0.059   -0.173    0.060
+1 1 pared sub#1   -0.104    0.036   -0.174   -0.033
+1 1 white sub#1   -0.369    1.598   -3.501    2.763
+1 1 native sub#1   -0.011    0.252   -0.504    0.483
+1 1 other sub#1   -1.020    1.605   -4.166    2.125
+1 1 hispanic sub#1   -0.168    0.305   -0.765    0.430
+1 1 single_par sub#1    0.215    0.087    0.045    0.385
+1 1 pgs sub#1    0.284    0.045    0.195    0.372
 91 1 pgs sub#1 cpsub1
-1 1 parent sub#1   -0.021    0.036   -0.092    0.050
+1 1 parent sub#1   -0.021    0.036   -0.091    0.050
 91 1 parent sub#1 bsub11
-1 1 peer sub#1    0.639    0.041    0.558    0.721
+1 1 peer sub#1    0.640    0.042    0.558    0.721
 91 1 peer sub#1 bsub12
 1 1 school sub#1   -0.182    0.040   -0.261   -0.103
 91 1 school sub#1 bsub13
 1 1 neighbor sub#1   -0.043    0.035   -0.112    0.026
 91 1 neighbor sub#1 bsub14
-1 1 pgsparent sub#2    0.051    0.056   -0.058    0.160
+1 1 pgsparent sub#2    0.051    0.056   -0.057    0.160
 1 1 pgspeer sub#2    0.082    0.072   -0.059    0.223
-1 1 pgsschool sub#2   -0.035    0.058   -0.149    0.080
+1 1 pgsschool sub#2   -0.034    0.058   -0.148    0.081
 1 1 pgsneighbor sub#2    0.024    0.047   -0.068    0.116
-1 1 pgsage sub#2    0.024    0.029   -0.033    0.080
+1 1 pgsage sub#2    0.024    0.029   -0.033    0.081
 1 1 pgssex sub#2   -0.050    0.094   -0.234    0.134
-1 1 pgsinc sub#2    0.007    0.075   -0.139    0.154
-1 1 pgspared sub#2   -0.044    0.047   -0.137    0.049
-1 1 pgssingpar sub#2   -0.152    0.123   -0.393    0.089
-1 1 asb_hi_dum sub#2   -0.484    4.673   -9.644    8.675
-1 1 asb_mod_dum sub#2   -0.852    0.224   -1.292   -0.412
-1 1 asb_ado_dum sub#2   -0.381    0.315   -0.999    0.237
-1 1 age sub#2    0.135    0.030    0.076    0.194
-1 1 sex sub#2    0.366    0.090    0.189    0.543
-1 1 income sub#2   -0.253    0.074   -0.398   -0.109
-1 1 pared sub#2   -0.202    0.050   -0.300   -0.104
-1 1 native sub#2    0.259    0.332   -0.393    0.910
-1 1 other sub#2   -0.444    2.316   -4.983    4.094
-1 1 hispanic sub#2   -0.311    0.432   -1.157    0.535
-1 1 single_par sub#2   -0.017    0.113   -0.239    0.204
-1 1 pgs sub#2   -0.169    0.073   -0.312   -0.026
+1 1 pgsinc sub#2    0.008    0.075   -0.138    0.154
+1 1 pgspared sub#2   -0.045    0.048   -0.138    0.048
+1 1 pgssingpar sub#2   -0.153    0.123   -0.394    0.088
+1 1 asb_hi_dum sub#2   -0.493    4.835   -9.970    8.984
+1 1 asb_mod_dum sub#2   -0.849    0.224   -1.289   -0.410
+1 1 asb_ado_dum sub#2   -0.377    0.316   -0.996    0.242
+1 1 age sub#2    0.135    0.030    0.075    0.194
+1 1 sex sub#2    0.368    0.090    0.190    0.545
+1 1 income sub#2   -0.255    0.074   -0.399   -0.110
+1 1 pared sub#2   -0.203    0.050   -0.302   -0.105
+1 1 white sub#2   -1.125    2.207   -5.450    3.200
+1 1 native sub#2    0.198    0.345   -0.478    0.874
+1 1 other sub#2   -1.382    2.770   -6.811    4.047
+1 1 hispanic sub#2   -0.320    0.432   -1.167    0.528
+1 1 single_par sub#2   -0.022    0.113   -0.244    0.200
+1 1 pgs sub#2   -0.170    0.073   -0.313   -0.027
 91 1 pgs sub#2 cpsub2
-1 1 parent sub#2    0.110    0.058   -0.003    0.224
+1 1 parent sub#2    0.110    0.058   -0.004    0.223
 91 1 parent sub#2 bsub21
-1 1 peer sub#2   -0.655    0.077   -0.805   -0.505
+1 1 peer sub#2   -0.656    0.077   -0.806   -0.505
 91 1 peer sub#2 bsub22
-1 1 school sub#2   -0.001    0.055   -0.108    0.106
+1 1 school sub#2   -0.002    0.055   -0.109    0.105
 91 1 school sub#2 bsub23
-1 1 neighbor sub#2   -0.110    0.050   -0.207   -0.012
+1 1 neighbor sub#2   -0.110    0.050   -0.208   -0.013
 91 1 neighbor sub#2 bsub24
 2 1 parent peer   -0.178    0.013   -0.203   -0.152
-2 1 parent school    0.330    0.015    0.300    0.359
+2 1 parent school    0.329    0.015    0.299    0.358
 2 1 parent neighbor    0.226    0.015    0.196    0.255
-2 1 peer school   -0.234    0.014   -0.262   -0.206
+2 1 peer school   -0.233    0.014   -0.262   -0.205
 2 1 peer neighbor   -0.078    0.013   -0.103   -0.052
-2 1 school neighbor    0.306    0.016    0.275    0.336
+2 1 school neighbor    0.305    0.016    0.275    0.336
 2 1 age pgs    0.001    0.024   -0.046    0.048
 2 1 sex pgs    0.013    0.007   -0.001    0.028
 2 1 sex age   -0.054    0.012   -0.077   -0.031
 2 1 income pgs   -0.061    0.011   -0.083   -0.039
-2 1 income age    0.008    0.020   -0.031    0.048
+2 1 income age    0.008    0.020   -0.032    0.047
 2 1 income sex    0.004    0.005   -0.007    0.014
-2 1 pared pgs   -0.131    0.015   -0.160   -0.102
+2 1 pared pgs   -0.131    0.015   -0.159   -0.102
 2 1 pared age   -0.099    0.029   -0.156   -0.043
 2 1 pared sex   -0.008    0.008   -0.023    0.007
-2 1 pared income    0.364    0.016    0.333    0.394
-2 1 pgsparent pgs    0.014    0.025   -0.035    0.063
+2 1 pared income    0.363    0.016    0.333    0.394
+2 1 pgsparent pgs    0.015    0.025   -0.034    0.064
 2 1 pgsparent age    0.020    0.026   -0.031    0.071
 2 1 pgsparent sex    0.012    0.007   -0.001    0.025
-2 1 pgsparent income   -0.005    0.012   -0.029    0.019
-2 1 pgsparent pared   -0.034    0.017   -0.067    0.000
+2 1 pgsparent income   -0.006    0.012   -0.029    0.018
+2 1 pgsparent pared   -0.034    0.017   -0.068   -0.001
 2 1 pgspeer pgs    0.008    0.024   -0.039    0.056
 2 1 pgspeer age    0.039    0.024   -0.008    0.085
 2 1 pgspeer sex    0.003    0.007   -0.010    0.017
-2 1 pgspeer income    0.006    0.012   -0.017    0.029
-2 1 pgspeer pared    0.018    0.017   -0.016    0.052
-2 1 pgspeer pgsparent   -0.259    0.023   -0.304   -0.213
+2 1 pgspeer income    0.007    0.012   -0.016    0.030
+2 1 pgspeer pared    0.019    0.017   -0.015    0.053
+2 1 pgspeer pgsparent   -0.258    0.023   -0.304   -0.212
 2 1 pgsschool pgs   -0.001    0.023   -0.046    0.044
 2 1 pgsschool age    0.004    0.025   -0.044    0.053
 2 1 pgsschool sex    0.013    0.007   -0.001    0.026
-2 1 pgsschool income    0.019    0.012   -0.005    0.042
-2 1 pgsschool pared    0.025    0.017   -0.008    0.057
-2 1 pgsschool pgsparent    0.380    0.026    0.329    0.431
+2 1 pgsschool income    0.018    0.012   -0.006    0.041
+2 1 pgsschool pared    0.024    0.017   -0.009    0.056
+2 1 pgsschool pgsparent    0.379    0.026    0.328    0.430
 2 1 pgsschool pgspeer   -0.319    0.026   -0.370   -0.267
-2 1 pgsneighbor pgs    0.003    0.025   -0.046    0.051
-2 1 pgsneighbor age   -0.019    0.025   -0.068    0.030
+2 1 pgsneighbor pgs    0.003    0.025   -0.046    0.052
+2 1 pgsneighbor age   -0.019    0.025   -0.068    0.029
 2 1 pgsneighbor sex    0.002    0.007   -0.013    0.016
 2 1 pgsneighbor income    0.010    0.012   -0.014    0.033
 2 1 pgsneighbor pared   -0.022    0.016   -0.052    0.009
-2 1 pgsneighbor pgsparent    0.271    0.027    0.218    0.325
+2 1 pgsneighbor pgsparent    0.272    0.027    0.218    0.325
 2 1 pgsneighbor pgspeer   -0.137    0.024   -0.185   -0.089
 2 1 pgsneighbor pgsschool    0.343    0.026    0.293    0.394
 2 1 pgsage pgs    0.078    0.040   -0.001    0.158
 2 1 pgsage age    0.017    0.059   -0.098    0.133
 2 1 pgsage sex    0.001    0.012   -0.022    0.025
-2 1 pgsage income    0.024    0.019   -0.014    0.062
-2 1 pgsage pared    0.035    0.028   -0.019    0.089
-2 1 pgsage pgsparent   -0.299    0.043   -0.383   -0.215
+2 1 pgsage income    0.024    0.019   -0.013    0.062
+2 1 pgsage pared    0.036    0.028   -0.018    0.091
+2 1 pgsage pgsparent   -0.297    0.043   -0.380   -0.213
 2 1 pgsage pgspeer    0.499    0.040    0.420    0.577
 2 1 pgsage pgsschool   -0.181    0.039   -0.259   -0.104
-2 1 pgsage pgsneighbor   -0.135    0.042   -0.218   -0.053
+2 1 pgsage pgsneighbor   -0.136    0.042   -0.218   -0.053
 2 1 pgssex pgs    0.025    0.012    0.001    0.048
 2 1 pgssex age    0.001    0.012   -0.022    0.024
 2 1 pgssex sex    0.000    0.003   -0.007    0.006
-2 1 pgssex income   -0.002    0.006   -0.014    0.010
-2 1 pgssex pared   -0.001    0.008   -0.017    0.015
-2 1 pgssex pgsparent   -0.025    0.012   -0.050   -0.001
+2 1 pgssex income   -0.002    0.006   -0.013    0.010
+2 1 pgssex pared   -0.001    0.008   -0.016    0.015
+2 1 pgssex pgsparent   -0.025    0.012   -0.049   -0.001
 2 1 pgssex pgspeer   -0.012    0.012   -0.036    0.011
 2 1 pgssex pgsschool    0.002    0.011   -0.020    0.024
 2 1 pgssex pgsneighbor    0.001    0.012   -0.023    0.024
 2 1 pgssex pgsage   -0.048    0.021   -0.090   -0.006
-2 1 pgsinc pgs    0.014    0.020   -0.025    0.053
-2 1 pgsinc age    0.025    0.019   -0.013    0.062
+2 1 pgsinc pgs    0.013    0.020   -0.026    0.052
+2 1 pgsinc age    0.024    0.019   -0.013    0.062
 2 1 pgsinc sex    0.000    0.006   -0.012    0.012
-2 1 pgsinc income    0.042    0.024   -0.006    0.089
-2 1 pgsinc pared   -0.003    0.015   -0.033    0.027
-2 1 pgsinc pgsparent    0.035    0.020   -0.003    0.074
-2 1 pgsinc pgspeer   -0.052    0.019   -0.089   -0.015
+2 1 pgsinc income    0.042    0.024   -0.005    0.090
+2 1 pgsinc pared   -0.002    0.015   -0.032    0.028
+2 1 pgsinc pgsparent    0.036    0.020   -0.002    0.074
+2 1 pgsinc pgspeer   -0.052    0.019   -0.089   -0.014
 2 1 pgsinc pgsschool    0.068    0.020    0.030    0.107
-2 1 pgsinc pgsneighbor    0.080    0.021    0.039    0.122
-2 1 pgsinc pgsage    0.016    0.033   -0.049    0.081
+2 1 pgsinc pgsneighbor    0.081    0.021    0.039    0.123
+2 1 pgsinc pgsage    0.015    0.033   -0.050    0.080
 2 1 pgsinc pgssex    0.005    0.009   -0.013    0.023
-2 1 pgspared pgs    0.023    0.028   -0.031    0.078
-2 1 pgspared age    0.035    0.028   -0.019    0.090
+2 1 pgspared pgs    0.024    0.028   -0.031    0.078
+2 1 pgspared age    0.037    0.028   -0.018    0.091
 2 1 pgspared sex    0.003    0.008   -0.012    0.019
-2 1 pgspared income   -0.003    0.015   -0.033    0.026
-2 1 pgspared pared   -0.011    0.026   -0.062    0.040
-2 1 pgspared pgsparent    0.070    0.029    0.013    0.128
-2 1 pgspared pgspeer   -0.134    0.027   -0.186   -0.082
-2 1 pgspared pgsschool    0.104    0.025    0.055    0.152
-2 1 pgspared pgsneighbor    0.059    0.027    0.006    0.113
-2 1 pgspared pgsage   -0.150    0.048   -0.244   -0.055
+2 1 pgspared income   -0.003    0.015   -0.032    0.027
+2 1 pgspared pared   -0.012    0.026   -0.063    0.040
+2 1 pgspared pgsparent    0.070    0.029    0.012    0.128
+2 1 pgspared pgspeer   -0.133    0.027   -0.185   -0.081
+2 1 pgspared pgsschool    0.103    0.025    0.055    0.152
+2 1 pgspared pgsneighbor    0.059    0.027    0.006    0.112
+2 1 pgspared pgsage   -0.149    0.048   -0.243   -0.055
 2 1 pgspared pgssex   -0.004    0.013   -0.029    0.021
-2 1 pgspared pgsinc    0.357    0.023    0.312    0.403
+2 1 pgspared pgsinc    0.358    0.023    0.312    0.403
 2 1 pgssingpar pgs   -0.284    0.011   -0.306   -0.261
 2 1 pgssingpar age    0.001    0.012   -0.023    0.025
 2 1 pgssingpar sex   -0.003    0.004   -0.010    0.005
 2 1 pgssingpar income    0.009    0.006   -0.002    0.020
 2 1 pgssingpar pared    0.046    0.008    0.031    0.061
-2 1 pgssingpar pgsparent   -0.020    0.012   -0.044    0.004
+2 1 pgssingpar pgsparent   -0.021    0.012   -0.045    0.003
 2 1 pgssingpar pgspeer    0.042    0.012    0.018    0.066
 2 1 pgssingpar pgsschool   -0.024    0.012   -0.046   -0.001
 2 1 pgssingpar pgsneighbor   -0.048    0.012   -0.072   -0.023
 2 1 pgssingpar pgsage   -0.014    0.021   -0.055    0.027
 2 1 pgssingpar pgssex   -0.012    0.006   -0.024    0.000
-2 1 pgssingpar pgsinc   -0.098    0.010   -0.117   -0.078
-2 1 pgssingpar pgspared   -0.035    0.015   -0.064   -0.006
+2 1 pgssingpar pgsinc   -0.098    0.010   -0.118   -0.078
+2 1 pgssingpar pgspared   -0.035    0.015   -0.065   -0.006
+2 1 white pgs    0.000    0.001   -0.002    0.002
+2 1 white age   -0.001    0.002   -0.004    0.002
+2 1 white sex    0.000    0.001   -0.001    0.001
+2 1 white income    0.001    0.001   -0.001    0.003
+2 1 white pared   -0.001    0.002   -0.004    0.002
+2 1 white pgsparent    0.002    0.002   -0.001    0.005
+2 1 white pgspeer    0.001    0.001   -0.002    0.003
+2 1 white pgsschool    0.001    0.001   -0.002    0.004
+2 1 white pgsneighbor    0.002    0.001   -0.001    0.004
+2 1 white pgsage    0.001    0.002   -0.002    0.004
+2 1 white pgssex    0.001    0.001   -0.001    0.002
+2 1 white pgsinc    0.001    0.001   -0.001    0.003
+2 1 white pgspared    0.001    0.002   -0.002    0.004
+2 1 white pgssingpar    0.000    0.001   -0.001    0.001
 2 1 native pgs    0.002    0.002   -0.002    0.005
 2 1 native age    0.002    0.003   -0.004    0.009
 2 1 native sex   -0.002    0.001   -0.004    0.000
-2 1 native income   -0.001    0.002   -0.004    0.002
+2 1 native income   -0.001    0.002   -0.005    0.002
 2 1 native pared   -0.006    0.002   -0.010   -0.002
 2 1 native pgsparent    0.000    0.002   -0.004    0.004
 2 1 native pgspeer   -0.001    0.002   -0.005    0.004
@@ -408,6 +435,7 @@ asb#1 asb#2 asb#3 sub#1 sub#2 parent peer school neighbor pgs age sex income par
 2 1 native pgsinc   -0.001    0.002   -0.004    0.002
 2 1 native pgspared    0.001    0.002   -0.003    0.005
 2 1 native pgssingpar   -0.001    0.001   -0.003    0.001
+2 1 native white   -0.001    0.000   -0.002    0.000
 2 1 other pgs    0.000    0.001   -0.003    0.002
 2 1 other age    0.002    0.002   -0.002    0.005
 2 1 other sex    0.000    0.001   -0.001    0.001
@@ -422,12 +450,13 @@ asb#1 asb#2 asb#3 sub#1 sub#2 parent peer school neighbor pgs age sex income par
 2 1 other pgsinc   -0.001    0.001   -0.003    0.001
 2 1 other pgspared   -0.001    0.002   -0.004    0.002
 2 1 other pgssingpar    0.000    0.001   -0.001    0.001
+2 1 other white   -0.005    0.001   -0.007   -0.003
 2 1 other native    0.000    0.000    0.000    0.000
 2 1 hispanic pgs   -0.001    0.002   -0.004    0.002
 2 1 hispanic age    0.006    0.003    0.001    0.012
 2 1 hispanic sex    0.000    0.001   -0.001    0.002
 2 1 hispanic income   -0.001    0.001   -0.004    0.002
-2 1 hispanic pared    0.000    0.002   -0.004    0.004
+2 1 hispanic pared    0.000    0.002   -0.003    0.004
 2 1 hispanic pgsparent    0.002    0.002   -0.002    0.005
 2 1 hispanic pgspeer   -0.002    0.002   -0.005    0.002
 2 1 hispanic pgsschool    0.000    0.002   -0.003    0.004
@@ -437,6 +466,7 @@ asb#1 asb#2 asb#3 sub#1 sub#2 parent peer school neighbor pgs age sex income par
 2 1 hispanic pgsinc    0.000    0.002   -0.004    0.003
 2 1 hispanic pgspared    0.002    0.002   -0.002    0.007
 2 1 hispanic pgssingpar    0.000    0.001   -0.002    0.001
+2 1 hispanic white   -0.003    0.001   -0.004   -0.001
 2 1 hispanic native    0.000    0.000    0.000    0.001
 2 1 hispanic other    0.003    0.001    0.002    0.005
 2 1 single_par pgs    0.032    0.006    0.021    0.043
@@ -450,30 +480,32 @@ asb#1 asb#2 asb#3 sub#1 sub#2 parent peer school neighbor pgs age sex income par
 2 1 single_par pgsneighbor    0.002    0.006   -0.010    0.015
 2 1 single_par pgsage    0.001    0.010   -0.018    0.021
 2 1 single_par pgssex    0.002    0.003   -0.004    0.008
-2 1 single_par pgsinc   -0.007    0.005   -0.018    0.004
+2 1 single_par pgsinc   -0.007    0.005   -0.018    0.003
 2 1 single_par pgspared    0.011    0.007   -0.002    0.025
 2 1 single_par pgssingpar    0.008    0.003    0.003    0.014
+2 1 single_par white    0.000    0.000   -0.001    0.001
 2 1 single_par native    0.000    0.001   -0.002    0.002
 2 1 single_par other    0.000    0.000   -0.001    0.001
 2 1 single_par hispanic    0.001    0.001    0.000    0.003
-4 1 parent    0.962    0.026    0.912    1.012
+4 1 parent    0.961    0.026    0.911    1.012
 4 1 peer    0.859    0.017    0.825    0.893
-4 1 school    0.962    0.020    0.924    1.001
+4 1 school    0.961    0.020    0.922    1.000
 4 1 neighbor    0.972    0.021    0.931    1.014
 5 1 pgs    1.000    0.019    0.962    1.038
 5 1 age    2.931    0.042    2.849    3.012
 5 1 sex    0.249    0.000    0.248    0.250
 5 1 income    0.600    0.024    0.552    0.647
 5 1 pared    1.234    0.021    1.193    1.274
-5 1 pgsparent    0.988    0.046    0.899    1.078
+5 1 pgsparent    0.987    0.046    0.897    1.076
 5 1 pgspeer    1.003    0.037    0.931    1.075
 5 1 pgsschool    0.960    0.036    0.889    1.030
-5 1 pgsneighbor    1.018    0.048    0.924    1.113
+5 1 pgsneighbor    1.019    0.048    0.924    1.113
 5 1 pgsage    2.903    0.091    2.725    3.081
 5 1 pgssex    0.250    0.005    0.240    0.259
-5 1 pgsinc    0.560    0.039    0.484    0.636
-5 1 pgspared    1.206    0.039    1.129    1.284
+5 1 pgsinc    0.562    0.039    0.486    0.638
+5 1 pgspared    1.205    0.039    1.128    1.282
 5 1 pgssingpar    0.249    0.005    0.240    0.258
+5 1 white    0.006    0.001    0.004    0.009
 5 1 native    0.021    0.002    0.017    0.025
 5 1 other    0.007    0.001    0.005    0.010
 5 1 hispanic    0.013    0.001    0.010    0.016
