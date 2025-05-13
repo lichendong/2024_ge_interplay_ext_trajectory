@@ -7,13 +7,17 @@
   AID age1 age2 age3 age4 age5
   asb1 asb2 asb3 asb4 asb5;
 
+
   usevariables =
+  age1 age2 age3 age4 age5
   asb1 asb2 asb3 asb4 asb5;
+
+  TSCORES = age1-age5; 
 
   count = asb1-asb5 (i);
   IDVARIABLE IS AID;
   Missing are .;
-  classes = c(4);
+  classes = c(3);
 
   !constraints = age1 age2 age3 age4 age5;
 
@@ -25,8 +29,8 @@
   age5 = age5 - 12;
 
   ANALYSIS:
-  TYPE = MIXTURE;
-  PROCESSORS = 4;
+  TYPE = MIXTURE RANDOM;
+  PROCESSORS = 20;
   !iteration=50000;
   !convergence=.000001;
   !coverage=.0000001;
@@ -34,20 +38,20 @@
   !estimator=MLR;
   ALGORITHM = INTEGRATION;
   !starts = 20 4;
+  INTEGRATION = MONTECARLO(5000);
 
   MODEL:
   %OVERALL%
 
-  fi by asb1@1 asb2@1 asb3@1 asb4@1 asb5@1;
+  i | asb1 asb2 asb3 asb4 asb5 AT age1 age2 age3 age4 age5;
 
-  fii by asb1#1@1 asb2#1@1 asb3#1@1 
-       asb4#1@1 asb5#1@1;
+  ii | asb1#1 asb2#1 asb3#1 asb4#1 asb5#1 AT age1 age2 age3 age4 age5;
 
-  MODEL CONSTRAINT:
 
-  
+  i-ii@0;  
+
   OUTPUT:
-  TECH11 TECH14;
+  TECH7 TECH11 TECH14;
 
   SAVEDATA:
   !file is SUB_sum_int4_poisson.csv;

@@ -1,0 +1,97 @@
+Mplus VERSION 7.4
+MUTHEN & MUTHEN
+05/12/2025   9:32 PM
+
+INPUT INSTRUCTIONS
+
+    Data:
+    File is
+    data.csv;
+
+    Variable:
+    Names are
+    AID age1 age2 age3 age4 age5
+    asb1 asb2 asb3 asb4 asb5;
+
+
+    usevariables =
+    age1 age2 age3 age4 age5
+    asb1 asb2 asb3 asb4 asb5;
+
+    TSCORES = age1-age5;
+
+    count = asb1-asb5 (i);
+    IDVARIABLE IS AID;
+    Missing are .;
+    classes = c(1);
+
+    !constraints = age1 age2 age3 age4 age5;
+
+    DEFINE:
+    age1 = age1 - 12;
+    age2 = age2 - 12;
+    age3 = age3 - 12;
+    age4 = age4 - 12;
+    age5 = age5 - 12;
+
+    ANALYSIS:
+    TYPE = MIXTURE RANDOM;
+    PROCESSORS = 20;
+    !iteration=50000;
+    !convergence=.000001;
+    !coverage=.0000001;
+    !h1convergence=.000001;
+    !estimator=MLR;
+    ALGORITHM = INTEGRATION;
+    !starts = 20 4;
+    INTEGRATION = MONTECARLO(5000);
+
+    MODEL:
+    %OVERALL%
+
+    i s | asb1 asb2 asb3 asb4 asb5 AT age1 age2 age3 age4 age5;
+
+    ii si | asb1#1 asb2#1 asb3#1 asb4#1 asb5#1 AT age1 age2 age3 age4 age5;
+
+
+    i-si@0;
+
+    OUTPUT:
+    TECH7 TECH11 TECH14;
+
+    SAVEDATA:
+    !file is SUB_sum_int4_poisson.csv;
+    !save is cprob;
+    !format is free;
+
+
+
+
+*** WARNING in MODEL command
+  All continuous latent variable covariances involving I have been fixed to 0
+  because the variance of I is fixed at 0.
+*** WARNING in MODEL command
+  All continuous latent variable covariances involving S have been fixed to 0
+  because the variance of S is fixed at 0.
+*** WARNING in MODEL command
+  All continuous latent variable covariances involving II have been fixed to 0
+  because the variance of II is fixed at 0.
+*** WARNING in OUTPUT command
+  TECH11 option is not available for TYPE=MIXTURE with only one class.
+  Request for TECH11 is ignored.
+*** WARNING in OUTPUT command
+  TECH14 option is not available for TYPE=MIXTURE with only one class.
+  Request for TECH14 is ignored.
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  39
+*** WARNING
+  Data set contains cases with missing on time scores but non-missing on the
+  corresponding dependent variables.  These cases were not included in the analysis.
+  Number of such cases:  9
+   7 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
