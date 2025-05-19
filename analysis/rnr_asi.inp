@@ -35,7 +35,7 @@ Analysis:
     process = 5;
     estimator = ML;
     Algorithm = INTEGRATION;
-    INTEGRATION = MONTECARLO (2000);  
+    INTEGRATION = MONTECARLO (1000);  
     !LINK = PROBIT;
     bootstrap=500;
 
