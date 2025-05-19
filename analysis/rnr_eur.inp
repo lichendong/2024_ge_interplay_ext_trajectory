@@ -29,6 +29,8 @@ Variable:
   USEOBSERVATIONS ARE
     ancestry == 0;
 
+  IDVARIABLE IS AID;
+
   Missing are .; 
 
 Analysis: 
@@ -166,3 +168,7 @@ MODEL CONSTRAINT:
     OUTPUT: 
     CINTERVAL(BOOTSTRAP)
     ;
+
+    SAVEDATA:
+    FILE is eur_id.dat;
+    FORMAT is free;

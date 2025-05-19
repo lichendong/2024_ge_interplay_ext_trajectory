@@ -29,6 +29,8 @@ Variable:
   USEOBSERVATIONS ARE
     ancestry == 2;
 
+  IDVARIABLE IS AID;
+
   Missing are .; 
 
 Analysis: 
@@ -166,3 +168,7 @@ MODEL CONSTRAINT:
     OUTPUT: 
     CINTERVAL(BOOTSTRAP)
     ;
+
+    SAVEDATA:
+    FILE is asi_id.dat;
+    FORMAT is free;
