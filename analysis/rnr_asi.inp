@@ -32,7 +32,7 @@ Variable:
   Missing are .; 
 
 Analysis: 
-    process = 15;
+    process = 5;
     estimator = ML;
     Algorithm = INTEGRATION;
     INTEGRATION = MONTECARLO (2000);  

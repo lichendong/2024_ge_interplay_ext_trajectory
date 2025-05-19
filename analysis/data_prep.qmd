@@ -1,5 +1,5 @@
 ---
-title: "Add Health Data Preparation for Within-Family Analysis of rGE"
+title: "Add Health Data Preparation for G-E Interplay on EXT Trajectories"
 author: "LiChen Dong"
 date: "`r lubridate::today()`"
 format: 
@@ -91,7 +91,7 @@ age <- Wave1 |> select(AID, H1GI1M, H1GI1Y, IMONTH, IYEAR) |>
 
 ```
 
-### Race/ethnicity (for descriptive statistics)
+### Race/ethnicity
 
 ```{r}
 race <- Wave1 |> select(AID, H1GI6A, H1GI6B, H1GI6C, H1GI6D, H1GI6E, H1GI4) |> 
@@ -144,7 +144,8 @@ parent <- Wave1 |> select(AID, H1WP9, H1WP10, H1PF1, H1PF2,
                             H1PF3, H1PF4, H1PF5, H1WP13, 
                             H1WP14, H1PF23, H1PF24, H1PF25) |> 
             mutate(across(H1WP9:H1PF25, ~ replace(.x, .x > 5, NA)),
-                   across(starts_with("H1PF"), ~ 6 - .x)) |> 
+                   across(starts_with("H1PF"), ~ 6 - .x),
+                   across(H1WP9:H1PF25, ~ as.vector(scale(.x)))) |> 
             rowwise() |> 
             mutate(parent_mum = if_else(sum(is.na(c(H1WP9, H1WP10, H1PF1, 
                                         H1PF2, H1PF3, H1PF4, H1PF5))) <= 3,
@@ -168,7 +169,8 @@ parent <- parent |> select(AID, parent, single_par)
 
 ```{r}
 del_peer <- Wave1 |> select(AID, H1TO29, H1TO33, H1TO9, H1DS14) |> 
-            mutate(across(H1TO29:H1DS14, ~ replace(.x, .x > 5, NA))) |> 
+            mutate(across(H1TO29:H1DS14, ~ replace(.x, .x > 5, NA)),
+                   across(H1TO29:H1DS14, ~ as.vector(scale(.x)))) |> 
             rowwise() |> 
             mutate(peer = if_else(sum(is.na(c(H1TO29, H1TO33, H1TO9, H1DS14))) <= 2,
                                   mean(c(H1TO29, H1TO33, H1TO9, H1DS14), na.rm = T),NA)) |> 
@@ -183,7 +185,8 @@ del_peer <- del_peer |> select(AID, peer)
 school_con <- Wave1 |> select(AID, H1ED19, H1ED20, H1ED22, H1ED23,
                               H1ED24, H1PR2) |> 
               mutate(across(H1ED19:H1PR2, ~ replace(.x, .x > 5, NA)),
-                     across(starts_with("H1ED"), ~ 6 - .x)) |> 
+                     across(starts_with("H1ED"), ~ 6 - .x),
+                     across(H1ED19:H1PR2, ~ as.vector(scale(.x)))) |> 
               rowwise() |> 
               mutate(school = if_else(sum(is.na(c(H1ED19, H1ED20, H1ED22, H1ED23,
                                       H1ED24, H1PR2))) <= 3,
@@ -202,7 +205,8 @@ neigh_con <- Wave1 |> select(AID, H1NB1, H1NB2, H1NB3, H1NB5,
                               H1NB6, H1NB7) |> 
               mutate(across(H1NB1:H1NB7, ~ replace(.x, .x > 5, NA)),
                      across(H1NB1:H1NB3, ~ 3 - .x),
-                     H1NB7 = 6 - H1NB7) |> 
+                     H1NB7 = 6 - H1NB7,
+                     across(H1NB1:H1NB7, ~ as.vector(scale(.x)))) |> 
               rowwise() |> 
               mutate(neigh = if_else(sum(is.na(c(H1NB1, H1NB2, H1NB3, H1NB5,
                                      H1NB6, H1NB7))) <= 3,
@@ -257,13 +261,17 @@ data <- data |>
 ```
 
 
-## Select one from each family
+## Select one from each family per ancestry
 
 ```{r}
-data <- data |> group_by(FAMID) |> 
+set.seed(12345)
+
+data <- data |> filter(!is.na(ANCESTRY)) |> group_by(FAMID, ANCESTRY) |> 
         slice_sample(n = 1) |> ungroup()
 
 data |> skimr::skim()
+data$ANCESTRY |> table()
+
 ```
 
 ## Preprocess
@@ -333,4 +341,19 @@ write.table(data,file = here::here(path_data, "gxe_ext_trajectory.csv"),sep = ",
 
 names(data) |> cat()
 ```
+
+
+## Descriptives
+
+### Create data for descriptives
+
+```{r}
+descrip <- data |> select(AID, ANCESTRY, sex, white, african, native, 
+                          asian, other, hispanic, single_par, EXT_PGS)
+```
+
+### Read in sum scores of ASB and SUB
+
+### Skim
+
 

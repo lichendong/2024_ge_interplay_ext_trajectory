@@ -27,7 +27,7 @@ Variable:
    asb sub;
   
   USEOBSERVATIONS ARE
-    ancestry == 2;
+    ancestry == 3;
 
   Missing are .; 
 
