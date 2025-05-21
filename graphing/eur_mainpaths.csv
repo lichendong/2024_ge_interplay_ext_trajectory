@@ -1,153 +1,153 @@
 outcome,variable,est,lower,upper
-High SUB,Supportive Parenting,0.979,0.888,1.069
-High SUB,Delinquent Peer Affiliation,1.896*,1.745,2.128
-High SUB,School Connectedness,0.834*,0.750,0.920
-High SUB,Neighborhood Connectedness,0.958,0.868,1.042
-High SUB,Total Effect,1.483*,1.327,1.684
-High SUB,Parent Indirect Effect,1.001,0.996,1.007
-High SUB,Peer Indirect Effect,1.093*,1.067,1.126
-High SUB,School Indirect Effect,1.019*,1.009,1.036
-High SUB,Neighborhood Indirect Effect,1.002,0.998,1.009
-High SUB,PGS Direct Effect,1.328*,1.185,1.522
-High SUB,PGS x Parent,0.977,0.887,1.090
-High SUB,PGS x Peer,0.920,0.820,1.015
-High SUB,PGS x School,1.004,0.902,1.112
-High SUB,PGS x Neighborhood,1.079,0.991,1.181
-High SUB,Age,0.878*,0.831,0.928
-High SUB,Female Sex,0.824*,0.689,0.976
-High SUB,Family Income,0.945,0.807,1.097
-High SUB,Parental Education,0.901*,0.829,0.986
-High SUB,Single Parent,1.240*,1.027,1.542
-High SUB,White,0.691,0.000,5.641
-High SUB,Native,0.989,0.528,1.878
-High SUB,Other Race,0.361,0.000,2.795
-High SUB,Hispanic,0.845,0.341,1.826
-High SUB,PGS x Age,1.057*,1.000,1.126
-High SUB,PGS x Sex,1.161,0.980,1.412
-High SUB,PGS x Income,0.919,0.780,1.060
-High SUB,PGS x Parental Education,1.057,0.946,1.162
-High SUB,PGS x Single Parent,0.994,0.787,1.300
-High SUB,High-Decline ASB,4.397*,1.721,14.865
-High SUB,Moderate ASB,2.092*,1.692,2.904
-High SUB,Adolescent-Peaked ASB,1.839*,1.281,2.633
-Low SUB,Supportive Parenting,1.116,0.958,1.305
-Low SUB,Delinquent Peer Affiliation,0.519*,0.420,0.618
-Low SUB,School Connectedness,0.998,0.872,1.145
-Low SUB,Neighborhood Connectedness,0.896*,0.787,0.999
-Low SUB,Total Effect,0.770*,0.637,0.915
-Low SUB,Parent Indirect Effect,0.994,0.982,1.002
-Low SUB,Peer Indirect Effect,0.913*,0.878,0.944
-Low SUB,School Indirect Effect,1.000,0.985,1.014
-Low SUB,Neighborhood Indirect Effect,1.005*,1.000,1.015
-Low SUB,PGS Direct Effect,0.844,0.696,1.013
-Low SUB,PGS x Parent,1.052,0.926,1.219
-Low SUB,PGS x Peer,1.085,0.900,1.285
-Low SUB,PGS x School,0.967,0.838,1.141
-Low SUB,PGS x Neighborhood,1.024,0.911,1.149
-Low SUB,Age,1.145*,1.057,1.235
-Low SUB,Female Sex,1.445*,1.139,1.806
-Low SUB,Family Income,0.775*,0.647,0.941
-Low SUB,Parental Education,0.816*,0.710,0.925
-Low SUB,Single Parent,0.978,0.751,1.307
-Low SUB,White,0.325,0.000,3162.126
-Low SUB,Native,1.219,0.436,2.630
-Low SUB,Other Race,0.251,0.000,2.612
-Low SUB,Hispanic,0.726,0.192,2.038
-Low SUB,PGS x Age,1.024,0.948,1.092
-Low SUB,PGS x Sex,0.951,0.737,1.169
-Low SUB,PGS x Income,1.008,0.839,1.214
-Low SUB,PGS x Parental Education,0.956,0.832,1.096
-Low SUB,PGS x Single Parent,0.858,0.616,1.160
-Low SUB,High-Decline ASB,0.611,0.000,3.139
-Low SUB,Moderate ASB,0.428*,0.236,0.725
-Low SUB,Adolescent-Peaked ASB,0.686,0.289,1.279
-High-Decline ASB,Supportive Parenting,0.857,0.598,1.210
-High-Decline ASB,Delinquent Peer Affiliation,3.568*,2.596,5.392
-High-Decline ASB,School Connectedness,0.723,0.481,1.044
-High-Decline ASB,Neighborhood Connectedness,0.961,0.687,1.420
-High-Decline ASB,Total Effect,2.145*,1.247,3.611
-High-Decline ASB,Parent Indirect Effect,1.008,0.989,1.030
-High-Decline ASB,Peer Indirect Effect,1.192*,1.133,1.289
-High-Decline ASB,School Indirect Effect,1.035,0.995,1.091
-High-Decline ASB,Neighborhood Indirect Effect,1.002,0.981,1.019
-High-Decline ASB,PGS Direct Effect,1.721,0.990,2.726
-High-Decline ASB,PGS x Parent,0.884,0.641,1.261
-High-Decline ASB,PGS x Peer,0.814,0.604,1.066
-High-Decline ASB,PGS x School,1.102,0.787,1.598
-High-Decline ASB,PGS x Neighborhood,0.903,0.651,1.292
-High-Decline ASB,Age,0.662*,0.517,0.807
-High-Decline ASB,Female Sex,0.059*,0.012,0.132
-High-Decline ASB,Family Income,0.879,0.579,1.448
-High-Decline ASB,Parental Education,1.260,0.901,1.706
-High-Decline ASB,Single Parent,0.900,0.409,1.850
-High-Decline ASB,White,0.114,0.000,1109.872
-High-Decline ASB,Native,1.326,0.000,4.879
-High-Decline ASB,Other Race,0.193,0.000,6.322
-High-Decline ASB,Hispanic,0.817,0.000,7.745
-High-Decline ASB,PGS x Age,1.028,0.849,1.274
-High-Decline ASB,PGS x Sex,1.214,0.559,2.489
-High-Decline ASB,PGS x Income,0.961,0.586,1.556
-High-Decline ASB,PGS x Parental Education,0.898,0.662,1.267
-High-Decline ASB,PGS x Single Parent,0.896,0.405,1.846
-High-Decline ASB,High SUB,4.604*,1.872,19.688
-High-Decline ASB,Low SUB,0.391,0.000,3.016
-Moderate ASB,Supportive Parenting,0.802*,0.708,0.916
-Moderate ASB,Delinquent Peer Affiliation,1.185*,1.030,1.369
-Moderate ASB,School Connectedness,0.916,0.798,1.062
-Moderate ASB,Neighborhood Connectedness,1.012,0.888,1.154
-Moderate ASB,Total Effect,1.143*,1.016,1.315
-Moderate ASB,Parent Indirect Effect,1.012*,1.004,1.025
-Moderate ASB,Peer Indirect Effect,1.024*,1.004,1.048
-Moderate ASB,School Indirect Effect,1.009,0.994,1.028
-Moderate ASB,Neighborhood Indirect Effect,0.999,0.991,1.006
-Moderate ASB,PGS Direct Effect,1.094,0.969,1.256
-Moderate ASB,PGS x Parent,1.078,0.953,1.223
-Moderate ASB,PGS x Peer,1.006,0.901,1.137
-Moderate ASB,PGS x School,0.972,0.843,1.102
-Moderate ASB,PGS x Neighborhood,0.969,0.850,1.102
-Moderate ASB,Age,0.899*,0.823,0.970
-Moderate ASB,Female Sex,0.270*,0.206,0.345
-Moderate ASB,Family Income,1.057,0.868,1.351
-Moderate ASB,Parental Education,1.070,0.945,1.208
-Moderate ASB,Single Parent,0.968,0.712,1.242
-Moderate ASB,White,1.155,0.000,19811.146
-Moderate ASB,Native,1.250,0.470,2.460
-Moderate ASB,Other Race,2.319,0.001,59.264
-Moderate ASB,Hispanic,1.343,0.390,3.193
-Moderate ASB,PGS x Age,1.007,0.925,1.081
-Moderate ASB,PGS x Sex,1.078,0.833,1.368
-Moderate ASB,PGS x Income,0.978,0.802,1.184
-Moderate ASB,PGS x Parental Education,1.083,0.951,1.245
-Moderate ASB,PGS x Single Parent,0.841,0.635,1.162
-Moderate ASB,High SUB,2.081*,1.682,2.886
-Moderate ASB,Low SUB,0.409*,0.226,0.694
-Adolescent-Peaked ASB,Supportive Parenting,0.781*,0.686,0.926
-Adolescent-Peaked ASB,Delinquent Peer Affiliation,2.075*,1.791,2.482
-Adolescent-Peaked ASB,School Connectedness,0.771*,0.646,0.931
-Adolescent-Peaked ASB,Neighborhood Connectedness,1.005,0.862,1.201
-Adolescent-Peaked ASB,Total Effect,1.201,0.905,1.553
-Adolescent-Peaked ASB,Parent Indirect Effect,1.013*,1.003,1.029
-Adolescent-Peaked ASB,Peer Indirect Effect,1.106*,1.073,1.142
-Adolescent-Peaked ASB,School Indirect Effect,1.027*,1.007,1.050
-Adolescent-Peaked ASB,Neighborhood Indirect Effect,1.000,0.988,1.008
-Adolescent-Peaked ASB,PGS Direct Effect,1.043,0.799,1.328
-Adolescent-Peaked ASB,PGS x Parent,0.925,0.783,1.077
-Adolescent-Peaked ASB,PGS x Peer,0.998,0.848,1.161
-Adolescent-Peaked ASB,PGS x School,0.982,0.798,1.172
-Adolescent-Peaked ASB,PGS x Neighborhood,1.031,0.871,1.241
-Adolescent-Peaked ASB,Age,0.714*,0.632,0.796
-Adolescent-Peaked ASB,Female Sex,0.351*,0.243,0.496
-Adolescent-Peaked ASB,Family Income,1.164,0.919,1.516
-Adolescent-Peaked ASB,Parental Education,1.031,0.842,1.201
-Adolescent-Peaked ASB,Single Parent,1.133,0.689,1.670
-Adolescent-Peaked ASB,White,7.706,0.283,1162403.032
-Adolescent-Peaked ASB,Native,1.113,0.343,2.680
-Adolescent-Peaked ASB,Other Race,5.697,0.170,83.429
-Adolescent-Peaked ASB,Hispanic,2.286,0.261,9.612
-Adolescent-Peaked ASB,PGS x Age,1.003,0.888,1.111
-Adolescent-Peaked ASB,PGS x Sex,1.078,0.728,1.559
-Adolescent-Peaked ASB,PGS x Income,0.963,0.750,1.210
-Adolescent-Peaked ASB,PGS x Parental Education,1.036,0.890,1.235
-Adolescent-Peaked ASB,PGS x Single Parent,1.309,0.836,1.952
-Adolescent-Peaked ASB,High SUB,1.813*,1.235,2.656
-Adolescent-Peaked ASB,Low SUB,0.570,0.235,1.089
+High SUB,Supportive Parenting,0.977,0.893,1.071
+High SUB,Delinquent Peer Affiliation,1.883*,1.684,2.061
+High SUB,School Connectedness,0.821*,0.741,0.907
+High SUB,Neighborhood Connectedness,0.983,0.899,1.093
+High SUB,Total Effect,1.432*,1.274,1.616
+High SUB,Parent Indirect Effect,1.001,0.995,1.007
+High SUB,Peer Indirect Effect,1.092*,1.068,1.117
+High SUB,School Indirect Effect,1.021*,1.009,1.036
+High SUB,Neighborhood Indirect Effect,1.001,0.996,1.006
+High SUB,PGS Direct Effect,1.281*,1.155,1.436
+High SUB,PGS x Parent,0.970,0.868,1.082
+High SUB,PGS x Peer,0.937,0.844,1.042
+High SUB,PGS x School,1.019,0.908,1.145
+High SUB,PGS x Neighborhood,1.079,0.982,1.184
+High SUB,Age,0.890*,0.839,0.938
+High SUB,Female Sex,0.811*,0.668,0.964
+High SUB,Family Income,0.951,0.815,1.112
+High SUB,Parental Education,0.901*,0.805,0.983
+High SUB,Single Parent,1.246,0.981,1.539
+High SUB,White,0.684,0.079,3.130
+High SUB,Native,0.941,0.509,1.788
+High SUB,Other Race,0.337,0.018,1.600
+High SUB,Hispanic,0.776,0.334,1.933
+High SUB,PGS x Age,1.055*,1.002,1.119
+High SUB,PGS x Sex,1.197*,1.015,1.438
+High SUB,PGS x Income,0.935,0.780,1.092
+High SUB,PGS x Parental Education,1.067,0.971,1.188
+High SUB,PGS x Single Parent,0.979,0.766,1.207
+High SUB,High-Decline ASB,4.293*,1.868,16.810
+High SUB,Moderate ASB,1.946*,1.536,2.620
+High SUB,Adolescent-Peaked ASB,1.652*,1.194,2.396
+Low SUB,Supportive Parenting,1.121,0.975,1.326
+Low SUB,Delinquent Peer Affiliation,0.507*,0.406,0.616
+Low SUB,School Connectedness,0.978,0.858,1.113
+Low SUB,Neighborhood Connectedness,0.889*,0.783,1.000
+Low SUB,Total Effect,0.766*,0.620,0.924
+Low SUB,Parent Indirect Effect,0.994,0.979,1.001
+Low SUB,Peer Indirect Effect,0.909*,0.871,0.938
+Low SUB,School Indirect Effect,1.002,0.987,1.019
+Low SUB,Neighborhood Indirect Effect,1.006*,1.000,1.015
+Low SUB,PGS Direct Effect,0.840,0.681,1.019
+Low SUB,PGS x Parent,1.048,0.908,1.242
+Low SUB,PGS x Peer,1.078,0.889,1.294
+Low SUB,PGS x School,0.970,0.840,1.139
+Low SUB,PGS x Neighborhood,1.054,0.947,1.204
+Low SUB,Age,1.160*,1.087,1.236
+Low SUB,Female Sex,1.467*,1.188,1.865
+Low SUB,Family Income,0.803*,0.648,0.971
+Low SUB,Parental Education,0.810*,0.717,0.932
+Low SUB,Single Parent,0.976,0.725,1.262
+Low SUB,White,0.384,0.000,213.791
+Low SUB,Native,1.213,0.416,2.457
+Low SUB,Other Race,0.285,0.000,1.670
+Low SUB,Hispanic,0.704,0.127,1.941
+Low SUB,PGS x Age,1.035,0.969,1.112
+Low SUB,PGS x Sex,0.980,0.783,1.273
+Low SUB,PGS x Income,1.020,0.819,1.241
+Low SUB,PGS x Parental Education,0.987,0.876,1.117
+Low SUB,PGS x Single Parent,0.888,0.626,1.185
+Low SUB,High-Decline ASB,0.631,0.000,3.245
+Low SUB,Moderate ASB,0.454*,0.269,0.717
+Low SUB,Adolescent-Peaked ASB,0.691,0.240,1.370
+High-Decline ASB,Supportive Parenting,0.832,0.555,1.132
+High-Decline ASB,Delinquent Peer Affiliation,3.397*,2.583,5.028
+High-Decline ASB,School Connectedness,0.690,0.487,1.030
+High-Decline ASB,Neighborhood Connectedness,0.985,0.662,1.381
+High-Decline ASB,Total Effect,1.927*,1.061,3.238
+High-Decline ASB,Parent Indirect Effect,1.010,0.992,1.034
+High-Decline ASB,Peer Indirect Effect,1.185*,1.133,1.287
+High-Decline ASB,School Indirect Effect,1.040,0.997,1.081
+High-Decline ASB,Neighborhood Indirect Effect,1.001,0.981,1.020
+High-Decline ASB,PGS Direct Effect,1.545,0.827,2.517
+High-Decline ASB,PGS x Parent,0.928,0.658,1.379
+High-Decline ASB,PGS x Peer,0.842,0.634,1.135
+High-Decline ASB,PGS x School,1.088,0.731,1.533
+High-Decline ASB,PGS x Neighborhood,0.874,0.611,1.319
+High-Decline ASB,Age,0.700*,0.564,0.855
+High-Decline ASB,Female Sex,0.060*,0.015,0.125
+High-Decline ASB,Family Income,0.855,0.581,1.339
+High-Decline ASB,Parental Education,1.324,0.907,1.941
+High-Decline ASB,Single Parent,0.766,0.298,1.545
+High-Decline ASB,White,0.123,0.000,823.859
+High-Decline ASB,Native,1.368,0.000,5.328
+High-Decline ASB,Other Race,0.211,0.000,9.235
+High-Decline ASB,Hispanic,0.824,0.000,6.573
+High-Decline ASB,PGS x Age,1.017,0.812,1.271
+High-Decline ASB,PGS x Sex,1.047,0.472,2.702
+High-Decline ASB,PGS x Income,1.081,0.700,1.782
+High-Decline ASB,PGS x Parental Education,0.865,0.632,1.281
+High-Decline ASB,PGS x Single Parent,1.055,0.473,2.257
+High-Decline ASB,High SUB,4.783*,2.046,18.357
+High-Decline ASB,Low SUB,0.444,0.000,3.525
+Moderate ASB,Supportive Parenting,0.821*,0.716,0.931
+Moderate ASB,Delinquent Peer Affiliation,1.230*,1.087,1.390
+Moderate ASB,School Connectedness,0.904,0.796,1.048
+Moderate ASB,Neighborhood Connectedness,1.012,0.902,1.142
+Moderate ASB,Total Effect,1.194*,1.022,1.409
+Moderate ASB,Parent Indirect Effect,1.011*,1.003,1.023
+Moderate ASB,Peer Indirect Effect,1.029*,1.011,1.051
+Moderate ASB,School Indirect Effect,1.011,0.995,1.025
+Moderate ASB,Neighborhood Indirect Effect,0.999,0.992,1.005
+Moderate ASB,PGS Direct Effect,1.135,0.976,1.324
+Moderate ASB,PGS x Parent,1.081,0.970,1.231
+Moderate ASB,PGS x Peer,0.984,0.874,1.110
+Moderate ASB,PGS x School,0.998,0.860,1.142
+Moderate ASB,PGS x Neighborhood,0.962,0.853,1.095
+Moderate ASB,Age,0.890*,0.824,0.961
+Moderate ASB,Female Sex,0.262*,0.202,0.327
+Moderate ASB,Family Income,1.041,0.865,1.280
+Moderate ASB,Parental Education,1.082,0.954,1.217
+Moderate ASB,Single Parent,0.966,0.715,1.323
+Moderate ASB,White,0.935,0.065,21.650
+Moderate ASB,Native,1.124,0.513,2.214
+Moderate ASB,Other Race,2.008,0.111,28.560
+Moderate ASB,Hispanic,1.247,0.376,2.776
+Moderate ASB,PGS x Age,1.018,0.945,1.094
+Moderate ASB,PGS x Sex,1.139,0.883,1.425
+Moderate ASB,PGS x Income,0.956,0.809,1.215
+Moderate ASB,PGS x Parental Education,1.084,0.969,1.230
+Moderate ASB,PGS x Single Parent,0.897,0.667,1.172
+Moderate ASB,High SUB,1.941*,1.534,2.614
+Moderate ASB,Low SUB,0.435*,0.256,0.689
+Adolescent-Peaked ASB,Supportive Parenting,0.811*,0.698,0.922
+Adolescent-Peaked ASB,Delinquent Peer Affiliation,2.117*,1.779,2.527
+Adolescent-Peaked ASB,School Connectedness,0.751*,0.630,0.901
+Adolescent-Peaked ASB,Neighborhood Connectedness,1.011,0.851,1.232
+Adolescent-Peaked ASB,Total Effect,1.236,0.967,1.559
+Adolescent-Peaked ASB,Parent Indirect Effect,1.012*,1.003,1.025
+Adolescent-Peaked ASB,Peer Indirect Effect,1.111*,1.076,1.156
+Adolescent-Peaked ASB,School Indirect Effect,1.031*,1.011,1.053
+Adolescent-Peaked ASB,Neighborhood Indirect Effect,0.999,0.989,1.010
+Adolescent-Peaked ASB,PGS Direct Effect,1.068,0.838,1.339
+Adolescent-Peaked ASB,PGS x Parent,0.924,0.776,1.082
+Adolescent-Peaked ASB,PGS x Peer,1.014,0.868,1.165
+Adolescent-Peaked ASB,PGS x School,0.961,0.813,1.164
+Adolescent-Peaked ASB,PGS x Neighborhood,1.111,0.932,1.342
+Adolescent-Peaked ASB,Age,0.719*,0.649,0.787
+Adolescent-Peaked ASB,Female Sex,0.348*,0.233,0.462
+Adolescent-Peaked ASB,Family Income,1.158,0.885,1.539
+Adolescent-Peaked ASB,Parental Education,1.057,0.890,1.270
+Adolescent-Peaked ASB,Single Parent,1.107,0.712,1.689
+Adolescent-Peaked ASB,White,6.841,0.497,422946.089
+Adolescent-Peaked ASB,Native,1.078,0.205,3.209
+Adolescent-Peaked ASB,Other Race,6.019,0.540,107.125
+Adolescent-Peaked ASB,Hispanic,1.898,0.118,6.092
+Adolescent-Peaked ASB,PGS x Age,1.002,0.906,1.126
+Adolescent-Peaked ASB,PGS x Sex,1.085,0.755,1.554
+Adolescent-Peaked ASB,PGS x Income,0.961,0.735,1.223
+Adolescent-Peaked ASB,PGS x Parental Education,1.057,0.900,1.260
+Adolescent-Peaked ASB,PGS x Single Parent,1.369,0.826,2.008
+Adolescent-Peaked ASB,High SUB,1.650*,1.204,2.435
+Adolescent-Peaked ASB,Low SUB,0.562,0.195,1.139

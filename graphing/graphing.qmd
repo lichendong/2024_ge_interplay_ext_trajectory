@@ -241,7 +241,7 @@ plot_all_med <- ggplot(data = plot_med) +
   geom_vline(xintercept = 1, color = "red",linetype = "dashed",linewidth = .25) +
   geom_errorbar(aes(y = variable, xmin = lower, xmax = upper),width=.3,linewidth = .55) + 
   geom_text(aes(x = est, y = variable, label = sig),vjust = -.9) +
-  facet_grid(cols = vars(outcome)) + coord_cartesian(xlim = c(0.7,2.25)) +theme_bw() +
+  facet_grid(cols = vars(outcome)) + coord_cartesian(xlim = c(0.65,2.05)) +theme_bw() +
   scale_y_discrete(limits=rev) + 
   scale_x_continuous(breaks = seq(0.5, 2.5, by = .25))+
   theme(text = element_text(size = 9),
@@ -307,7 +307,7 @@ afr <- readModels(here::here("analysis/rnr_afr.out"))$parameters$ci.unstandardiz
           as_tibble() |> janitor::clean_names() |> 
           select(param_header, param, est, low_5, up_5)
 
-afr$param_header[457:481] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
+afr$param_header[426:450] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
 afr <- afr |> mutate(param = replace(param, param %in% c("INDASB11","INDASB21",
                                                          "INDASB31","INDSUB11","INDSUB21"), 
                                      "Parent Indirect Effect"),
@@ -348,12 +348,11 @@ afr_apaths <- afr_apaths |>
                                         "WHITE" ~ "White",
                                         "AFRICAN" ~ "African",
                                         "NATIVE" ~ "Native",
-                                        "ASIAN" ~ "Asian", 
                                         "OTHER" ~ "Other Race",
                                         "HISPANIC" ~ "Hispanic",
                                         "SINGLE_PAR" ~ "Single Parent",
                                         "PGS" ~ "PGS"),
-                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent","White", "African", "Native", "Asian", "Other Race", "Hispanic"))) 
+                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent","White", "African", "Native", "Other Race", "Hispanic"))) 
 
 ```
 
@@ -392,7 +391,6 @@ afr_mainpaths <- afr_mainpaths |>
                                         "WHITE" ~ "White",
                                         "AFRICAN" ~ "African",
                                         "NATIVE" ~ "Native",
-                                        "ASIAN" ~ "Asian", 
                                         "OTHER" ~ "Other Race",
                                         "HISPANIC" ~ "Hispanic",
                                         "PGSAGE" ~ "PGS x Age",
@@ -429,7 +427,6 @@ afr_mainpaths <- afr_mainpaths |>
                                         "White",
                                         "African",
                                         "Native",
-                                        "Asian",
                                         "Other Race",
                                         "Hispanic",
                                         "PGS x Age",
@@ -494,9 +491,10 @@ write_csv(afr_mainpaths, "afr_mainpaths.csv")
 ```{r}
 asi <- readModels(here::here("analysis/rnr_asi.out"))$parameters$ci.unstandardized |> 
           as_tibble() |> janitor::clean_names() |> 
-          select(param_header, param, est, low_5, up_5)
+          select(param_header, param, est, low_5, up_5) |> 
+          mutate(low_5 = as.numeric(replace(low_5, low_5 == "*********", "-9999")))
 
-asi$param_header[426:450] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
+asi$param_header[312:336] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
 asi <- asi |> mutate(param = replace(param, param %in% c("INDASB11","INDASB21",
                                                          "INDASB31","INDSUB11","INDSUB21"), 
                                      "Parent Indirect Effect"),
@@ -534,14 +532,10 @@ asi_apaths <- asi_apaths |>
                                         "SEX" ~ "Female Sex",
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
-                                        "WHITE" ~ "White",
-                                        "NATIVE" ~ "Native",
-                                        "ASIAN" ~ "Asian", 
-                                        "OTHER" ~ "Other Race",
                                         "HISPANIC" ~ "Hispanic",
                                         "SINGLE_PAR" ~ "Single Parent",
                                         "PGS" ~ "PGS"),
-                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent","White", "Native", "Asian", "Other Race", "Hispanic"))) 
+                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent", "Hispanic"))) 
 
 ```
 
@@ -577,10 +571,6 @@ asi_mainpaths <- asi_mainpaths |>
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
                                         "SINGLE_PAR" ~ "Single Parent",
-                                        "WHITE" ~ "White",
-                                        "NATIVE" ~ "Native",
-                                        "ASIAN" ~ "Asian", 
-                                        "OTHER" ~ "Other Race",
                                         "HISPANIC" ~ "Hispanic",
                                         "PGSAGE" ~ "PGS x Age",
                                         "PGSSEX" ~ "PGS x Sex",
@@ -613,10 +603,6 @@ asi_mainpaths <- asi_mainpaths |>
                                         "Family Income",
                                         "Parental Education",
                                         "Single Parent",
-                                        "White",
-                                        "Native",
-                                        "Asian",
-                                        "Other Race",
                                         "Hispanic",
                                         "PGS x Age",
                                         "PGS x Sex",
@@ -681,7 +667,8 @@ write_csv(asi_mainpaths, "asi_mainpaths.csv")
 ```{r}
 his <- readModels(here::here("analysis/rnr_his.out"))$parameters$ci.unstandardized |> 
           as_tibble() |> janitor::clean_names() |> 
-          select(param_header, param, est, low_5, up_5)
+          select(param_header, param, est, low_5, up_5)|> 
+          mutate(low_5 = as.numeric(replace(low_5, low_5 == "*********", "-9999")))
 
 his$param_header[426:450] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
 his <- his |> mutate(param = replace(param, param %in% c("INDASB11","INDASB21",

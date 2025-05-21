@@ -1,45 +1,45 @@
 outcome,variable,est,lower,upper
-Supportive Parenting,PGS,-0.027,-0.107,0.051
-Supportive Parenting,Age,-0.113*,-0.169,-0.056
-Supportive Parenting,Female Sex,-0.422*,-0.577,-0.194
-Supportive Parenting,Family Income,-0.041,-0.166,0.092
-Supportive Parenting,Parental Education,0.018,-0.049,0.097
-Supportive Parenting,Single Parent,-0.118,-0.361,0.093
-Supportive Parenting,White,-0.147,-0.477,0.169
-Supportive Parenting,Native,0.072,-0.214,0.350
-Supportive Parenting,Asian,0.082,-0.425,0.568
-Supportive Parenting,Other Race,-0.079,-0.431,0.245
-Supportive Parenting,Hispanic,0.201,-0.139,0.525
-Delinquent Peer Affiliation,PGS,0.052,-0.034,0.148
-Delinquent Peer Affiliation,Age,0.106*,0.055,0.158
-Delinquent Peer Affiliation,Female Sex,-0.106,-0.291,0.050
-Delinquent Peer Affiliation,Family Income,0.056,-0.069,0.185
-Delinquent Peer Affiliation,Parental Education,0.060,-0.026,0.145
-Delinquent Peer Affiliation,Single Parent,0.185,-0.033,0.377
-Delinquent Peer Affiliation,White,0.081,-0.276,0.427
-Delinquent Peer Affiliation,Native,0.231,-0.137,0.672
-Delinquent Peer Affiliation,Asian,-0.026,-0.468,0.473
-Delinquent Peer Affiliation,Other Race,0.047,-0.317,0.419
-Delinquent Peer Affiliation,Hispanic,0.031,-0.279,0.294
-School Connectedness,PGS,0.018,-0.057,0.110
-School Connectedness,Age,-0.029,-0.080,0.029
-School Connectedness,Female Sex,-0.032,-0.223,0.144
-School Connectedness,Family Income,-0.100,-0.217,0.033
-School Connectedness,Parental Education,0.008,-0.068,0.080
-School Connectedness,Single Parent,-0.303*,-0.506,-0.080
-School Connectedness,White,-0.068,-0.499,0.380
-School Connectedness,Native,0.041,-0.335,0.446
-School Connectedness,Asian,0.015,-0.516,0.520
-School Connectedness,Other Race,-0.046,-0.432,0.335
-School Connectedness,Hispanic,0.007,-0.301,0.287
-Neighborhood Connectedness,PGS,-0.066,-0.146,0.014
-Neighborhood Connectedness,Age,-0.076*,-0.134,-0.013
-Neighborhood Connectedness,Female Sex,-0.103,-0.287,0.065
-Neighborhood Connectedness,Family Income,0.065,-0.068,0.217
-Neighborhood Connectedness,Parental Education,0.078*,0.006,0.158
-Neighborhood Connectedness,Single Parent,-0.068,-0.298,0.138
-Neighborhood Connectedness,White,0.036,-0.263,0.360
-Neighborhood Connectedness,Native,-0.043,-0.422,0.402
-Neighborhood Connectedness,Asian,-0.212,-0.771,0.265
-Neighborhood Connectedness,Other Race,-0.004,-0.331,0.335
-Neighborhood Connectedness,Hispanic,-0.057,-0.342,0.229
+Supportive Parenting,PGS,-0.050,-0.135,0.032
+Supportive Parenting,Age,-0.096*,-0.141,-0.047
+Supportive Parenting,Female Sex,-0.395*,-0.575,-0.204
+Supportive Parenting,Family Income,-0.002,-0.149,0.160
+Supportive Parenting,Parental Education,0.027,-0.054,0.111
+Supportive Parenting,Single Parent,-0.229,-0.446,0.014
+Supportive Parenting,White,-0.146,-0.508,0.240
+Supportive Parenting,Native,0.044,-0.316,0.364
+Supportive Parenting,Asian,0.021,-0.497,0.512
+Supportive Parenting,Other Race,-0.114,-0.472,0.261
+Supportive Parenting,Hispanic,0.237,-0.067,0.541
+Delinquent Peer Affiliation,PGS,0.068,-0.013,0.148
+Delinquent Peer Affiliation,Age,0.094*,0.048,0.143
+Delinquent Peer Affiliation,Female Sex,-0.185*,-0.359,-0.008
+Delinquent Peer Affiliation,Family Income,0.083,-0.046,0.222
+Delinquent Peer Affiliation,Parental Education,0.050,-0.035,0.127
+Delinquent Peer Affiliation,Single Parent,0.197,-0.026,0.389
+Delinquent Peer Affiliation,White,0.057,-0.311,0.400
+Delinquent Peer Affiliation,Native,0.214,-0.142,0.608
+Delinquent Peer Affiliation,Asian,-0.248,-0.752,0.225
+Delinquent Peer Affiliation,Other Race,0.006,-0.359,0.352
+Delinquent Peer Affiliation,Hispanic,-0.076,-0.383,0.202
+School Connectedness,PGS,-0.010,-0.096,0.091
+School Connectedness,Age,-0.037,-0.091,0.024
+School Connectedness,Female Sex,-0.025,-0.216,0.149
+School Connectedness,Family Income,-0.049,-0.212,0.103
+School Connectedness,Parental Education,0.000,-0.079,0.084
+School Connectedness,Single Parent,-0.300*,-0.554,-0.101
+School Connectedness,White,-0.113,-0.505,0.249
+School Connectedness,Native,0.061,-0.295,0.449
+School Connectedness,Asian,0.030,-0.577,0.667
+School Connectedness,Other Race,-0.123,-0.527,0.253
+School Connectedness,Hispanic,0.086,-0.168,0.409
+Neighborhood Connectedness,PGS,-0.063,-0.152,0.037
+Neighborhood Connectedness,Age,-0.070*,-0.116,-0.014
+Neighborhood Connectedness,Female Sex,-0.143,-0.316,0.033
+Neighborhood Connectedness,Family Income,0.119,-0.078,0.294
+Neighborhood Connectedness,Parental Education,0.055,-0.022,0.130
+Neighborhood Connectedness,Single Parent,-0.016,-0.212,0.170
+Neighborhood Connectedness,White,-0.064,-0.432,0.244
+Neighborhood Connectedness,Native,-0.153,-0.564,0.173
+Neighborhood Connectedness,Asian,-0.303,-0.765,0.140
+Neighborhood Connectedness,Other Race,-0.104,-0.477,0.242
+Neighborhood Connectedness,Hispanic,-0.150,-0.436,0.112
