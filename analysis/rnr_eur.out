@@ -33,19 +33,19 @@ INPUT INSTRUCTIONS
      asb sub;
 
     USEOBSERVATIONS ARE
-      ancestry == 0;
+      ancestry == 0 AND white == 1 AND hispanic == 0;
 
     IDVARIABLE IS AID;
 
     Missing are .;
 
   Analysis:
-      process = 10;
+      process = 18;
       estimator = ML;
       Algorithm = INTEGRATION;
-      INTEGRATION = MONTECARLO (1500);
+      INTEGRATION = MONTECARLO (2000);
       !LINK = PROBIT;
-      bootstrap=500;
+      bootstrap=1500;
 
   Define:
 
@@ -53,9 +53,7 @@ INPUT INSTRUCTIONS
   MODEL:
 
       parent peer school neighbor ON age sex income pared
-      white !african
-      native !asian
-      other hispanic single_par;
+      single_par;
 
       parent ON pgs(a1);
       peer ON pgs(a2);
@@ -68,9 +66,7 @@ INPUT INSTRUCTIONS
       pgsage pgssex pgsinc pgspared pgssingpar
       sub_hi_dum sub_lo_dum age sex
       income pared
-      white !african
-      native !asian
-      other hispanic single_par;
+      single_par;
 
       asb#1 ON pgs(cpasb1);
       asb#1 ON parent(basb11);
@@ -95,9 +91,7 @@ INPUT INSTRUCTIONS
       pgsage pgssex pgsinc pgspared pgssingpar
       asb_hi_dum asb_mod_dum asb_ado_dum age sex
       income pared
-      white !african
-      native !asian
-      other hispanic single_par;
+      single_par;
 
       sub#1 ON pgs(cpsub1);
       sub#1 ON parent(bsub11);
@@ -121,9 +115,7 @@ INPUT INSTRUCTIONS
       neighbor WITH parent peer school;
 
       [pgs parent peer school neighbor
-      age sex income pared white !african
-      native !asian
-      other hispanic single_par
+      age sex income pared single_par
       pgsparent pgspeer
       pgsschool pgsneighbor
       pgsage pgssex pgsinc pgspared pgssingpar];
@@ -192,10 +184,10 @@ INPUT INSTRUCTIONS
 SUMMARY OF ANALYSIS
 
 Number of groups                                                 1
-Number of observations                                        5122
+Number of observations                                        5025
 
 Number of dependent variables                                    6
-Number of independent variables                                 24
+Number of independent variables                                 20
 Number of continuous latent variables                            0
 
 Observed dependent variables
@@ -210,7 +202,7 @@ Observed independent variables
    PGS         AGE         SEX         INCOME      PARED       SUB_HI_D
    SUB_LO_D    ASB_HI_D    ASB_MOD_    ASB_ADO_    PGSPAREN    PGSPEER
    PGSSCHOO    PGSNEIGH    PGSAGE      PGSSEX      PGSINC      PGSPARED
-   PGSSINGP    WHITE       NATIVE      OTHER       HISPANIC    SINGLE_P
+   PGSSINGP    SINGLE_P
 
 Variables with special functions
 
@@ -245,13 +237,13 @@ Categorical (Nominal) and Count Outcomes
 Maximum number of iterations for H1                           2000
 Convergence criterion for H1                             0.100D-03
 Number of bootstrap draws
-    Requested                                                  500
-    Completed                                                  500
+    Requested                                                 1500
+    Completed                                                 1500
 Optimization algorithm                                         EMA
 Integration Specifications
   Type                                                  MONTECARLO
-  Number of integration points                                1500
-  Dimensions of numerical integration                           18
+  Number of integration points                                2000
+  Dimensions of numerical integration                           14
   Adaptive quadrature                                           ON
   Monte Carlo integration seed                                   0
 Cholesky                                                       OFF
@@ -263,7 +255,7 @@ Input data format  FREE
 
 SUMMARY OF DATA
 
-     Number of missing data patterns            27
+     Number of missing data patterns            24
 
 
 COVARIANCE COVERAGE OF DATA
@@ -280,25 +272,21 @@ Minimum covariance coverage value   0.100
  PARENT         0.981
  PEER           0.977         0.995
  SCHOOL         0.964         0.977         0.982
- NEIGHBOR       0.979         0.994         0.980         0.997
+ NEIGHBOR       0.979         0.993         0.979         0.997
  PGS            0.981         0.995         0.982         0.997         1.000
- AGE            0.981         0.994         0.982         0.997         1.000
+ AGE            0.980         0.994         0.981         0.997         1.000
  SEX            0.981         0.995         0.982         0.997         1.000
- INCOME         0.809         0.812         0.801         0.815         0.816
+ INCOME         0.810         0.813         0.802         0.816         0.817
  PARED          0.959         0.955         0.943         0.957         0.959
  PGSPAREN       0.981         0.977         0.964         0.979         0.981
- PGSPEER        0.977         0.995         0.977         0.994         0.995
- PGSSCHOO       0.964         0.977         0.982         0.980         0.982
- PGSNEIGH       0.979         0.994         0.980         0.997         0.997
- PGSAGE         0.981         0.994         0.982         0.997         1.000
+ PGSPEER        0.977         0.995         0.977         0.993         0.995
+ PGSSCHOO       0.964         0.977         0.982         0.979         0.982
+ PGSNEIGH       0.979         0.993         0.979         0.997         0.997
+ PGSAGE         0.980         0.994         0.981         0.997         1.000
  PGSSEX         0.981         0.995         0.982         0.997         1.000
- PGSINC         0.809         0.812         0.801         0.815         0.816
+ PGSINC         0.810         0.813         0.802         0.816         0.817
  PGSPARED       0.959         0.955         0.943         0.957         0.959
  PGSSINGP       0.981         0.995         0.982         0.997         1.000
- WHITE          0.981         0.994         0.982         0.997         1.000
- NATIVE         0.981         0.994         0.982         0.997         1.000
- OTHER          0.981         0.994         0.982         0.997         1.000
- HISPANIC       0.980         0.993         0.980         0.996         0.998
  SINGLE_P       0.981         0.995         0.982         0.997         1.000
  SUB_HI_D       0.981         0.995         0.982         0.997         1.000
  SUB_LO_D       0.981         0.995         0.982         0.997         1.000
@@ -312,27 +300,23 @@ Minimum covariance coverage value   0.100
               ________      ________      ________      ________      ________
  AGE            1.000
  SEX            1.000         1.000
- INCOME         0.816         0.816         0.816
- PARED          0.959         0.959         0.793         0.959
- PGSPAREN       0.981         0.981         0.809         0.959         0.981
- PGSPEER        0.994         0.995         0.812         0.955         0.977
- PGSSCHOO       0.982         0.982         0.801         0.943         0.964
- PGSNEIGH       0.997         0.997         0.815         0.957         0.979
- PGSAGE         1.000         1.000         0.816         0.959         0.981
- PGSSEX         1.000         1.000         0.816         0.959         0.981
- PGSINC         0.816         0.816         0.816         0.793         0.809
- PGSPARED       0.959         0.959         0.793         0.959         0.959
- PGSSINGP       1.000         1.000         0.816         0.959         0.981
- WHITE          0.999         1.000         0.816         0.959         0.981
- NATIVE         0.999         1.000         0.816         0.959         0.981
- OTHER          0.999         1.000         0.816         0.959         0.981
- HISPANIC       0.998         0.998         0.815         0.957         0.980
- SINGLE_P       1.000         1.000         0.816         0.959         0.981
- SUB_HI_D       1.000         1.000         0.816         0.959         0.981
- SUB_LO_D       1.000         1.000         0.816         0.959         0.981
- ASB_HI_D       1.000         1.000         0.816         0.959         0.981
- ASB_MOD_       1.000         1.000         0.816         0.959         0.981
- ASB_ADO_       1.000         1.000         0.816         0.959         0.981
+ INCOME         0.817         0.817         0.817
+ PARED          0.959         0.959         0.794         0.959
+ PGSPAREN       0.980         0.981         0.810         0.959         0.981
+ PGSPEER        0.994         0.995         0.813         0.955         0.977
+ PGSSCHOO       0.981         0.982         0.802         0.943         0.964
+ PGSNEIGH       0.997         0.997         0.816         0.957         0.979
+ PGSAGE         1.000         1.000         0.817         0.959         0.980
+ PGSSEX         1.000         1.000         0.817         0.959         0.981
+ PGSINC         0.817         0.817         0.817         0.794         0.810
+ PGSPARED       0.959         0.959         0.794         0.959         0.959
+ PGSSINGP       1.000         1.000         0.817         0.959         0.981
+ SINGLE_P       1.000         1.000         0.817         0.959         0.981
+ SUB_HI_D       1.000         1.000         0.817         0.959         0.981
+ SUB_LO_D       1.000         1.000         0.817         0.959         0.981
+ ASB_HI_D       1.000         1.000         0.817         0.959         0.981
+ ASB_MOD_       1.000         1.000         0.817         0.959         0.981
+ ASB_ADO_       1.000         1.000         0.817         0.959         0.981
 
 
            Covariance Coverage
@@ -340,16 +324,12 @@ Minimum covariance coverage value   0.100
               ________      ________      ________      ________      ________
  PGSPEER        0.995
  PGSSCHOO       0.977         0.982
- PGSNEIGH       0.994         0.980         0.997
- PGSAGE         0.994         0.982         0.997         1.000
+ PGSNEIGH       0.993         0.979         0.997
+ PGSAGE         0.994         0.981         0.997         1.000
  PGSSEX         0.995         0.982         0.997         1.000         1.000
- PGSINC         0.812         0.801         0.815         0.816         0.816
+ PGSINC         0.813         0.802         0.816         0.817         0.817
  PGSPARED       0.955         0.943         0.957         0.959         0.959
  PGSSINGP       0.995         0.982         0.997         1.000         1.000
- WHITE          0.994         0.982         0.997         0.999         1.000
- NATIVE         0.994         0.982         0.997         0.999         1.000
- OTHER          0.994         0.982         0.997         0.999         1.000
- HISPANIC       0.993         0.980         0.996         0.998         0.998
  SINGLE_P       0.995         0.982         0.997         1.000         1.000
  SUB_HI_D       0.995         0.982         0.997         1.000         1.000
  SUB_LO_D       0.995         0.982         0.997         1.000         1.000
@@ -359,55 +339,39 @@ Minimum covariance coverage value   0.100
 
 
            Covariance Coverage
-              PGSINC        PGSPARED      PGSSINGP      WHITE         NATIVE
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
               ________      ________      ________      ________      ________
- PGSINC         0.816
- PGSPARED       0.793         0.959
- PGSSINGP       0.816         0.959         1.000
- WHITE          0.816         0.959         1.000         1.000
- NATIVE         0.816         0.959         1.000         1.000         1.000
- OTHER          0.816         0.959         1.000         1.000         1.000
- HISPANIC       0.815         0.957         0.998         0.998         0.998
- SINGLE_P       0.816         0.959         1.000         1.000         1.000
- SUB_HI_D       0.816         0.959         1.000         1.000         1.000
- SUB_LO_D       0.816         0.959         1.000         1.000         1.000
- ASB_HI_D       0.816         0.959         1.000         1.000         1.000
- ASB_MOD_       0.816         0.959         1.000         1.000         1.000
- ASB_ADO_       0.816         0.959         1.000         1.000         1.000
+ PGSINC         0.817
+ PGSPARED       0.794         0.959
+ PGSSINGP       0.817         0.959         1.000
+ SINGLE_P       0.817         0.959         1.000         1.000
+ SUB_HI_D       0.817         0.959         1.000         1.000         1.000
+ SUB_LO_D       0.817         0.959         1.000         1.000         1.000
+ ASB_HI_D       0.817         0.959         1.000         1.000         1.000
+ ASB_MOD_       0.817         0.959         1.000         1.000         1.000
+ ASB_ADO_       0.817         0.959         1.000         1.000         1.000
 
 
            Covariance Coverage
-              OTHER         HISPANIC      SINGLE_P      SUB_HI_D      SUB_LO_D
-              ________      ________      ________      ________      ________
- OTHER          1.000
- HISPANIC       0.998         0.998
- SINGLE_P       1.000         0.998         1.000
- SUB_HI_D       1.000         0.998         1.000         1.000
- SUB_LO_D       1.000         0.998         1.000         1.000         1.000
- ASB_HI_D       1.000         0.998         1.000         1.000         1.000
- ASB_MOD_       1.000         0.998         1.000         1.000         1.000
- ASB_ADO_       1.000         0.998         1.000         1.000         1.000
-
-
-           Covariance Coverage
-              ASB_HI_D      ASB_MOD_      ASB_ADO_
-              ________      ________      ________
- ASB_HI_D       1.000
- ASB_MOD_       1.000         1.000
- ASB_ADO_       1.000         1.000         1.000
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ SUB_LO_D       1.000
+ ASB_HI_D       1.000         1.000
+ ASB_MOD_       1.000         1.000         1.000
+ ASB_ADO_       1.000         1.000         1.000         1.000
 
 
 UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
 
     ASB
-      Category 1    0.018           93.000
-      Category 2    0.128          656.000
-      Category 3    0.061          313.000
-      Category 4    0.793         4060.000
+      Category 1    0.018           91.000
+      Category 2    0.128          643.000
+      Category 3    0.060          304.000
+      Category 4    0.793         3987.000
     SUB
-      Category 1    0.431         2209.000
-      Category 2    0.148          758.000
-      Category 3    0.421         2155.000
+      Category 1    0.432         2171.000
+      Category 2    0.148          746.000
+      Category 3    0.420         2108.000
 
 
 
@@ -417,17 +381,17 @@ THE MODEL ESTIMATION TERMINATED NORMALLY
 
 MODEL FIT INFORMATION
 
-Number of Free Parameters                      395
+Number of Free Parameters                      285
 
 Loglikelihood
 
-          H0 Value                     -105466.829
+          H0 Value                     -123066.590
 
 Information Criteria
 
-          Akaike (AIC)                  211723.659
-          Bayesian (BIC)                214307.472
-          Sample-Size Adjusted BIC      213052.295
+          Akaike (AIC)                  246703.179
+          Bayesian (BIC)                248562.001
+          Sample-Size Adjusted BIC      247656.369
             (n* = (n + 2) / 24)
 
 
@@ -438,634 +402,496 @@ MODEL RESULTS
                     Estimate       S.E.  Est./S.E.    P-Value
 
  PARENT     ON
-    AGE               -0.094      0.008    -11.758      0.000
-    SEX               -0.172      0.027     -6.264      0.000
-    INCOME             0.044      0.024      1.829      0.067
-    PARED              0.019      0.015      1.258      0.208
-    WHITE             -0.217      0.295     -0.735      0.463
-    NATIVE            -0.072      0.096     -0.745      0.456
-    OTHER             -0.380      0.286     -1.328      0.184
-    HISPANIC           0.067      0.131      0.514      0.607
-    SINGLE_PAR        -0.075      0.038     -1.969      0.049
-    PGS               -0.056      0.014     -4.042      0.000
+    AGE               -0.092      0.008    -12.020      0.000
+    SEX               -0.170      0.028     -6.003      0.000
+    INCOME             0.046      0.025      1.836      0.066
+    PARED              0.022      0.016      1.380      0.167
+    SINGLE_PAR        -0.078      0.039     -1.981      0.048
+    PGS               -0.055      0.014     -3.976      0.000
 
  PEER       ON
-    AGE                0.156      0.007     21.429      0.000
-    SEX               -0.048      0.025     -1.901      0.057
-    INCOME             0.006      0.021      0.309      0.757
-    PARED             -0.093      0.014     -6.786      0.000
-    WHITE              0.319      0.288      1.109      0.268
-    NATIVE             0.240      0.102      2.342      0.019
-    OTHER              0.701      0.279      2.510      0.012
-    HISPANIC          -0.112      0.127     -0.886      0.376
-    SINGLE_PAR         0.213      0.034      6.324      0.000
-    PGS                0.139      0.013     10.978      0.000
+    AGE                0.155      0.007     21.498      0.000
+    SEX               -0.050      0.026     -1.909      0.056
+    INCOME             0.004      0.022      0.197      0.844
+    PARED             -0.090      0.014     -6.282      0.000
+    SINGLE_PAR         0.217      0.035      6.186      0.000
+    PGS                0.141      0.013     10.483      0.000
 
  SCHOOL     ON
-    AGE               -0.057      0.008     -7.216      0.000
-    SEX               -0.004      0.026     -0.160      0.873
-    INCOME             0.035      0.023      1.531      0.126
-    PARED              0.075      0.015      4.910      0.000
-    WHITE             -0.409      0.277     -1.477      0.140
-    NATIVE            -0.164      0.105     -1.558      0.119
-    OTHER             -0.587      0.266     -2.210      0.027
-    HISPANIC          -0.005      0.138     -0.033      0.973
-    SINGLE_PAR        -0.130      0.036     -3.600      0.000
-    PGS               -0.106      0.013     -8.130      0.000
+    AGE               -0.058      0.008     -7.136      0.000
+    SEX               -0.003      0.028     -0.091      0.927
+    INCOME             0.035      0.024      1.412      0.158
+    PARED              0.072      0.014      5.049      0.000
+    SINGLE_PAR        -0.139      0.037     -3.782      0.000
+    PGS               -0.105      0.014     -7.638      0.000
 
  NEIGHBOR   ON
-    AGE               -0.049      0.008     -6.076      0.000
-    SEX               -0.051      0.027     -1.938      0.053
-    INCOME             0.005      0.024      0.227      0.821
-    PARED             -0.005      0.015     -0.311      0.756
-    WHITE             -0.236      0.281     -0.842      0.400
-    NATIVE            -0.179      0.116     -1.544      0.123
-    OTHER             -0.242      0.266     -0.909      0.363
-    HISPANIC          -0.249      0.123     -2.026      0.043
-    SINGLE_PAR        -0.232      0.037     -6.313      0.000
-    PGS               -0.047      0.013     -3.504      0.000
+    AGE               -0.052      0.008     -6.504      0.000
+    SEX               -0.052      0.028     -1.817      0.069
+    INCOME             0.006      0.024      0.247      0.805
+    PARED             -0.007      0.015     -0.466      0.641
+    SINGLE_PAR        -0.228      0.037     -6.165      0.000
+    PGS               -0.045      0.014     -3.214      0.001
 
  ASB#1      ON
-    PGSPARENT         -0.075      0.135     -0.552      0.581
-    PGSPEER           -0.172      0.110     -1.558      0.119
-    PGSSCHOOL          0.084      0.146      0.578      0.563
-    PGSNEIGHBO        -0.135      0.141     -0.958      0.338
-    PGSAGE             0.017      0.088      0.189      0.850
-    PGSSEX             0.046      0.331      0.139      0.889
-    PGSINC             0.078      0.186      0.421      0.674
-    PGSPARED          -0.145      0.134     -1.082      0.279
-    PGSSINGPAR         0.054      0.283      0.191      0.848
-    SUB_HI_DUM         1.565      0.455      3.442      0.001
-    SUB_LO_DUM        -0.811      4.654     -0.174      0.862
-    AGE               -0.357      0.078     -4.564      0.000
-    SEX               -2.810      0.426     -6.591      0.000
-    INCOME            -0.157      0.172     -0.911      0.362
-    PARED              0.281      0.130      2.162      0.031
-    WHITE             -2.094      2.884     -0.726      0.468
-    NATIVE             0.313      1.962      0.160      0.873
-    OTHER             -1.554      3.880     -0.400      0.689
-    HISPANIC          -0.193      3.013     -0.064      0.949
-    SINGLE_PAR        -0.266      0.283     -0.938      0.348
-    PGS                0.435      0.218      1.991      0.046
-    PARENT            -0.184      0.132     -1.395      0.163
-    PEER               1.223      0.130      9.426      0.000
-    SCHOOL            -0.371      0.141     -2.640      0.008
-    NEIGHBOR          -0.015      0.141     -0.105      0.916
+    PGSPARENT         -0.071      0.139     -0.511      0.609
+    PGSPEER           -0.150      0.114     -1.314      0.189
+    PGSSCHOOL          0.065      0.149      0.435      0.664
+    PGSNEIGHBO        -0.173      0.145     -1.199      0.230
+    PGSAGE             0.006      0.083      0.069      0.945
+    PGSSEX             0.038      0.326      0.117      0.907
+    PGSINC             0.106      0.180      0.586      0.558
+    PGSPARED          -0.136      0.135     -1.010      0.312
+    PGSSINGPAR         0.042      0.290      0.146      0.884
+    SUB_HI_DUM         1.571      0.531      2.959      0.003
+    SUB_LO_DUM        -9.357      0.585    -15.982      0.000
+    AGE               -0.372      0.074     -5.006      0.000
+    SEX               -2.820      0.455     -6.193      0.000
+    INCOME            -0.139      0.182     -0.764      0.445
+    PARED              0.296      0.128      2.318      0.020
+    SINGLE_PAR        -0.229      0.288     -0.794      0.427
+    PGS                0.371      0.223      1.664      0.096
+    PARENT            -0.192      0.134     -1.426      0.154
+    PEER               1.252      0.134      9.352      0.000
+    SCHOOL            -0.367      0.148     -2.478      0.013
+    NEIGHBOR          -0.047      0.142     -0.331      0.740
 
  ASB#2      ON
-    PGSPARENT          0.078      0.048      1.620      0.105
-    PGSPEER           -0.016      0.047     -0.335      0.738
-    PGSSCHOOL         -0.002      0.052     -0.031      0.975
-    PGSNEIGHBO        -0.039      0.047     -0.817      0.414
-    PGSAGE             0.018      0.028      0.662      0.508
-    PGSSEX             0.130      0.091      1.428      0.153
-    PGSINC            -0.045      0.076     -0.591      0.555
-    PGSPARED           0.081      0.049      1.667      0.096
-    PGSSINGPAR        -0.109      0.114     -0.960      0.337
-    SUB_HI_DUM         0.663      0.097      6.834      0.000
-    SUB_LO_DUM        -0.832      0.205     -4.060      0.000
-    AGE               -0.116      0.031     -3.797      0.000
-    SEX               -1.341      0.101    -13.256      0.000
-    INCOME             0.040      0.072      0.551      0.582
-    PARED              0.079      0.047      1.699      0.089
-    WHITE             -0.067      1.150     -0.058      0.953
-    NATIVE             0.117      0.311      0.376      0.707
-    OTHER              0.697      1.080      0.645      0.519
-    HISPANIC           0.221      0.396      0.559      0.576
-    SINGLE_PAR        -0.035      0.114     -0.307      0.759
-    PGS                0.127      0.058      2.167      0.030
-    PARENT            -0.197      0.052     -3.798      0.000
-    PEER               0.207      0.051      4.055      0.000
-    SCHOOL            -0.101      0.053     -1.909      0.056
-    NEIGHBOR           0.012      0.051      0.242      0.809
+    PGSPARENT          0.075      0.049      1.522      0.128
+    PGSPEER           -0.011      0.049     -0.221      0.825
+    PGSSCHOOL          0.000      0.052     -0.002      0.998
+    PGSNEIGHBO        -0.044      0.049     -0.903      0.367
+    PGSAGE             0.022      0.029      0.759      0.448
+    PGSSEX             0.127      0.094      1.347      0.178
+    PGSINC            -0.046      0.080     -0.579      0.563
+    PGSPARED           0.080      0.051      1.559      0.119
+    PGSSINGPAR        -0.119      0.118     -1.008      0.314
+    SUB_HI_DUM         0.628      0.102      6.140      0.000
+    SUB_LO_DUM        -0.837      0.207     -4.033      0.000
+    AGE               -0.124      0.030     -4.146      0.000
+    SEX               -1.362      0.102    -13.300      0.000
+    INCOME             0.042      0.077      0.547      0.584
+    PARED              0.084      0.048      1.765      0.078
+    SINGLE_PAR        -0.047      0.112     -0.418      0.676
+    PGS                0.133      0.060      2.219      0.026
+    PARENT            -0.208      0.050     -4.130      0.000
+    PEER               0.216      0.052      4.166      0.000
+    SCHOOL            -0.101      0.054     -1.847      0.065
+    NEIGHBOR           0.010      0.050      0.202      0.840
 
  ASB#3      ON
-    PGSPARENT         -0.079      0.062     -1.274      0.203
-    PGSPEER            0.014      0.057      0.237      0.813
-    PGSSCHOOL         -0.040      0.070     -0.569      0.569
-    PGSNEIGHBO         0.105      0.073      1.426      0.154
-    PGSAGE             0.002      0.041      0.036      0.971
-    PGSSEX             0.082      0.141      0.578      0.564
-    PGSINC            -0.040      0.099     -0.402      0.688
-    PGSPARED           0.055      0.069      0.798      0.425
-    PGSSINGPAR         0.314      0.167      1.881      0.060
-    SUB_HI_DUM         0.501      0.144      3.474      0.001
-    SUB_LO_DUM        -0.577      0.333     -1.732      0.083
-    AGE               -0.330      0.041     -8.143      0.000
-    SEX               -1.055      0.133     -7.916      0.000
-    INCOME             0.147      0.104      1.404      0.160
-    PARED              0.055      0.071      0.771      0.441
-    WHITE              1.923      2.795      0.688      0.491
-    NATIVE             0.075      0.476      0.157      0.876
-    OTHER              1.795      0.984      1.824      0.068
-    HISPANIC           0.641      0.705      0.909      0.363
-    SINGLE_PAR         0.102      0.164      0.622      0.534
-    PGS                0.066      0.093      0.708      0.479
-    PARENT            -0.209      0.056     -3.746      0.000
-    PEER               0.750      0.065     11.504      0.000
-    SCHOOL            -0.287      0.070     -4.088      0.000
-    NEIGHBOR           0.011      0.068      0.158      0.874
+    PGSPARENT         -0.088      0.061     -1.450      0.147
+    PGSPEER            0.005      0.058      0.088      0.930
+    PGSSCHOOL         -0.068      0.066     -1.028      0.304
+    PGSNEIGHBO         0.095      0.067      1.409      0.159
+    PGSAGE            -0.006      0.041     -0.141      0.888
+    PGSSEX             0.077      0.142      0.546      0.585
+    PGSINC            -0.038      0.106     -0.355      0.723
+    PGSPARED           0.049      0.065      0.756      0.450
+    PGSSINGPAR         0.328      0.175      1.876      0.061
+    SUB_HI_DUM         0.566      0.157      3.597      0.000
+    SUB_LO_DUM        -0.521      0.334     -1.559      0.119
+    AGE               -0.333      0.043     -7.777      0.000
+    SEX               -1.031      0.142     -7.285      0.000
+    INCOME             0.142      0.109      1.305      0.192
+    PARED              0.060      0.069      0.866      0.386
+    SINGLE_PAR         0.071      0.163      0.436      0.663
+    PGS                0.057      0.096      0.590      0.555
+    PARENT            -0.216      0.058     -3.706      0.000
+    PEER               0.773      0.064     12.093      0.000
+    SCHOOL            -0.275      0.066     -4.160      0.000
+    NEIGHBOR          -0.004      0.065     -0.057      0.954
 
  SUB#1      ON
-    PGSPARENT         -0.030      0.042     -0.709      0.478
-    PGSPEER           -0.065      0.042     -1.570      0.116
-    PGSSCHOOL          0.019      0.045      0.409      0.682
-    PGSNEIGHBO         0.076      0.037      2.024      0.043
-    PGSAGE             0.054      0.022      2.448      0.014
-    PGSSEX             0.180      0.070      2.564      0.010
-    PGSINC            -0.067      0.067     -0.992      0.321
-    PGSPARED           0.065      0.038      1.692      0.091
-    PGSSINGPAR        -0.021      0.092     -0.222      0.824
-    ASB_HI_DUM         1.457      0.442      3.296      0.001
-    ASB_MOD_DU         0.666      0.097      6.844      0.000
-    ASB_ADO_DU         0.502      0.142      3.525      0.000
-    AGE               -0.117      0.021     -5.630      0.000
-    SEX               -0.209      0.074     -2.847      0.004
-    INCOME            -0.050      0.061     -0.813      0.416
-    PARED             -0.104      0.035     -2.948      0.003
-    WHITE             -0.380      0.855     -0.444      0.657
-    NATIVE            -0.061      0.235     -0.259      0.796
-    OTHER             -1.087      0.860     -1.264      0.206
-    HISPANIC          -0.254      0.322     -0.790      0.430
-    SINGLE_PAR         0.220      0.086      2.547      0.011
-    PGS                0.248      0.041      5.998      0.000
-    PARENT            -0.023      0.038     -0.601      0.548
-    PEER               0.633      0.039     16.175      0.000
-    SCHOOL            -0.197      0.039     -4.996      0.000
-    NEIGHBOR          -0.017      0.036     -0.468      0.640
+    PGSPARENT         -0.023      0.041     -0.551      0.581
+    PGSPEER           -0.067      0.041     -1.639      0.101
+    PGSSCHOOL          0.016      0.045      0.361      0.718
+    PGSNEIGHBO         0.085      0.037      2.288      0.022
+    PGSAGE             0.055      0.022      2.530      0.011
+    PGSSEX             0.185      0.068      2.720      0.007
+    PGSINC            -0.063      0.065     -0.981      0.327
+    PGSPARED           0.070      0.039      1.827      0.068
+    PGSSINGPAR        -0.021      0.091     -0.233      0.816
+    ASB_HI_DUM         1.445      0.524      2.759      0.006
+    ASB_MOD_DU         0.632      0.103      6.151      0.000
+    ASB_ADO_DU         0.553      0.157      3.517      0.000
+    AGE               -0.119      0.022     -5.305      0.000
+    SEX               -0.221      0.071     -3.087      0.002
+    INCOME            -0.048      0.059     -0.819      0.413
+    PARED             -0.109      0.035     -3.089      0.002
+    SINGLE_PAR         0.229      0.088      2.606      0.009
+    PGS                0.244      0.044      5.524      0.000
+    PARENT            -0.020      0.037     -0.527      0.598
+    PEER               0.630      0.042     14.917      0.000
+    SCHOOL            -0.190      0.039     -4.893      0.000
+    NEIGHBOR          -0.016      0.036     -0.432      0.666
 
  SUB#2      ON
-    PGSPARENT          0.047      0.056      0.842      0.400
-    PGSPEER            0.075      0.079      0.955      0.339
-    PGSSCHOOL         -0.030      0.057     -0.536      0.592
-    PGSNEIGHBO         0.053      0.044      1.208      0.227
-    PGSAGE             0.034      0.027      1.240      0.215
-    PGSSEX            -0.020      0.094     -0.211      0.833
-    PGSINC             0.020      0.083      0.246      0.806
-    PGSPARED          -0.013      0.050     -0.265      0.791
-    PGSSINGPAR        -0.119      0.122     -0.975      0.330
-    ASB_HI_DUM        -0.461      4.654     -0.099      0.921
-    ASB_MOD_DU        -0.789      0.205     -3.847      0.000
-    ASB_ADO_DU        -0.370      0.328     -1.129      0.259
-    AGE                0.148      0.028      5.228      0.000
-    SEX                0.383      0.094      4.072      0.000
-    INCOME            -0.219      0.075     -2.914      0.004
-    PARED             -0.211      0.052     -4.079      0.000
-    WHITE             -0.958      1.450     -0.660      0.509
-    NATIVE             0.193      0.325      0.594      0.553
-    OTHER             -1.256      2.009     -0.625      0.532
-    HISPANIC          -0.351      0.441     -0.795      0.427
-    SINGLE_PAR        -0.024      0.113     -0.210      0.834
-    PGS               -0.174      0.076     -2.294      0.022
-    PARENT             0.114      0.061      1.866      0.062
-    PEER              -0.679      0.082     -8.253      0.000
-    SCHOOL            -0.022      0.054     -0.410      0.682
-    NEIGHBOR          -0.118      0.047     -2.482      0.013
+    PGSPARENT          0.062      0.058      1.071      0.284
+    PGSPEER            0.076      0.079      0.961      0.337
+    PGSSCHOOL         -0.042      0.057     -0.738      0.460
+    PGSNEIGHBO         0.057      0.049      1.173      0.241
+    PGSAGE             0.031      0.028      1.090      0.276
+    PGSSEX            -0.002      0.091     -0.026      0.979
+    PGSINC             0.038      0.081      0.465      0.642
+    PGSPARED          -0.014      0.052     -0.272      0.786
+    PGSSINGPAR        -0.096      0.125     -0.771      0.441
+    ASB_HI_DUM        -9.931      0.511    -19.421      0.000
+    ASB_MOD_DU        -0.799      0.207     -3.868      0.000
+    ASB_ADO_DU        -0.302      0.326     -0.926      0.354
+    AGE                0.146      0.028      5.147      0.000
+    SEX                0.365      0.095      3.852      0.000
+    INCOME            -0.207      0.075     -2.769      0.006
+    PARED             -0.206      0.052     -3.972      0.000
+    SINGLE_PAR         0.001      0.117      0.010      0.992
+    PGS               -0.165      0.073     -2.268      0.023
+    PARENT             0.112      0.059      1.886      0.059
+    PEER              -0.677      0.084     -8.056      0.000
+    SCHOOL            -0.029      0.055     -0.532      0.595
+    NEIGHBOR          -0.113      0.048     -2.342      0.019
 
  PARENT   WITH
-    PEER              -0.178      0.014    -12.952      0.000
-    SCHOOL             0.326      0.015     21.373      0.000
-    NEIGHBOR           0.194      0.014     13.944      0.000
+    PEER              -0.174      0.014    -12.418      0.000
+    SCHOOL             0.323      0.016     19.690      0.000
+    NEIGHBOR           0.195      0.014     13.955      0.000
 
  PEER     WITH
-    SCHOOL            -0.237      0.015    -16.343      0.000
-    NEIGHBOR          -0.059      0.013     -4.453      0.000
+    SCHOOL            -0.233      0.014    -16.297      0.000
+    NEIGHBOR          -0.060      0.013     -4.489      0.000
 
  SCHOOL   WITH
-    NEIGHBOR           0.290      0.015     19.664      0.000
+    NEIGHBOR           0.291      0.015     19.789      0.000
 
  AGE      WITH
-    PGS                0.001      0.024      0.043      0.966
+    PGS                0.003      0.025      0.124      0.901
 
  SEX      WITH
-    PGS                0.013      0.007      1.843      0.065
-    AGE               -0.054      0.012     -4.574      0.000
+    PGS                0.014      0.007      1.948      0.051
+    AGE               -0.054      0.012     -4.325      0.000
 
  INCOME   WITH
-    PGS               -0.064      0.012     -5.456      0.000
-    AGE                0.000      0.019     -0.024      0.981
-    SEX                0.004      0.006      0.713      0.476
+    PGS               -0.063      0.012     -5.380      0.000
+    AGE               -0.004      0.020     -0.225      0.822
+    SEX                0.003      0.006      0.604      0.546
 
  PARED    WITH
-    PGS               -0.127      0.016     -8.139      0.000
-    AGE               -0.107      0.027     -3.958      0.000
-    SEX               -0.007      0.008     -0.876      0.381
-    INCOME             0.360      0.015     24.794      0.000
+    PGS               -0.126      0.016     -7.919      0.000
+    AGE               -0.111      0.027     -4.056      0.000
+    SEX               -0.007      0.008     -0.930      0.352
+    INCOME             0.359      0.015     23.857      0.000
 
  PGSPAREN WITH
-    PGS                0.015      0.024      0.603      0.547
-    AGE                0.030      0.024      1.249      0.212
-    SEX                0.011      0.007      1.557      0.119
-    INCOME            -0.001      0.012     -0.077      0.938
-    PARED             -0.031      0.017     -1.826      0.068
+    PGS                0.018      0.024      0.723      0.470
+    AGE                0.033      0.025      1.316      0.188
+    SEX                0.010      0.007      1.382      0.167
+    INCOME             0.001      0.012      0.113      0.910
+    PARED             -0.031      0.017     -1.802      0.072
 
  PGSPEER  WITH
-    PGS                0.003      0.024      0.130      0.896
-    AGE                0.038      0.025      1.548      0.122
-    SEX                0.000      0.007      0.061      0.951
-    INCOME             0.008      0.011      0.718      0.473
-    PARED              0.016      0.017      0.972      0.331
-    PGSPARENT         -0.252      0.026     -9.785      0.000
+    PGS                0.001      0.024      0.028      0.978
+    AGE                0.038      0.024      1.582      0.114
+    SEX                0.001      0.007      0.182      0.856
+    INCOME             0.009      0.012      0.719      0.472
+    PARED              0.014      0.016      0.894      0.371
+    PGSPARENT         -0.242      0.025     -9.571      0.000
 
  PGSSCHOO WITH
-    PGS                0.004      0.023      0.179      0.858
-    AGE                0.012      0.025      0.484      0.629
-    SEX                0.008      0.007      1.200      0.230
-    INCOME             0.024      0.012      1.983      0.047
-    PARED              0.023      0.016      1.429      0.153
-    PGSPARENT          0.381      0.026     14.479      0.000
-    PGSPEER           -0.321      0.026    -12.256      0.000
+    PGS                0.006      0.024      0.242      0.809
+    AGE                0.017      0.023      0.733      0.463
+    SEX                0.007      0.007      1.014      0.311
+    INCOME             0.024      0.012      2.067      0.039
+    PARED              0.022      0.015      1.433      0.152
+    PGSPARENT          0.368      0.027     13.794      0.000
+    PGSPEER           -0.310      0.026    -11.750      0.000
 
  PGSNEIGH WITH
-    PGS                0.002      0.024      0.082      0.934
-    AGE               -0.019      0.025     -0.749      0.454
-    SEX               -0.008      0.007     -1.111      0.266
-    INCOME             0.011      0.012      0.930      0.352
-    PARED             -0.005      0.016     -0.336      0.737
-    PGSPARENT          0.224      0.026      8.706      0.000
-    PGSPEER           -0.100      0.025     -4.080      0.000
-    PGSSCHOOL          0.320      0.025     12.997      0.000
+    PGS                0.004      0.024      0.157      0.876
+    AGE               -0.014      0.024     -0.559      0.576
+    SEX               -0.009      0.007     -1.332      0.183
+    INCOME             0.011      0.012      0.887      0.375
+    PARED             -0.006      0.016     -0.406      0.684
+    PGSPARENT          0.222      0.026      8.693      0.000
+    PGSPEER           -0.098      0.025     -3.936      0.000
+    PGSSCHOOL          0.316      0.024     13.138      0.000
 
  PGSAGE   WITH
-    PGS                0.073      0.043      1.710      0.087
-    AGE                0.028      0.060      0.475      0.635
-    SEX               -0.002      0.012     -0.198      0.843
-    INCOME             0.030      0.019      1.522      0.128
-    PARED              0.029      0.028      1.057      0.291
-    PGSPARENT         -0.258      0.045     -5.791      0.000
-    PGSPEER            0.450      0.040     11.121      0.000
-    PGSSCHOOL         -0.154      0.039     -3.963      0.000
-    PGSNEIGHBO        -0.097      0.044     -2.217      0.027
+    PGS                0.066      0.043      1.538      0.124
+    AGE                0.037      0.060      0.607      0.544
+    SEX               -0.001      0.012     -0.072      0.943
+    INCOME             0.030      0.020      1.465      0.143
+    PARED              0.034      0.027      1.283      0.199
+    PGSPARENT         -0.258      0.045     -5.775      0.000
+    PGSPEER            0.455      0.041     10.971      0.000
+    PGSSCHOOL         -0.160      0.040     -4.047      0.000
+    PGSNEIGHBO        -0.099      0.045     -2.228      0.026
 
  PGSSEX   WITH
-    PGS                0.028      0.012      2.310      0.021
-    AGE               -0.002      0.012     -0.201      0.841
-    SEX                0.000      0.004     -0.111      0.911
-    INCOME            -0.003      0.006     -0.492      0.622
-    PARED              0.003      0.008      0.410      0.682
+    PGS                0.030      0.012      2.516      0.012
+    AGE               -0.001      0.012     -0.062      0.950
+    SEX                0.000      0.004     -0.098      0.922
+    INCOME            -0.004      0.006     -0.644      0.520
+    PARED              0.003      0.008      0.439      0.661
     PGSPARENT         -0.031      0.012     -2.568      0.010
-    PGSPEER           -0.016      0.012     -1.360      0.174
-    PGSSCHOOL          0.007      0.011      0.627      0.530
-    PGSNEIGHBO        -0.003      0.012     -0.262      0.793
-    PGSAGE            -0.052      0.020     -2.606      0.009
+    PGSPEER           -0.015      0.012     -1.272      0.203
+    PGSSCHOOL          0.007      0.012      0.601      0.548
+    PGSNEIGHBO        -0.004      0.012     -0.339      0.734
+    PGSAGE            -0.047      0.022     -2.166      0.030
 
  PGSINC   WITH
-    PGS                0.014      0.020      0.708      0.479
-    AGE                0.030      0.019      1.529      0.126
-    SEX               -0.001      0.006     -0.242      0.809
-    INCOME             0.045      0.022      2.037      0.042
-    PARED             -0.005      0.015     -0.367      0.714
-    PGSPARENT          0.047      0.020      2.427      0.015
-    PGSPEER           -0.056      0.020     -2.822      0.005
-    PGSSCHOOL          0.080      0.019      4.200      0.000
-    PGSNEIGHBO         0.062      0.022      2.791      0.005
-    PGSAGE             0.037      0.035      1.070      0.284
-    PGSSEX             0.002      0.010      0.236      0.813
+    PGS                0.012      0.019      0.626      0.532
+    AGE                0.029      0.020      1.455      0.146
+    SEX               -0.002      0.006     -0.402      0.687
+    INCOME             0.041      0.024      1.679      0.093
+    PARED             -0.008      0.016     -0.526      0.599
+    PGSPARENT          0.049      0.020      2.478      0.013
+    PGSPEER           -0.054      0.020     -2.770      0.006
+    PGSSCHOOL          0.078      0.019      4.049      0.000
+    PGSNEIGHBO         0.061      0.024      2.601      0.009
+    PGSAGE             0.025      0.033      0.767      0.443
+    PGSSEX             0.002      0.009      0.243      0.808
 
  PGSPARED WITH
-    PGS                0.032      0.025      1.294      0.196
-    AGE                0.030      0.027      1.095      0.273
-    SEX                0.007      0.008      0.860      0.390
-    INCOME            -0.007      0.014     -0.449      0.653
-    PARED             -0.016      0.027     -0.594      0.553
-    PGSPARENT          0.081      0.031      2.655      0.008
-    PGSPEER           -0.143      0.028     -5.209      0.000
-    PGSSCHOOL          0.117      0.025      4.645      0.000
-    PGSNEIGHBO         0.012      0.025      0.482      0.630
-    PGSAGE            -0.127      0.048     -2.660      0.008
-    PGSSEX            -0.009      0.014     -0.616      0.538
-    PGSINC             0.359      0.023     15.553      0.000
+    PGS                0.033      0.026      1.258      0.209
+    AGE                0.035      0.026      1.343      0.179
+    SEX                0.007      0.008      0.898      0.369
+    INCOME            -0.009      0.015     -0.567      0.571
+    PARED             -0.021      0.027     -0.789      0.430
+    PGSPARENT          0.077      0.030      2.569      0.010
+    PGSPEER           -0.134      0.026     -5.103      0.000
+    PGSSCHOOL          0.102      0.025      4.150      0.000
+    PGSNEIGHBO         0.006      0.025      0.251      0.802
+    PGSAGE            -0.145      0.045     -3.182      0.001
+    PGSSEX            -0.007      0.013     -0.516      0.606
+    PGSINC             0.348      0.023     15.103      0.000
 
  PGSSINGP WITH
-    PGS               -0.279      0.011    -24.988      0.000
-    AGE               -0.004      0.012     -0.304      0.761
-    SEX               -0.001      0.004     -0.391      0.696
-    INCOME             0.007      0.006      1.204      0.228
-    PARED              0.044      0.008      5.577      0.000
-    PGSPARENT         -0.030      0.013     -2.401      0.016
-    PGSPEER            0.043      0.012      3.596      0.000
-    PGSSCHOOL         -0.025      0.011     -2.268      0.023
-    PGSNEIGHBO        -0.051      0.012     -4.336      0.000
-    PGSAGE            -0.017      0.022     -0.801      0.423
-    PGSSEX            -0.013      0.006     -2.080      0.037
-    PGSINC            -0.102      0.009    -10.718      0.000
-    PGSPARED          -0.039      0.013     -2.987      0.003
-
- WHITE    WITH
-    PGS               -0.001      0.001     -0.905      0.365
-    AGE               -0.001      0.002     -0.490      0.624
-    SEX                0.000      0.001      0.181      0.857
-    INCOME             0.001      0.001      1.248      0.212
-    PARED              0.000      0.002      0.107      0.915
-    PGSPARENT          0.001      0.002      0.888      0.374
-    PGSPEER            0.001      0.001      0.380      0.704
-    PGSSCHOOL          0.001      0.001      0.738      0.460
-    PGSNEIGHBO         0.001      0.001      0.667      0.505
-    PGSAGE             0.001      0.002      0.501      0.616
-    PGSSEX             0.001      0.001      1.612      0.107
-    PGSINC             0.001      0.001      1.313      0.189
-    PGSPARED           0.002      0.002      0.816      0.414
-    PGSSINGPAR         0.000      0.001      0.434      0.664
-
- NATIVE   WITH
-    PGS                0.002      0.002      0.780      0.436
-    AGE                0.000      0.003      0.038      0.970
-    SEX               -0.002      0.001     -1.855      0.064
-    INCOME            -0.002      0.002     -1.161      0.246
-    PARED             -0.006      0.002     -2.832      0.005
-    PGSPARENT          0.000      0.002     -0.141      0.888
-    PGSPEER           -0.001      0.002     -0.491      0.623
-    PGSSCHOOL          0.002      0.002      1.370      0.171
-    PGSNEIGHBO         0.002      0.002      0.759      0.448
-    PGSAGE             0.002      0.003      0.797      0.426
-    PGSSEX            -0.001      0.001     -1.047      0.295
-    PGSINC            -0.001      0.002     -0.842      0.400
-    PGSPARED           0.001      0.002      0.343      0.731
-    PGSSINGPAR        -0.001      0.001     -0.944      0.345
-    WHITE             -0.001      0.000     -2.483      0.013
-
- OTHER    WITH
-    PGS                0.001      0.001      0.592      0.554
-    AGE                0.002      0.002      1.051      0.293
-    SEX                0.000      0.001      0.270      0.787
-    INCOME             0.000      0.001     -0.281      0.779
-    PARED              0.001      0.002      0.335      0.738
-    PGSPARENT         -0.001      0.001     -0.713      0.476
-    PGSPEER            0.000      0.001      0.005      0.996
-    PGSSCHOOL         -0.001      0.001     -0.760      0.447
-    PGSNEIGHBO        -0.002      0.001     -1.571      0.116
-    PGSAGE             0.001      0.002      0.645      0.519
-    PGSSEX            -0.001      0.001     -1.334      0.182
-    PGSINC            -0.001      0.001     -0.891      0.373
-    PGSPARED          -0.001      0.002     -0.577      0.564
-    PGSSINGPAR         0.000      0.001     -0.218      0.828
-    WHITE             -0.005      0.001     -5.505      0.000
-    NATIVE             0.000      0.000      0.187      0.852
-
- HISPANIC WITH
-    PGS               -0.001      0.002     -0.817      0.414
-    AGE                0.007      0.003      2.463      0.014
-    SEX                0.000      0.001     -0.104      0.917
-    INCOME            -0.001      0.001     -0.746      0.456
-    PARED              0.001      0.002      0.515      0.607
-    PGSPARENT          0.000      0.002     -0.008      0.993
-    PGSPEER           -0.001      0.002     -0.360      0.719
-    PGSSCHOOL          0.000      0.002     -0.224      0.823
-    PGSNEIGHBO         0.000      0.001     -0.331      0.741
-    PGSAGE            -0.001      0.003     -0.239      0.811
-    PGSSEX             0.000      0.001     -0.420      0.675
-    PGSINC             0.000      0.002     -0.208      0.835
-    PGSPARED           0.001      0.003      0.558      0.577
-    PGSSINGPAR         0.000      0.001     -0.026      0.980
-    WHITE             -0.003      0.001     -3.644      0.000
-    NATIVE             0.000      0.000      0.401      0.688
-    OTHER              0.003      0.001      4.089      0.000
+    PGS               -0.277      0.012    -23.796      0.000
+    AGE               -0.004      0.012     -0.350      0.726
+    SEX               -0.002      0.004     -0.539      0.590
+    INCOME             0.007      0.006      1.183      0.237
+    PARED              0.043      0.008      5.392      0.000
+    PGSPARENT         -0.032      0.012     -2.590      0.010
+    PGSPEER            0.043      0.012      3.464      0.001
+    PGSSCHOOL         -0.026      0.012     -2.196      0.028
+    PGSNEIGHBO        -0.051      0.012     -4.118      0.000
+    PGSAGE            -0.013      0.021     -0.638      0.524
+    PGSSEX            -0.013      0.006     -2.198      0.028
+    PGSINC            -0.100      0.010    -10.392      0.000
+    PGSPARED          -0.039      0.013     -2.991      0.003
 
  SINGLE_P WITH
-    PGS                0.035      0.006      5.963      0.000
-    AGE                0.013      0.010      1.332      0.183
-    SEX                0.000      0.003      0.159      0.874
-    INCOME            -0.107      0.006    -18.539      0.000
-    PARED             -0.041      0.007     -5.798      0.000
-    PGSPARENT          0.001      0.007      0.105      0.916
-    PGSPEER           -0.004      0.006     -0.611      0.542
-    PGSSCHOOL          0.006      0.006      1.013      0.311
-    PGSNEIGHBO         0.000      0.006      0.019      0.985
-    PGSAGE            -0.003      0.010     -0.325      0.746
-    PGSSEX             0.003      0.003      1.000      0.317
-    PGSINC            -0.010      0.005     -1.783      0.075
-    PGSPARED           0.011      0.007      1.718      0.086
-    PGSSINGPAR         0.009      0.003      3.179      0.001
-    WHITE              0.000      0.000     -0.012      0.991
-    NATIVE             0.000      0.001      0.150      0.881
-    OTHER              0.000      0.000     -0.955      0.340
-    HISPANIC           0.001      0.001      1.495      0.135
+    PGS                0.036      0.006      6.084      0.000
+    AGE                0.013      0.010      1.310      0.190
+    SEX                0.001      0.003      0.327      0.744
+    INCOME            -0.107      0.005    -19.887      0.000
+    PARED             -0.044      0.007     -6.125      0.000
+    PGSPARENT          0.001      0.006      0.094      0.925
+    PGSPEER           -0.003      0.006     -0.451      0.652
+    PGSSCHOOL          0.006      0.006      0.954      0.340
+    PGSNEIGHBO         0.000      0.006      0.049      0.961
+    PGSAGE            -0.003      0.010     -0.341      0.733
+    PGSSEX             0.003      0.003      0.922      0.356
+    PGSINC            -0.009      0.006     -1.698      0.090
+    PGSPARED           0.010      0.007      1.409      0.159
+    PGSSINGPAR         0.009      0.003      3.149      0.002
 
  Means
-    PGS                0.000      0.014      0.000      1.000
-    AGE                0.000      0.024     -0.007      0.994
-    SEX                0.031      0.007      4.242      0.000
-    INCOME            -0.007      0.012     -0.566      0.571
-    PARED             -0.005      0.015     -0.342      0.732
-    PGSPARENT         -0.065      0.014     -4.677      0.000
-    PGSPEER            0.159      0.013     12.028      0.000
-    PGSSCHOOL         -0.122      0.013     -9.345      0.000
-    PGSNEIGHBO        -0.055      0.013     -4.106      0.000
-    PGSAGE             0.001      0.024      0.052      0.959
-    PGSSEX             0.013      0.007      1.840      0.066
-    PGSINC            -0.064      0.012     -5.492      0.000
-    PGSPARED          -0.128      0.016     -8.174      0.000
-    PGSSINGPAR         0.035      0.007      4.839      0.000
-    WHITE              0.994      0.001    931.272      0.000
-    NATIVE             0.021      0.002     10.457      0.000
-    OTHER              0.007      0.001      6.363      0.000
-    HISPANIC           0.013      0.002      7.959      0.000
-    SINGLE_PAR        -0.258      0.006    -40.698      0.000
+    PGS                0.000      0.014      0.019      0.985
+    AGE               -0.005      0.024     -0.198      0.843
+    SEX                0.031      0.007      4.291      0.000
+    INCOME            -0.005      0.012     -0.434      0.665
+    PARED             -0.004      0.015     -0.286      0.775
+    PGSPARENT         -0.065      0.014     -4.635      0.000
+    PGSPEER            0.160      0.015     11.000      0.000
+    PGSSCHOOL         -0.120      0.014     -8.632      0.000
+    PGSNEIGHBO        -0.054      0.014     -3.801      0.000
+    PGSAGE             0.003      0.025      0.132      0.895
+    PGSSEX             0.014      0.007      1.942      0.052
+    PGSINC            -0.063      0.012     -5.424      0.000
+    PGSPARED          -0.126      0.016     -7.938      0.000
+    PGSSINGPAR         0.036      0.007      5.041      0.000
+    SINGLE_PAR        -0.259      0.006    -42.781      0.000
 
  Intercepts
-    PARENT             0.198      0.296      0.670      0.503
-    PEER              -0.269      0.288     -0.936      0.349
-    SCHOOL             0.377      0.278      1.352      0.176
-    NEIGHBOR           0.185      0.281      0.658      0.511
-    ASB#1             -4.342      2.935     -1.479      0.139
-    ASB#2             -2.143      1.149     -1.865      0.062
-    ASB#3             -5.098      2.813     -1.812      0.070
-    SUB#1              0.279      0.856      0.326      0.744
-    SUB#2             -0.385      1.453     -0.265      0.791
+    PARENT            -0.021      0.018     -1.126      0.260
+    PEER               0.056      0.017      3.333      0.001
+    SCHOOL            -0.037      0.018     -2.087      0.037
+    NEIGHBOR          -0.053      0.017     -3.046      0.002
+    ASB#1             -6.425      0.549    -11.704      0.000
+    ASB#2             -2.191      0.085    -25.779      0.000
+    ASB#3             -3.233      0.134    -24.206      0.000
+    SUB#1             -0.098      0.044     -2.211      0.027
+    SUB#2             -1.324      0.076    -17.461      0.000
 
  Variances
-    PGS                1.000      0.020     50.676      0.000
-    AGE                2.950      0.044     67.518      0.000
-    SEX                0.249      0.000    544.497      0.000
-    INCOME             0.598      0.024     25.302      0.000
-    PARED              1.231      0.021     57.448      0.000
-    PGSPARENT          0.996      0.051     19.602      0.000
-    PGSPEER            1.011      0.042     23.991      0.000
-    PGSSCHOOL          0.959      0.034     27.941      0.000
-    PGSNEIGHBO         1.002      0.045     22.131      0.000
-    PGSAGE             2.956      0.099     29.991      0.000
-    PGSSEX             0.250      0.005     50.767      0.000
-    PGSINC             0.570      0.042     13.683      0.000
-    PGSPARED           1.205      0.042     28.795      0.000
-    PGSSINGPAR         0.249      0.005     50.968      0.000
-    WHITE              0.006      0.001      6.080      0.000
-    NATIVE             0.021      0.002     10.690      0.000
-    OTHER              0.007      0.001      6.410      0.000
-    HISPANIC           0.013      0.002      8.053      0.000
-    SINGLE_PAR         0.183      0.003     55.653      0.000
+    PGS                0.998      0.021     48.674      0.000
+    AGE                2.950      0.043     68.519      0.000
+    SEX                0.249      0.000    567.094      0.000
+    INCOME             0.598      0.024     24.683      0.000
+    PARED              1.221      0.021     57.655      0.000
+    PGSPARENT          0.981      0.053     18.546      0.000
+    PGSPEER            1.005      0.043     23.495      0.000
+    PGSSCHOOL          0.946      0.036     26.394      0.000
+    PGSNEIGHBO         1.002      0.048     20.809      0.000
+    PGSAGE             2.953      0.098     30.202      0.000
+    PGSSEX             0.249      0.005     48.676      0.000
+    PGSINC             0.564      0.042     13.556      0.000
+    PGSPARED           1.182      0.041     29.103      0.000
+    PGSSINGPAR         0.248      0.005     48.810      0.000
+    SINGLE_PAR         0.183      0.003     58.483      0.000
 
  Residual Variances
-    PARENT             0.963      0.028     34.312      0.000
-    PEER               0.875      0.019     45.751      0.000
-    SCHOOL             0.962      0.021     46.649      0.000
-    NEIGHBOR           0.977      0.021     46.149      0.000
+    PARENT             0.961      0.029     33.416      0.000
+    PEER               0.875      0.020     44.228      0.000
+    SCHOOL             0.955      0.021     46.041      0.000
+    NEIGHBOR           0.977      0.022     45.293      0.000
 
 New/Additional Parameters
-    INDASB11           0.010      0.008      1.295      0.195
-    INDASB12           0.170      0.025      6.852      0.000
-    INDASB13           0.039      0.016      2.513      0.012
-    INDASB14           0.001      0.007      0.101      0.919
-    TOTALASB           0.656      0.223      2.943      0.003
-    INDASB21           0.011      0.004      2.701      0.007
-    INDASB22           0.029      0.008      3.720      0.000
-    INDASB23           0.011      0.006      1.862      0.063
-    INDASB24          -0.001      0.003     -0.226      0.821
-    TOTALASB           0.177      0.060      2.957      0.003
-    INDASB31           0.012      0.004      2.716      0.007
-    INDASB32           0.105      0.014      7.704      0.000
-    INDASB33           0.031      0.008      3.733      0.000
-    INDASB34          -0.001      0.003     -0.151      0.880
-    TOTALASB           0.212      0.094      2.268      0.023
-    INDSUB11           0.001      0.002      0.578      0.564
-    INDSUB12           0.088      0.010      9.195      0.000
-    INDSUB13           0.021      0.005      4.146      0.000
-    INDSUB14           0.001      0.002      0.441      0.659
-    TOTALSUB           0.359      0.042      8.522      0.000
-    INDSUB21          -0.006      0.004     -1.607      0.108
-    INDSUB22          -0.095      0.014     -6.607      0.000
-    INDSUB23           0.002      0.006      0.405      0.686
-    INDSUB24           0.006      0.003      1.832      0.067
-    TOTALSUB          -0.267      0.077     -3.490      0.000
+    INDASB11           0.011      0.008      1.345      0.178
+    INDASB12           0.177      0.026      6.859      0.000
+    INDASB13           0.038      0.016      2.358      0.018
+    INDASB14           0.002      0.007      0.319      0.750
+    TOTALASB           0.600      0.228      2.631      0.009
+    INDASB21           0.012      0.004      2.798      0.005
+    INDASB22           0.031      0.008      3.784      0.000
+    INDASB23           0.011      0.006      1.778      0.075
+    INDASB24           0.000      0.002     -0.195      0.845
+    TOTALASB           0.185      0.060      3.073      0.002
+    INDASB31           0.012      0.005      2.643      0.008
+    INDASB32           0.109      0.014      7.960      0.000
+    INDASB33           0.029      0.008      3.604      0.000
+    INDASB34           0.000      0.003      0.055      0.956
+    TOTALASB           0.207      0.097      2.130      0.033
+    INDSUB11           0.001      0.002      0.500      0.617
+    INDSUB12           0.089      0.010      8.526      0.000
+    INDSUB13           0.020      0.005      4.163      0.000
+    INDSUB14           0.001      0.002      0.414      0.679
+    TOTALSUB           0.355      0.045      7.858      0.000
+    INDSUB21          -0.006      0.004     -1.673      0.094
+    INDSUB22          -0.096      0.015     -6.448      0.000
+    INDSUB23           0.003      0.006      0.527      0.599
+    INDSUB24           0.005      0.003      1.912      0.056
+    TOTALSUB          -0.259      0.074     -3.486      0.000
 
 
 LOGISTIC REGRESSION ODDS RATIO RESULTS
 
  ASB#1      ON
-    PGSPARENT          0.928
-    PGSPEER            0.842
-    PGSSCHOOL          1.088
-    PGSNEIGHBO         0.874
-    PGSAGE             1.017
-    PGSSEX             1.047
-    PGSINC             1.081
-    PGSPARED           0.865
-    PGSSINGPAR         1.056
-    SUB_HI_DUM         4.783
-    SUB_LO_DUM         0.444
-    AGE                0.700
+    PGSPARENT          0.931
+    PGSPEER            0.861
+    PGSSCHOOL          1.067
+    PGSNEIGHBO         0.841
+    PGSAGE             1.006
+    PGSSEX             1.039
+    PGSINC             1.111
+    PGSPARED           0.873
+    PGSSINGPAR         1.043
+    SUB_HI_DUM         4.810
+    SUB_LO_DUM         0.000
+    AGE                0.689
     SEX                0.060
-    INCOME             0.855
-    PARED              1.325
-    WHITE              0.123
-    NATIVE             1.368
-    OTHER              0.211
-    HISPANIC           0.824
-    SINGLE_PAR         0.766
-    PGS                1.545
-    PARENT             0.832
-    PEER               3.397
-    SCHOOL             0.690
-    NEIGHBOR           0.985
+    INCOME             0.870
+    PARED              1.344
+    SINGLE_PAR         0.796
+    PGS                1.450
+    PARENT             0.826
+    PEER               3.498
+    SCHOOL             0.693
+    NEIGHBOR           0.954
 
  ASB#2      ON
-    PGSPARENT          1.082
-    PGSPEER            0.984
-    PGSSCHOOL          0.998
-    PGSNEIGHBO         0.962
-    PGSAGE             1.018
-    PGSSEX             1.138
-    PGSINC             0.956
-    PGSPARED           1.084
-    PGSSINGPAR         0.896
-    SUB_HI_DUM         1.941
-    SUB_LO_DUM         0.435
-    AGE                0.890
-    SEX                0.262
-    INCOME             1.041
-    PARED              1.082
-    WHITE              0.935
-    NATIVE             1.124
-    OTHER              2.008
-    HISPANIC           1.247
-    SINGLE_PAR         0.966
-    PGS                1.135
-    PARENT             0.821
-    PEER               1.230
+    PGSPARENT          1.078
+    PGSPEER            0.989
+    PGSSCHOOL          1.000
+    PGSNEIGHBO         0.956
+    PGSAGE             1.022
+    PGSSEX             1.135
+    PGSINC             0.955
+    PGSPARED           1.083
+    PGSSINGPAR         0.888
+    SUB_HI_DUM         1.874
+    SUB_LO_DUM         0.433
+    AGE                0.883
+    SEX                0.256
+    INCOME             1.043
+    PARED              1.087
+    SINGLE_PAR         0.954
+    PGS                1.142
+    PARENT             0.812
+    PEER               1.241
     SCHOOL             0.904
-    NEIGHBOR           1.012
+    NEIGHBOR           1.010
 
  ASB#3      ON
-    PGSPARENT          0.924
-    PGSPEER            1.014
-    PGSSCHOOL          0.961
-    PGSNEIGHBO         1.110
-    PGSAGE             1.002
-    PGSSEX             1.085
-    PGSINC             0.961
-    PGSPARED           1.057
-    PGSSINGPAR         1.369
-    SUB_HI_DUM         1.651
-    SUB_LO_DUM         0.562
-    AGE                0.719
-    SEX                0.348
-    INCOME             1.158
-    PARED              1.056
-    WHITE              6.843
-    NATIVE             1.077
-    OTHER              6.022
-    HISPANIC           1.898
-    SINGLE_PAR         1.107
-    PGS                1.068
-    PARENT             0.811
-    PEER               2.118
-    SCHOOL             0.750
-    NEIGHBOR           1.011
+    PGSPARENT          0.916
+    PGSPEER            1.005
+    PGSSCHOOL          0.934
+    PGSNEIGHBO         1.099
+    PGSAGE             0.994
+    PGSSEX             1.080
+    PGSINC             0.963
+    PGSPARED           1.051
+    PGSSINGPAR         1.388
+    SUB_HI_DUM         1.761
+    SUB_LO_DUM         0.594
+    AGE                0.717
+    SEX                0.357
+    INCOME             1.153
+    PARED              1.061
+    SINGLE_PAR         1.073
+    PGS                1.058
+    PARENT             0.806
+    PEER               2.165
+    SCHOOL             0.759
+    NEIGHBOR           0.996
 
  SUB#1      ON
-    PGSPARENT          0.970
-    PGSPEER            0.937
-    PGSSCHOOL          1.019
-    PGSNEIGHBO         1.079
-    PGSAGE             1.055
-    PGSSEX             1.197
-    PGSINC             0.935
-    PGSPARED           1.067
-    PGSSINGPAR         0.980
-    ASB_HI_DUM         4.295
-    ASB_MOD_DU         1.946
-    ASB_ADO_DU         1.652
-    AGE                0.890
-    SEX                0.811
-    INCOME             0.952
-    PARED              0.901
-    WHITE              0.684
-    NATIVE             0.941
-    OTHER              0.337
-    HISPANIC           0.776
-    SINGLE_PAR         1.246
-    PGS                1.281
-    PARENT             0.978
-    PEER               1.884
-    SCHOOL             0.822
-    NEIGHBOR           0.983
+    PGSPARENT          0.978
+    PGSPEER            0.936
+    PGSSCHOOL          1.016
+    PGSNEIGHBO         1.089
+    PGSAGE             1.056
+    PGSSEX             1.203
+    PGSINC             0.939
+    PGSPARED           1.073
+    PGSSINGPAR         0.979
+    ASB_HI_DUM         4.240
+    ASB_MOD_DU         1.882
+    ASB_ADO_DU         1.738
+    AGE                0.888
+    SEX                0.802
+    INCOME             0.953
+    PARED              0.896
+    SINGLE_PAR         1.258
+    PGS                1.277
+    PARENT             0.981
+    PEER               1.877
+    SCHOOL             0.827
+    NEIGHBOR           0.984
 
  SUB#2      ON
-    PGSPARENT          1.048
-    PGSPEER            1.078
-    PGSSCHOOL          0.970
-    PGSNEIGHBO         1.055
-    PGSAGE             1.035
-    PGSSEX             0.980
-    PGSINC             1.021
-    PGSPARED           0.987
-    PGSSINGPAR         0.888
-    ASB_HI_DUM         0.631
-    ASB_MOD_DU         0.454
-    ASB_ADO_DU         0.691
-    AGE                1.159
-    SEX                1.466
-    INCOME             0.803
-    PARED              0.810
-    WHITE              0.384
-    NATIVE             1.213
-    OTHER              0.285
-    HISPANIC           0.704
-    SINGLE_PAR         0.977
-    PGS                0.840
-    PARENT             1.121
-    PEER               0.507
-    SCHOOL             0.978
-    NEIGHBOR           0.889
+    PGSPARENT          1.064
+    PGSPEER            1.079
+    PGSSCHOOL          0.959
+    PGSNEIGHBO         1.059
+    PGSAGE             1.031
+    PGSSEX             0.998
+    PGSINC             1.038
+    PGSPARED           0.986
+    PGSSINGPAR         0.908
+    ASB_HI_DUM         0.000
+    ASB_MOD_DU         0.450
+    ASB_ADO_DU         0.740
+    AGE                1.157
+    SEX                1.440
+    INCOME             0.813
+    PARED              0.814
+    SINGLE_PAR         1.001
+    PGS                0.848
+    PARENT             1.118
+    PEER               0.508
+    SCHOOL             0.971
+    NEIGHBOR           0.893
 
 
 CONFIDENCE INTERVALS OF MODEL RESULTS
@@ -1073,494 +899,376 @@ CONFIDENCE INTERVALS OF MODEL RESULTS
                   Lower .5%  Lower 2.5%    Lower 5%    Estimate    Upper 5%  Upper 2.5%   Upper .5%
 
  PARENT   ON
-    AGE             -0.113      -0.107      -0.106      -0.094      -0.080      -0.077      -0.073
-    SEX             -0.250      -0.226      -0.218      -0.172      -0.127      -0.117      -0.101
-    INCOME          -0.015      -0.004       0.002       0.044       0.082       0.091       0.104
-    PARED           -0.019      -0.010      -0.006       0.019       0.044       0.049       0.065
-    WHITE           -0.887      -0.756      -0.678      -0.217       0.318       0.389       0.500
-    NATIVE          -0.321      -0.267      -0.231      -0.072       0.077       0.104       0.158
-    OTHER           -1.214      -0.967      -0.869      -0.380       0.078       0.161       0.374
-    HISPANIC        -0.307      -0.207      -0.155       0.067       0.281       0.318       0.378
-    SINGLE_PAR      -0.165      -0.147      -0.135      -0.075      -0.011      -0.003       0.034
-    PGS             -0.092      -0.084      -0.079      -0.056      -0.033      -0.025      -0.016
+    AGE             -0.113      -0.108      -0.106      -0.092      -0.081      -0.078      -0.074
+    SEX             -0.242      -0.227      -0.218      -0.170      -0.124      -0.115      -0.097
+    INCOME          -0.013       0.000       0.005       0.046       0.089       0.098       0.118
+    PARED           -0.019      -0.010      -0.004       0.022       0.048       0.053       0.062
+    SINGLE_PAR      -0.193      -0.152      -0.141      -0.078      -0.013      -0.001       0.022
+    PGS             -0.090      -0.082      -0.077      -0.055      -0.033      -0.027      -0.017
 
  PEER     ON
-    AGE              0.138       0.141       0.144       0.156       0.168       0.170       0.174
-    SEX             -0.112      -0.099      -0.088      -0.048      -0.007       0.005       0.020
-    INCOME          -0.044      -0.035      -0.028       0.006       0.039       0.046       0.053
-    PARED           -0.132      -0.120      -0.116      -0.093      -0.069      -0.066      -0.063
-    WHITE           -0.424      -0.306      -0.170       0.319       0.775       0.902       0.997
-    NATIVE          -0.032       0.038       0.064       0.240       0.410       0.441       0.489
-    OTHER           -0.008       0.142       0.196       0.701       1.160       1.226       1.309
-    HISPANIC        -0.504      -0.358      -0.322      -0.112       0.088       0.131       0.185
-    SINGLE_PAR       0.122       0.144       0.156       0.213       0.265       0.276       0.295
-    PGS              0.109       0.115       0.118       0.139       0.159       0.163       0.171
+    AGE              0.137       0.141       0.143       0.155       0.167       0.170       0.174
+    SEX             -0.118      -0.101      -0.094      -0.050      -0.005       0.003       0.018
+    INCOME          -0.053      -0.041      -0.033       0.004       0.041       0.047       0.060
+    PARED           -0.125      -0.119      -0.116      -0.090      -0.068      -0.063      -0.055
+    SINGLE_PAR       0.126       0.143       0.158       0.217       0.273       0.285       0.302
+    PGS              0.107       0.115       0.119       0.141       0.163       0.167       0.176
 
  SCHOOL   ON
-    AGE             -0.078      -0.072      -0.070      -0.057      -0.043      -0.040      -0.036
-    SEX             -0.067      -0.053      -0.045      -0.004       0.036       0.043       0.074
-    INCOME          -0.027      -0.013      -0.002       0.035       0.071       0.079       0.088
-    PARED            0.035       0.045       0.048       0.075       0.100       0.106       0.114
-    WHITE           -1.169      -1.003      -0.879      -0.409       0.027       0.120       0.253
-    NATIVE          -0.450      -0.381      -0.326      -0.164       0.015       0.051       0.126
-    OTHER           -1.291      -1.133      -1.042      -0.587      -0.162      -0.092       0.074
-    HISPANIC        -0.390      -0.265      -0.236      -0.005       0.217       0.250       0.305
-    SINGLE_PAR      -0.222      -0.200      -0.190      -0.130      -0.072      -0.059      -0.036
-    PGS             -0.136      -0.130      -0.126      -0.106      -0.083      -0.079      -0.074
+    AGE             -0.079      -0.074      -0.071      -0.058      -0.045      -0.042      -0.037
+    SEX             -0.075      -0.056      -0.048      -0.003       0.044       0.052       0.074
+    INCOME          -0.028      -0.014      -0.006       0.035       0.073       0.083       0.100
+    PARED            0.034       0.044       0.049       0.072       0.096       0.099       0.106
+    SINGLE_PAR      -0.233      -0.209      -0.200      -0.139      -0.079      -0.068      -0.033
+    PGS             -0.139      -0.130      -0.127      -0.105      -0.081      -0.077      -0.071
 
  NEIGHBOR ON
-    AGE             -0.072      -0.066      -0.063      -0.049      -0.035      -0.034      -0.030
-    SEX             -0.121      -0.106      -0.095      -0.051      -0.008      -0.001       0.016
-    INCOME          -0.050      -0.039      -0.034       0.005       0.045       0.058       0.067
-    PARED           -0.046      -0.035      -0.032      -0.005       0.018       0.026       0.035
-    WHITE           -0.820      -0.724      -0.666      -0.236       0.248       0.389       0.682
-    NATIVE          -0.510      -0.422      -0.364      -0.179       0.004       0.050       0.107
-    OTHER           -1.010      -0.747      -0.701      -0.242       0.182       0.249       0.369
-    HISPANIC        -0.554      -0.473      -0.433      -0.249      -0.038      -0.001       0.088
-    SINGLE_PAR      -0.338      -0.304      -0.295      -0.232      -0.175      -0.162      -0.140
-    PGS             -0.078      -0.074      -0.069      -0.047      -0.026      -0.022      -0.015
+    AGE             -0.071      -0.067      -0.065      -0.052      -0.039      -0.036      -0.031
+    SEX             -0.125      -0.109      -0.099      -0.052      -0.005       0.004       0.024
+    INCOME          -0.052      -0.038      -0.032       0.006       0.044       0.054       0.069
+    PARED           -0.046      -0.037      -0.032      -0.007       0.017       0.022       0.030
+    SINGLE_PAR      -0.322      -0.300      -0.290      -0.228      -0.167      -0.156      -0.135
+    PGS             -0.081      -0.072      -0.068      -0.045      -0.022      -0.018      -0.008
 
  ASB#1    ON
-    PGSPARENT       -0.418      -0.289      -0.262      -0.075       0.183       0.211       0.321
-    PGSPEER         -0.456      -0.389      -0.339      -0.172       0.015       0.054       0.127
-    PGSSCHOOL       -0.313      -0.229      -0.171       0.084       0.317       0.353       0.427
-    PGSNEIGHBO      -0.493      -0.420      -0.349      -0.135       0.117       0.165       0.277
-    PGSAGE          -0.208      -0.157      -0.136       0.017       0.156       0.176       0.240
-    PGSSEX          -0.751      -0.639      -0.493       0.046       0.603       0.710       0.994
-    PGSINC          -0.356      -0.274      -0.210       0.078       0.391       0.476       0.578
-    PGSPARED        -0.459      -0.379      -0.354      -0.145       0.086       0.123       0.248
-    PGSSINGPAR      -0.748      -0.549      -0.452       0.054       0.449       0.527       0.814
-    SUB_HI_DUM       0.716       0.911       1.024       1.565       2.473       2.731       2.910
-    SUB_LO_DUM     -11.389     -10.872     -10.484      -0.811       0.543       0.773       1.260
-    AGE             -0.572      -0.526      -0.500      -0.357      -0.245      -0.221      -0.157
-    SEX             -4.198      -3.871      -3.709      -2.810      -2.299      -2.209      -2.081
-    INCOME          -0.543      -0.465      -0.424      -0.157       0.135       0.191       0.292
-    PARED           -0.098       0.056       0.089       0.281       0.502       0.544       0.663
-    WHITE          -11.797      -9.094      -6.376      -2.094       3.617       5.055       6.714
-    NATIVE          -9.604      -6.996      -5.798       0.313       1.274       1.410       1.673
-    OTHER          -21.274     -11.621     -10.383      -1.554       0.792       1.222       2.223
-    HISPANIC        -9.104      -7.867      -7.281      -0.193       1.376       1.607       1.883
-    SINGLE_PAR      -1.210      -0.847      -0.766      -0.266       0.166       0.221       0.435
-    PGS             -0.190       0.014       0.059       0.435       0.755       0.823       0.923
-    PARENT          -0.589      -0.459      -0.419      -0.184       0.024       0.058       0.124
-    PEER             0.949       1.018       1.042       1.223       1.484       1.518       1.615
-    SCHOOL          -0.719      -0.620      -0.602      -0.371      -0.123      -0.075       0.030
-    NEIGHBOR        -0.413      -0.319      -0.248      -0.015       0.221       0.253       0.323
+    PGSPARENT       -0.371      -0.309      -0.270      -0.071       0.187       0.250       0.340
+    PGSPEER         -0.419      -0.359      -0.320      -0.150       0.059       0.101       0.157
+    PGSSCHOOL       -0.370      -0.238      -0.190       0.065       0.291       0.342       0.425
+    PGSNEIGHBO      -0.508      -0.425      -0.390      -0.173       0.082       0.140       0.226
+    PGSAGE          -0.209      -0.167      -0.141       0.006       0.133       0.163       0.208
+    PGSSEX          -0.825      -0.617      -0.505       0.038       0.566       0.663       0.906
+    PGSINC          -0.326      -0.215      -0.173       0.106       0.408       0.501       0.645
+    PGSPARED        -0.493      -0.397      -0.358      -0.136       0.098       0.128       0.194
+    PGSSINGPAR      -0.788      -0.528      -0.446       0.042       0.485       0.607       0.834
+    SUB_HI_DUM       0.649       0.800       0.959       1.571       2.422       2.622       3.244
+    SUB_LO_DUM     -15.942     -15.517     -15.301      -9.357     -13.371     -13.146     -12.641
+    AGE             -0.578      -0.523      -0.498      -0.372      -0.254      -0.232      -0.187
+    SEX             -4.451      -3.871      -3.691      -2.820      -2.266      -2.162      -1.971
+    INCOME          -0.540      -0.482      -0.426      -0.139       0.180       0.234       0.420
+    PARED           -0.054       0.050       0.089       0.296       0.510       0.540       0.612
+    SINGLE_PAR      -1.022      -0.829      -0.734      -0.229       0.205       0.288       0.522
+    PGS             -0.228      -0.088      -0.023       0.371       0.710       0.769       0.958
+    PARENT          -0.522      -0.462      -0.415      -0.192       0.017       0.072       0.154
+    PEER             0.961       1.018       1.056       1.252       1.497       1.543       1.628
+    SCHOOL          -0.750      -0.664      -0.619      -0.367      -0.130      -0.075       0.032
+    NEIGHBOR        -0.384      -0.319      -0.274      -0.047       0.185       0.238       0.340
 
  ASB#2    ON
-    PGSPARENT       -0.030      -0.004       0.005       0.078       0.156       0.182       0.208
-    PGSPEER         -0.135      -0.115      -0.100      -0.016       0.057       0.077       0.104
-    PGSSCHOOL       -0.151      -0.097      -0.083      -0.002       0.084       0.098       0.133
-    PGSNEIGHBO      -0.159      -0.128      -0.115      -0.039       0.034       0.053       0.091
-    PGSAGE          -0.057      -0.035      -0.029       0.018       0.060       0.069       0.090
-    PGSSEX          -0.124      -0.059      -0.030       0.130       0.269       0.297       0.354
-    PGSINC          -0.212      -0.179      -0.158      -0.045       0.087       0.109       0.195
-    PGSPARED        -0.032      -0.006       0.002       0.081       0.163       0.177       0.207
-    PGSSINGPAR      -0.405      -0.340      -0.312      -0.109       0.079       0.123       0.159
-    SUB_HI_DUM       0.428       0.479       0.505       0.663       0.824       0.856       0.961
-    SUB_LO_DUM      -1.364      -1.264      -1.213      -0.832      -0.513      -0.454      -0.372
-    AGE             -0.194      -0.182      -0.173      -0.116      -0.072      -0.058      -0.040
-    SEX             -1.600      -1.550      -1.520      -1.341      -1.177      -1.152      -1.117
-    INCOME          -0.145      -0.088      -0.074       0.040       0.161       0.192       0.247
-    PARED           -0.047      -0.014       0.006       0.079       0.153       0.168       0.196
-    WHITE           -2.736      -2.285      -1.908      -0.067       1.678       1.864       3.075
-    NATIVE          -0.667      -0.536      -0.448       0.117       0.586       0.686       0.795
-    OTHER           -2.201      -1.609      -1.386       0.697       2.139       2.485       3.352
-    HISPANIC        -0.978      -0.701      -0.583       0.221       0.775       0.902       1.021
-    SINGLE_PAR      -0.335      -0.257      -0.212      -0.035       0.138       0.179       0.280
-    PGS             -0.024       0.008       0.032       0.127       0.225       0.239       0.281
-    PARENT          -0.334      -0.297      -0.282      -0.197      -0.116      -0.100      -0.071
-    PEER             0.083       0.111       0.126       0.207       0.297       0.310       0.329
-    SCHOOL          -0.228      -0.202      -0.186      -0.101      -0.015       0.000       0.047
-    NEIGHBOR        -0.103      -0.075      -0.063       0.012       0.099       0.115       0.133
+    PGSPARENT       -0.049      -0.023      -0.003       0.075       0.159       0.173       0.205
+    PGSPEER         -0.136      -0.104      -0.089      -0.011       0.070       0.085       0.120
+    PGSSCHOOL       -0.150      -0.105      -0.087       0.000       0.084       0.106       0.132
+    PGSNEIGHBO      -0.175      -0.144      -0.127      -0.044       0.034       0.051       0.086
+    PGSAGE          -0.058      -0.037      -0.027       0.022       0.068       0.075       0.094
+    PGSSEX          -0.121      -0.060      -0.026       0.127       0.277       0.310       0.365
+    PGSINC          -0.242      -0.193      -0.172      -0.046       0.092       0.125       0.174
+    PGSPARED        -0.055      -0.022      -0.006       0.080       0.163       0.181       0.206
+    PGSSINGPAR      -0.420      -0.339      -0.308      -0.119       0.075       0.110       0.171
+    SUB_HI_DUM       0.353       0.425       0.462       0.628       0.798       0.829       0.894
+    SUB_LO_DUM      -1.436      -1.302      -1.219      -0.837      -0.529      -0.453      -0.355
+    AGE             -0.202      -0.186      -0.176      -0.124      -0.078      -0.070      -0.054
+    SEX             -1.638      -1.564      -1.538      -1.362      -1.200      -1.167      -1.114
+    INCOME          -0.135      -0.093      -0.075       0.042       0.181       0.209       0.253
+    PARED           -0.050      -0.010       0.006       0.084       0.161       0.176       0.197
+    SINGLE_PAR      -0.333      -0.276      -0.235      -0.047       0.132       0.163       0.229
+    PGS             -0.016       0.013       0.030       0.133       0.229       0.246       0.291
+    PARENT          -0.335      -0.305      -0.291      -0.208      -0.124      -0.108      -0.069
+    PEER             0.085       0.113       0.131       0.216       0.301       0.318       0.348
+    SCHOOL          -0.235      -0.208      -0.191      -0.101      -0.011       0.007       0.030
+    NEIGHBOR        -0.116      -0.085      -0.070       0.010       0.097       0.114       0.154
 
  ASB#3    ON
-    PGSPARENT       -0.253      -0.214      -0.185      -0.079       0.013       0.033       0.079
-    PGSPEER         -0.142      -0.098      -0.084       0.014       0.111       0.121       0.153
-    PGSSCHOOL       -0.207      -0.165      -0.149      -0.040       0.073       0.094       0.152
-    PGSNEIGHBO      -0.070      -0.036      -0.017       0.105       0.223       0.253       0.294
-    PGSAGE          -0.099      -0.078      -0.066       0.002       0.072       0.089       0.119
-    PGSSEX          -0.281      -0.207      -0.157       0.082       0.309       0.341       0.441
-    PGSINC          -0.308      -0.243      -0.220      -0.040       0.117       0.140       0.201
-    PGSPARED        -0.105      -0.076      -0.054       0.055       0.182       0.198       0.231
-    PGSSINGPAR      -0.191      -0.038       0.038       0.314       0.570       0.626       0.697
-    SUB_HI_DUM       0.186       0.255       0.292       0.501       0.757       0.809       0.890
-    SUB_LO_DUM      -1.634      -1.288      -1.139      -0.577      -0.121      -0.017       0.130
-    AGE             -0.432      -0.414      -0.400      -0.330      -0.272      -0.263      -0.239
-    SEX             -1.456      -1.324      -1.290      -1.055      -0.835      -0.804      -0.772
-    INCOME          -0.122      -0.037      -0.013       0.147       0.333       0.353       0.431
-    PARED           -0.116      -0.089      -0.053       0.055       0.180       0.211       0.239
-    WHITE           -0.700      -0.227       0.101       1.923       9.449      10.789      12.955
-    NATIVE          -1.584      -1.036      -0.833       0.075       0.712       0.863       1.166
-    OTHER           -0.616       0.052       0.444       1.795       3.260       3.606       4.674
-    HISPANIC        -2.137      -1.100      -0.801       0.641       1.489       1.692       1.807
-    SINGLE_PAR      -0.340      -0.238      -0.175       0.102       0.342       0.424       0.524
-    PGS             -0.177      -0.131      -0.106       0.066       0.204       0.251       0.292
-    PARENT          -0.360      -0.321      -0.307      -0.209      -0.122      -0.110      -0.081
-    PEER             0.576       0.634       0.642       0.750       0.864       0.894       0.927
-    SCHOOL          -0.462      -0.426      -0.403      -0.287      -0.177      -0.147      -0.104
-    NEIGHBOR        -0.161      -0.104      -0.091       0.011       0.121       0.158       0.209
+    PGSPARENT       -0.237      -0.204      -0.187      -0.088       0.014       0.035       0.071
+    PGSPEER         -0.150      -0.111      -0.093       0.005       0.097       0.117       0.151
+    PGSSCHOOL       -0.244      -0.198      -0.180      -0.068       0.040       0.066       0.118
+    PGSNEIGHBO      -0.074      -0.036      -0.013       0.095       0.206       0.222       0.265
+    PGSAGE          -0.116      -0.085      -0.075      -0.006       0.058       0.074       0.098
+    PGSSEX          -0.277      -0.201      -0.162       0.077       0.313       0.359       0.447
+    PGSINC          -0.313      -0.254      -0.219      -0.038       0.133       0.171       0.233
+    PGSPARED        -0.121      -0.075      -0.055       0.049       0.158       0.185       0.236
+    PGSSINGPAR      -0.114      -0.024       0.030       0.328       0.601       0.697       0.802
+    SUB_HI_DUM       0.187       0.268       0.316       0.566       0.836       0.892       0.991
+    SUB_LO_DUM      -1.536      -1.223      -1.128      -0.521      -0.034       0.080       0.239
+    AGE             -0.455      -0.425      -0.409      -0.333      -0.269      -0.256      -0.230
+    SEX             -1.422      -1.329      -1.278      -1.031      -0.819      -0.784      -0.686
+    INCOME          -0.121      -0.058      -0.021       0.142       0.337       0.378       0.478
+    PARED           -0.110      -0.074      -0.054       0.060       0.171       0.193       0.230
+    SINGLE_PAR      -0.376      -0.262      -0.198       0.071       0.337       0.381       0.473
+    PGS             -0.171      -0.117      -0.100       0.057       0.219       0.248       0.331
+    PARENT          -0.362      -0.331      -0.315      -0.216      -0.124      -0.105      -0.071
+    PEER             0.627       0.657       0.678       0.773       0.891       0.913       0.941
+    SCHOOL          -0.452      -0.413      -0.388      -0.275      -0.172      -0.152      -0.117
+    NEIGHBOR        -0.167      -0.128      -0.106      -0.004       0.105       0.132       0.181
 
  SUB#1    ON
-    PGSPARENT       -0.141      -0.114      -0.098      -0.030       0.038       0.052       0.079
-    PGSPEER         -0.170      -0.152      -0.137      -0.065       0.002       0.015       0.041
-    PGSSCHOOL       -0.096      -0.070      -0.059       0.019       0.096       0.111       0.135
-    PGSNEIGHBO      -0.018       0.002       0.019       0.076       0.137       0.148       0.169
-    PGSAGE           0.002       0.010       0.019       0.054       0.091       0.096       0.112
-    PGSSEX           0.015       0.046       0.074       0.180       0.294       0.322       0.363
-    PGSINC          -0.249      -0.214      -0.190      -0.067       0.041       0.060       0.088
-    PGSPARED        -0.029      -0.006       0.004       0.065       0.132       0.149       0.172
-    PGSSINGPAR      -0.267      -0.209      -0.183      -0.021       0.126       0.149       0.188
-    ASB_HI_DUM       0.625       0.787       0.890       1.457       2.300       2.538       2.822
-    ASB_MOD_DU       0.429       0.485       0.505       0.666       0.829       0.858       0.963
-    ASB_ADO_DU       0.177       0.254       0.294       0.502       0.747       0.796       0.874
-    AGE             -0.175      -0.158      -0.152      -0.117      -0.085      -0.075      -0.064
-    SEX             -0.403      -0.368      -0.339      -0.209      -0.091      -0.067      -0.037
-    INCOME          -0.204      -0.173      -0.156      -0.050       0.046       0.069       0.106
-    PARED           -0.217      -0.182      -0.169      -0.104      -0.050      -0.039      -0.017
-    WHITE           -2.543      -1.936      -1.630      -0.380       0.643       0.808       1.141
-    NATIVE          -0.675      -0.521      -0.446      -0.061       0.311       0.405       0.581
-    OTHER           -4.000      -2.685      -2.343      -1.087      -0.154      -0.022       0.470
-    HISPANIC        -1.098      -0.902      -0.778      -0.254       0.228       0.368       0.659
-    SINGLE_PAR      -0.019       0.040       0.078       0.220       0.360       0.395       0.431
-    PGS              0.144       0.170       0.186       0.248       0.318       0.332       0.362
-    PARENT          -0.113      -0.091      -0.083      -0.023       0.044       0.056       0.069
-    PEER             0.521       0.563       0.573       0.633       0.699       0.710       0.723
-    SCHOOL          -0.300      -0.280      -0.263      -0.197      -0.133      -0.120      -0.098
-    NEIGHBOR        -0.107      -0.084      -0.074      -0.017       0.043       0.054       0.089
+    PGSPARENT       -0.122      -0.104      -0.091      -0.023       0.046       0.057       0.075
+    PGSPEER         -0.178      -0.149      -0.136      -0.067      -0.001       0.015       0.038
+    PGSSCHOOL       -0.097      -0.071      -0.056       0.016       0.089       0.105       0.128
+    PGSNEIGHBO      -0.016       0.012       0.024       0.085       0.146       0.158       0.179
+    PGSAGE          -0.003       0.013       0.020       0.055       0.091       0.098       0.112
+    PGSSEX           0.000       0.058       0.080       0.185       0.300       0.322       0.372
+    PGSINC          -0.221      -0.186      -0.168      -0.063       0.039       0.064       0.097
+    PGSPARED        -0.025      -0.002       0.008       0.070       0.134       0.146       0.177
+    PGSSINGPAR      -0.256      -0.204      -0.167      -0.021       0.131       0.160       0.206
+    ASB_HI_DUM       0.492       0.682       0.817       1.445       2.241       2.445       2.936
+    ASB_MOD_DU       0.356       0.427       0.467       0.632       0.800       0.834       0.910
+    ASB_ADO_DU       0.175       0.252       0.300       0.553       0.828       0.881       0.972
+    AGE             -0.179      -0.162      -0.156      -0.119      -0.082      -0.076      -0.061
+    SEX             -0.401      -0.364      -0.338      -0.221      -0.107      -0.087      -0.040
+    INCOME          -0.194      -0.167      -0.149      -0.048       0.048       0.065       0.091
+    PARED           -0.194      -0.179      -0.168      -0.109      -0.052      -0.039      -0.016
+    SINGLE_PAR       0.011       0.062       0.089       0.229       0.372       0.405       0.466
+    PGS              0.134       0.160       0.173       0.244       0.319       0.335       0.366
+    PARENT          -0.116      -0.092      -0.081      -0.020       0.042       0.052       0.069
+    PEER             0.515       0.555       0.565       0.630       0.703       0.720       0.741
+    SCHOOL          -0.293      -0.268      -0.253      -0.190      -0.129      -0.117      -0.092
+    NEIGHBOR        -0.108      -0.086      -0.076      -0.016       0.045       0.056       0.076
 
  SUB#2    ON
-    PGSPARENT       -0.096      -0.054      -0.038       0.047       0.145       0.162       0.217
-    PGSPEER         -0.118      -0.091      -0.058       0.075       0.207       0.233       0.258
-    PGSSCHOOL       -0.174      -0.138      -0.119      -0.030       0.059       0.081       0.130
-    PGSNEIGHBO      -0.054      -0.022      -0.013       0.053       0.133       0.142       0.186
-    PGSAGE          -0.031      -0.023      -0.014       0.034       0.079       0.085       0.106
-    PGSSEX          -0.244      -0.206      -0.176      -0.020       0.134       0.174       0.241
-    PGSINC          -0.200      -0.141      -0.113       0.020       0.166       0.187       0.216
-    PGSPARED        -0.132      -0.114      -0.096      -0.013       0.068       0.081       0.111
-    PGSSINGPAR      -0.469      -0.380      -0.327      -0.119       0.067       0.110       0.170
-    ASB_HI_DUM     -10.937     -10.315      -9.976      -0.461       0.784       0.933       1.177
-    ASB_MOD_DU      -1.314      -1.225      -1.162      -0.789      -0.465      -0.402      -0.333
-    ASB_ADO_DU      -1.427      -1.056      -0.934      -0.370       0.095       0.187       0.315
-    AGE              0.083       0.098       0.104       0.148       0.195       0.203       0.212
-    SEX              0.172       0.195       0.221       0.383       0.544       0.558       0.623
-    INCOME          -0.434      -0.378      -0.346      -0.219      -0.101      -0.075      -0.029
-    PARED           -0.333      -0.308      -0.297      -0.211      -0.117      -0.108      -0.070
-    WHITE           -8.371      -3.411      -2.602      -0.958       0.404       0.976       5.365
-    NATIVE          -0.877      -0.494      -0.408       0.193       0.679       0.766       0.899
-    OTHER          -10.831      -9.014      -7.692      -1.256      -0.144       0.061       0.513
-    HISPANIC        -2.061      -1.343      -1.262      -0.351       0.217       0.333       0.663
-    SINGLE_PAR      -0.322      -0.257      -0.211      -0.024       0.158       0.187       0.233
-    PGS             -0.384      -0.329      -0.300      -0.174      -0.062      -0.022       0.019
-    PARENT          -0.025      -0.002       0.012       0.114       0.214       0.233       0.282
-    PEER            -0.901      -0.846      -0.823      -0.679      -0.545      -0.519      -0.484
-    SCHOOL          -0.153      -0.128      -0.103      -0.022       0.076       0.085       0.107
-    NEIGHBOR        -0.244      -0.210      -0.200      -0.118      -0.044      -0.025       0.000
+    PGSPARENT       -0.083      -0.049      -0.034       0.062       0.160       0.176       0.218
+    PGSPEER         -0.125      -0.082      -0.060       0.076       0.205       0.231       0.262
+    PGSSCHOOL       -0.183      -0.146      -0.133      -0.042       0.052       0.067       0.097
+    PGSNEIGHBO      -0.077      -0.038      -0.025       0.057       0.137       0.149       0.180
+    PGSAGE          -0.043      -0.023      -0.014       0.031       0.080       0.087       0.109
+    PGSSEX          -0.237      -0.178      -0.151      -0.002       0.145       0.180       0.246
+    PGSINC          -0.153      -0.114      -0.098       0.038       0.179       0.203       0.246
+    PGSPARED        -0.149      -0.114      -0.100      -0.014       0.072       0.088       0.110
+    PGSSINGPAR      -0.412      -0.334      -0.300      -0.096       0.109       0.149       0.215
+    ASB_HI_DUM     -16.514     -16.152     -15.919      -9.931     -14.194     -14.000     -13.482
+    ASB_MOD_DU      -1.402      -1.264      -1.175      -0.799      -0.495      -0.423      -0.323
+    ASB_ADO_DU      -1.289      -0.992      -0.904      -0.302       0.168       0.287       0.433
+    AGE              0.076       0.092       0.101       0.146       0.193       0.203       0.222
+    SEX              0.133       0.183       0.222       0.365       0.521       0.553       0.619
+    INCOME          -0.409      -0.364      -0.335      -0.207      -0.086      -0.063      -0.027
+    PARED           -0.345      -0.308      -0.293      -0.206      -0.121      -0.106      -0.078
+    SINGLE_PAR      -0.359      -0.231      -0.196       0.001       0.182       0.217       0.289
+    PGS             -0.357      -0.315      -0.291      -0.165      -0.051      -0.030       0.017
+    PARENT          -0.033      -0.002       0.021       0.112       0.216       0.231       0.275
+    PEER            -0.918      -0.856      -0.824      -0.677      -0.543      -0.514      -0.471
+    SCHOOL          -0.163      -0.138      -0.119      -0.029       0.063       0.081       0.115
+    NEIGHBOR        -0.238      -0.206      -0.193      -0.113      -0.033      -0.016       0.008
 
  PARENT   WITH
-    PEER            -0.213      -0.205      -0.200      -0.178      -0.154      -0.151      -0.144
-    SCHOOL           0.289       0.297       0.300       0.326       0.352       0.357       0.366
-    NEIGHBOR         0.160       0.167       0.169       0.194       0.217       0.220       0.230
+    PEER            -0.211      -0.202      -0.197      -0.174      -0.150      -0.146      -0.138
+    SCHOOL           0.281       0.292       0.296       0.323       0.350       0.357       0.364
+    NEIGHBOR         0.159       0.167       0.171       0.195       0.217       0.221       0.231
 
  PEER     WITH
-    SCHOOL          -0.276      -0.266      -0.260      -0.237      -0.213      -0.206      -0.202
-    NEIGHBOR        -0.092      -0.086      -0.081      -0.059      -0.038      -0.034      -0.027
+    SCHOOL          -0.271      -0.262      -0.257      -0.233      -0.211      -0.205      -0.194
+    NEIGHBOR        -0.092      -0.087      -0.082      -0.060      -0.038      -0.033      -0.026
 
  SCHOOL   WITH
-    NEIGHBOR         0.250       0.260       0.264       0.290       0.313       0.317       0.332
+    NEIGHBOR         0.253       0.264       0.267       0.291       0.316       0.320       0.329
 
  AGE      WITH
-    PGS             -0.063      -0.049      -0.042       0.001       0.037       0.042       0.057
+    PGS             -0.062      -0.043      -0.037       0.003       0.044       0.050       0.064
 
  SEX      WITH
-    PGS             -0.004      -0.001       0.002       0.013       0.024       0.027       0.030
-    AGE             -0.083      -0.077      -0.073      -0.054      -0.036      -0.033      -0.025
+    PGS             -0.005       0.000       0.002       0.014       0.025       0.028       0.033
+    AGE             -0.085      -0.079      -0.074      -0.054      -0.033      -0.029      -0.023
 
  INCOME   WITH
-    PGS             -0.092      -0.087      -0.083      -0.064      -0.044      -0.041      -0.035
-    AGE             -0.051      -0.040      -0.033       0.000       0.027       0.031       0.041
-    SEX             -0.009      -0.007      -0.005       0.004       0.013       0.015       0.019
+    PGS             -0.093      -0.085      -0.081      -0.063      -0.044      -0.040      -0.033
+    AGE             -0.057      -0.043      -0.037      -0.004       0.027       0.032       0.043
+    SEX             -0.013      -0.007      -0.006       0.003       0.013       0.015       0.020
 
  PARED    WITH
-    PGS             -0.166      -0.158      -0.152      -0.127      -0.100      -0.094      -0.086
-    AGE             -0.167      -0.160      -0.150      -0.107      -0.061      -0.054      -0.035
-    SEX             -0.027      -0.023      -0.020      -0.007       0.007       0.008       0.015
-    INCOME           0.324       0.330       0.336       0.360       0.384       0.389       0.398
+    PGS             -0.164      -0.157      -0.152      -0.126      -0.100      -0.094      -0.086
+    AGE             -0.181      -0.165      -0.156      -0.111      -0.067      -0.057      -0.042
+    SEX             -0.029      -0.022      -0.020      -0.007       0.005       0.007       0.011
+    INCOME           0.321       0.331       0.335       0.359       0.384       0.389       0.400
 
  PGSPAREN WITH
-    PGS             -0.043      -0.029      -0.023       0.015       0.054       0.062       0.078
-    AGE             -0.032      -0.017      -0.010       0.030       0.070       0.076       0.089
-    SEX             -0.011      -0.002       0.000       0.011       0.023       0.026       0.030
-    INCOME          -0.035      -0.026      -0.022      -0.001       0.021       0.025       0.030
-    PARED           -0.076      -0.064      -0.058      -0.031      -0.002       0.004       0.013
+    PGS             -0.046      -0.033      -0.024       0.018       0.057       0.063       0.078
+    AGE             -0.030      -0.016      -0.009       0.033       0.074       0.081       0.100
+    SEX             -0.009      -0.004      -0.002       0.010       0.021       0.023       0.027
+    INCOME          -0.027      -0.022      -0.018       0.001       0.021       0.026       0.036
+    PARED           -0.082      -0.066      -0.059      -0.031      -0.004       0.002       0.013
 
  PGSPEER  WITH
-    PGS             -0.058      -0.044      -0.036       0.003       0.043       0.048       0.056
-    AGE             -0.025      -0.015      -0.005       0.038       0.076       0.084       0.094
-    SEX             -0.019      -0.013      -0.011       0.000       0.012       0.014       0.019
-    INCOME          -0.022      -0.014      -0.011       0.008       0.026       0.030       0.037
-    PARED           -0.029      -0.015      -0.009       0.016       0.043       0.049       0.058
-    PGSPARENT       -0.312      -0.301      -0.293      -0.252      -0.211      -0.201      -0.186
+    PGS             -0.066      -0.050      -0.041       0.001       0.037       0.044       0.060
+    AGE             -0.026      -0.008       0.000       0.038       0.076       0.084       0.099
+    SEX             -0.016      -0.013      -0.010       0.001       0.013       0.015       0.018
+    INCOME          -0.026      -0.016      -0.011       0.009       0.028       0.032       0.038
+    PARED           -0.025      -0.018      -0.012       0.014       0.040       0.046       0.054
+    PGSPARENT       -0.311      -0.292      -0.285      -0.242      -0.203      -0.193      -0.173
 
  PGSSCHOO WITH
-    PGS             -0.053      -0.039      -0.034       0.004       0.042       0.050       0.063
-    AGE             -0.049      -0.032      -0.028       0.012       0.053       0.062       0.075
-    SEX             -0.009      -0.005      -0.003       0.008       0.021       0.023       0.029
-    INCOME          -0.006      -0.001       0.004       0.024       0.044       0.049       0.058
-    PARED           -0.020      -0.009      -0.006       0.023       0.047       0.054       0.066
-    PGSPARENT        0.310       0.330       0.337       0.381       0.424       0.435       0.449
-    PGSPEER         -0.381      -0.370      -0.364      -0.321      -0.279      -0.270      -0.247
+    PGS             -0.053      -0.041      -0.033       0.006       0.046       0.052       0.065
+    AGE             -0.042      -0.030      -0.024       0.017       0.055       0.063       0.076
+    SEX             -0.010      -0.007      -0.005       0.007       0.018       0.021       0.025
+    INCOME          -0.006       0.000       0.004       0.024       0.044       0.047       0.057
+    PARED           -0.015      -0.008      -0.004       0.022       0.046       0.052       0.065
+    PGSPARENT        0.302       0.316       0.325       0.368       0.412       0.420       0.439
+    PGSPEER         -0.382      -0.363      -0.354      -0.310      -0.268      -0.259      -0.243
 
  PGSNEIGH WITH
-    PGS             -0.058      -0.044      -0.037       0.002       0.043       0.050       0.064
-    AGE             -0.079      -0.066      -0.059      -0.019       0.022       0.032       0.050
-    SEX             -0.027      -0.022      -0.020      -0.008       0.004       0.007       0.011
-    INCOME          -0.018      -0.011      -0.007       0.011       0.030       0.036       0.046
-    PARED           -0.045      -0.036      -0.032      -0.005       0.019       0.029       0.036
-    PGSPARENT        0.154       0.172       0.182       0.224       0.268       0.275       0.287
-    PGSPEER         -0.164      -0.147      -0.141      -0.100      -0.060      -0.054      -0.037
-    PGSSCHOOL        0.256       0.272       0.279       0.320       0.358       0.366       0.389
+    PGS             -0.061      -0.045      -0.036       0.004       0.043       0.051       0.069
+    AGE             -0.076      -0.062      -0.054      -0.014       0.027       0.033       0.050
+    SEX             -0.028      -0.023      -0.021      -0.009       0.002       0.004       0.009
+    INCOME          -0.023      -0.014      -0.010       0.011       0.032       0.035       0.042
+    PARED           -0.050      -0.037      -0.032      -0.006       0.020       0.025       0.032
+    PGSPARENT        0.157       0.174       0.182       0.222       0.265       0.274       0.291
+    PGSPEER         -0.168      -0.144      -0.137      -0.098      -0.055      -0.048      -0.030
+    PGSSCHOOL        0.254       0.270       0.276       0.316       0.356       0.364       0.379
 
  PGSAGE   WITH
-    PGS             -0.053      -0.015      -0.004       0.073       0.137       0.150       0.178
-    AGE             -0.134      -0.105      -0.080       0.028       0.121       0.147       0.176
-    SEX             -0.030      -0.024      -0.020      -0.002       0.018       0.022       0.031
-    INCOME          -0.017      -0.007       0.000       0.030       0.063       0.067       0.083
-    PARED           -0.039      -0.025      -0.016       0.029       0.076       0.086       0.099
-    PGSPARENT       -0.374      -0.356      -0.335      -0.258      -0.184      -0.175      -0.160
-    PGSPEER          0.350       0.376       0.390       0.450       0.520       0.528       0.553
-    PGSSCHOOL       -0.236      -0.225      -0.215      -0.154      -0.085      -0.076      -0.054
-    PGSNEIGHBO      -0.244      -0.187      -0.169      -0.097      -0.029      -0.012       0.010
+    PGS             -0.047      -0.024      -0.005       0.066       0.134       0.148       0.178
+    AGE             -0.115      -0.085      -0.068       0.037       0.135       0.155       0.183
+    SEX             -0.033      -0.025      -0.021      -0.001       0.019       0.024       0.031
+    INCOME          -0.022      -0.010      -0.004       0.030       0.064       0.070       0.083
+    PARED           -0.030      -0.015      -0.008       0.034       0.080       0.089       0.108
+    PGSPARENT       -0.375      -0.348      -0.334      -0.258      -0.187      -0.171      -0.156
+    PGSPEER          0.357       0.380       0.390       0.455       0.528       0.540       0.566
+    PGSSCHOOL       -0.266      -0.236      -0.225      -0.160      -0.095      -0.083      -0.052
+    PGSNEIGHBO      -0.205      -0.181      -0.171      -0.099      -0.024      -0.013       0.025
 
  PGSSEX   WITH
-    PGS              0.001       0.005       0.008       0.028       0.047       0.053       0.063
-    AGE             -0.030      -0.024      -0.020      -0.002       0.017       0.022       0.032
-    SEX             -0.009      -0.007      -0.006       0.000       0.005       0.007       0.008
-    INCOME          -0.018      -0.013      -0.011      -0.003       0.007       0.010       0.014
-    PARED           -0.020      -0.012      -0.010       0.003       0.015       0.019       0.023
-    PGSPARENT       -0.061      -0.054      -0.051      -0.031      -0.011      -0.008      -0.002
-    PGSPEER         -0.046      -0.040      -0.037      -0.016       0.003       0.005       0.014
-    PGSSCHOOL       -0.022      -0.014      -0.010       0.007       0.026       0.032       0.039
-    PGSNEIGHBO      -0.033      -0.025      -0.022      -0.003       0.016       0.020       0.027
-    PGSAGE          -0.099      -0.092      -0.085      -0.052      -0.018      -0.012      -0.001
+    PGS              0.002       0.008       0.010       0.030       0.049       0.053       0.061
+    AGE             -0.033      -0.025      -0.021      -0.001       0.019       0.024       0.031
+    SEX             -0.010      -0.008      -0.007       0.000       0.005       0.006       0.009
+    INCOME          -0.018      -0.015      -0.013      -0.004       0.005       0.007       0.010
+    PARED           -0.016      -0.012      -0.010       0.003       0.016       0.019       0.025
+    PGSPARENT       -0.062      -0.055      -0.051      -0.031      -0.011      -0.007       0.001
+    PGSPEER         -0.044      -0.038      -0.035      -0.015       0.004       0.009       0.016
+    PGSSCHOOL       -0.022      -0.016      -0.012       0.007       0.026       0.030       0.037
+    PGSNEIGHBO      -0.036      -0.029      -0.025      -0.004       0.016       0.020       0.029
+    PGSAGE          -0.103      -0.091      -0.083      -0.047      -0.014      -0.005       0.014
 
  PGSINC   WITH
-    PGS             -0.043      -0.027      -0.021       0.014       0.047       0.054       0.066
-    AGE             -0.015      -0.005      -0.001       0.030       0.063       0.067       0.082
-    SEX             -0.016      -0.012      -0.010      -0.001       0.008       0.011       0.015
-    INCOME          -0.016       0.000       0.008       0.045       0.082       0.092       0.106
-    PARED           -0.047      -0.035      -0.031      -0.005       0.018       0.023       0.032
-    PGSPARENT       -0.003       0.012       0.018       0.047       0.082       0.086       0.097
-    PGSPEER         -0.104      -0.092      -0.087      -0.056      -0.020      -0.014       0.000
-    PGSSCHOOL        0.030       0.045       0.051       0.080       0.111       0.117       0.132
-    PGSNEIGHBO       0.010       0.016       0.024       0.062       0.098       0.105       0.114
-    PGSAGE          -0.041      -0.023      -0.018       0.037       0.096       0.108       0.135
-    PGSSEX          -0.020      -0.016      -0.014       0.002       0.018       0.021       0.028
+    PGS             -0.040      -0.027      -0.021       0.012       0.042       0.048       0.058
+    AGE             -0.023      -0.010      -0.004       0.029       0.063       0.069       0.081
+    SEX             -0.017      -0.014      -0.012      -0.002       0.007       0.008       0.012
+    INCOME          -0.016      -0.005       0.003       0.041       0.081       0.089       0.109
+    PARED           -0.049      -0.039      -0.035      -0.008       0.017       0.022       0.030
+    PGSPARENT        0.001       0.012       0.018       0.049       0.083       0.090       0.104
+    PGSPEER         -0.106      -0.093      -0.088      -0.054      -0.022      -0.016      -0.007
+    PGSSCHOOL        0.027       0.042       0.047       0.078       0.110       0.116       0.134
+    PGSNEIGHBO       0.003       0.016       0.022       0.061       0.100       0.111       0.129
+    PGSAGE          -0.062      -0.040      -0.030       0.025       0.079       0.089       0.110
+    PGSSEX          -0.021      -0.015      -0.012       0.002       0.018       0.021       0.026
 
  PGSPARED WITH
-    PGS             -0.030      -0.018      -0.009       0.032       0.070       0.080       0.101
-    AGE             -0.036      -0.025      -0.016       0.030       0.077       0.085       0.099
-    SEX             -0.017      -0.009      -0.006       0.007       0.019       0.022       0.025
-    INCOME          -0.045      -0.035      -0.031      -0.007       0.016       0.022       0.032
-    PARED           -0.091      -0.069      -0.060      -0.016       0.028       0.034       0.047
-    PGSPARENT        0.004       0.015       0.033       0.081       0.129       0.139       0.174
-    PGSPEER         -0.214      -0.198      -0.193      -0.143      -0.099      -0.088      -0.066
-    PGSSCHOOL        0.057       0.064       0.072       0.117       0.156       0.167       0.187
-    PGSNEIGHBO      -0.051      -0.036      -0.031       0.012       0.052       0.062       0.076
-    PGSAGE          -0.243      -0.218      -0.204      -0.127      -0.049      -0.028       0.009
-    PGSSEX          -0.040      -0.034      -0.031      -0.009       0.016       0.021       0.027
-    PGSINC           0.300       0.315       0.322       0.359       0.398       0.405       0.414
+    PGS             -0.037      -0.018      -0.010       0.033       0.074       0.085       0.100
+    AGE             -0.029      -0.014      -0.007       0.035       0.079       0.088       0.109
+    SEX             -0.013      -0.009      -0.006       0.007       0.019       0.022       0.029
+    INCOME          -0.048      -0.038      -0.034      -0.009       0.016       0.021       0.029
+    PARED           -0.085      -0.073      -0.065      -0.021       0.025       0.034       0.046
+    PGSPARENT        0.000       0.020       0.027       0.077       0.124       0.136       0.153
+    PGSPEER         -0.199      -0.186      -0.178      -0.134      -0.093      -0.084      -0.067
+    PGSSCHOOL        0.034       0.049       0.059       0.102       0.141       0.147       0.165
+    PGSNEIGHBO      -0.057      -0.045      -0.036       0.006       0.048       0.054       0.069
+    PGSAGE          -0.263      -0.235      -0.220      -0.145      -0.069      -0.056      -0.024
+    PGSSEX          -0.041      -0.032      -0.028      -0.007       0.014       0.018       0.026
+    PGSINC           0.284       0.303       0.310       0.348       0.386       0.394       0.408
 
  PGSSINGP WITH
-    PGS             -0.308      -0.300      -0.298      -0.279      -0.261      -0.257      -0.252
-    AGE             -0.033      -0.026      -0.023      -0.004       0.017       0.019       0.027
-    SEX             -0.011      -0.009      -0.007      -0.001       0.004       0.006       0.009
-    INCOME          -0.008      -0.005      -0.003       0.007       0.016       0.018       0.023
-    PARED            0.023       0.027       0.030       0.044       0.057       0.060       0.064
-    PGSPARENT       -0.060      -0.055      -0.050      -0.030      -0.009      -0.006       0.001
-    PGSPEER          0.010       0.018       0.022       0.043       0.061       0.066       0.073
-    PGSSCHOOL       -0.052      -0.049      -0.046      -0.025      -0.007      -0.004       0.003
-    PGSNEIGHBO      -0.082      -0.074      -0.070      -0.051      -0.032      -0.027      -0.021
-    PGSAGE          -0.067      -0.058      -0.053      -0.017       0.021       0.027       0.039
-    PGSSEX          -0.030      -0.025      -0.023      -0.013      -0.002      -0.001       0.003
-    PGSINC          -0.124      -0.120      -0.116      -0.102      -0.084      -0.082      -0.078
-    PGSPARED        -0.070      -0.064      -0.059      -0.039      -0.017      -0.013      -0.004
-
- WHITE    WITH
-    PGS             -0.004      -0.003      -0.003      -0.001       0.001       0.001       0.002
-    AGE             -0.005      -0.004      -0.003      -0.001       0.002       0.003       0.004
-    SEX             -0.001      -0.001      -0.001       0.000       0.001       0.001       0.002
-    INCOME          -0.001      -0.001       0.000       0.001       0.003       0.003       0.004
-    PARED           -0.004      -0.003      -0.003       0.000       0.003       0.003       0.005
-    PGSPARENT       -0.003      -0.002      -0.001       0.001       0.004       0.005       0.006
-    PGSPEER         -0.003      -0.002      -0.002       0.001       0.003       0.003       0.004
-    PGSSCHOOL       -0.002      -0.002      -0.001       0.001       0.003       0.004       0.005
-    PGSNEIGHBO      -0.003      -0.002      -0.001       0.001       0.003       0.003       0.004
-    PGSAGE          -0.003      -0.002      -0.002       0.001       0.004       0.005       0.006
-    PGSSEX          -0.001       0.000       0.000       0.001       0.002       0.002       0.002
-    PGSINC          -0.002      -0.001      -0.001       0.001       0.003       0.003       0.004
-    PGSPARED        -0.003      -0.002      -0.002       0.002       0.004       0.005       0.006
-    PGSSINGPAR      -0.001      -0.001      -0.001       0.000       0.001       0.001       0.002
-
- NATIVE   WITH
-    PGS             -0.004      -0.002      -0.002       0.002       0.005       0.005       0.007
-    AGE             -0.008      -0.006      -0.005       0.000       0.006       0.007       0.010
-    SEX             -0.005      -0.004      -0.004      -0.002       0.000       0.000       0.001
-    INCOME          -0.006      -0.005      -0.005      -0.002       0.001       0.001       0.002
-    PARED           -0.011      -0.010      -0.009      -0.006      -0.003      -0.002      -0.001
-    PGSPARENT       -0.007      -0.004      -0.004       0.000       0.003       0.003       0.006
-    PGSPEER         -0.007      -0.005      -0.005      -0.001       0.003       0.004       0.004
-    PGSSCHOOL       -0.001      -0.001       0.000       0.002       0.005       0.006       0.007
-    PGSNEIGHBO      -0.005      -0.003      -0.002       0.002       0.006       0.007       0.009
-    PGSAGE          -0.004      -0.003      -0.002       0.002       0.007       0.008       0.010
-    PGSSEX          -0.004      -0.003      -0.003      -0.001       0.000       0.001       0.001
-    PGSINC          -0.005      -0.004      -0.004      -0.001       0.001       0.002       0.003
-    PGSPARED        -0.005      -0.003      -0.003       0.001       0.004       0.005       0.007
-    PGSSINGPAR      -0.003      -0.003      -0.002      -0.001       0.001       0.001       0.002
-    WHITE           -0.003      -0.002      -0.002      -0.001       0.000       0.000       0.000
-
- OTHER    WITH
-    PGS             -0.003      -0.002      -0.001       0.001       0.003       0.003       0.004
-    AGE             -0.003      -0.002      -0.001       0.002       0.005       0.006       0.006
-    SEX             -0.001      -0.001      -0.001       0.000       0.001       0.001       0.002
-    INCOME          -0.003      -0.002      -0.002       0.000       0.001       0.002       0.002
-    PARED           -0.005      -0.003      -0.002       0.001       0.004       0.005       0.005
-    PGSPARENT       -0.005      -0.004      -0.003      -0.001       0.001       0.002       0.003
-    PGSPEER         -0.004      -0.003      -0.002       0.000       0.002       0.003       0.004
-    PGSSCHOOL       -0.005      -0.004      -0.004      -0.001       0.001       0.002       0.002
-    PGSNEIGHBO      -0.005      -0.004      -0.004      -0.002       0.000       0.001       0.001
-    PGSAGE          -0.004      -0.003      -0.002       0.001       0.004       0.005       0.006
-    PGSSEX          -0.002      -0.002      -0.002      -0.001       0.000       0.000       0.001
-    PGSINC          -0.004      -0.003      -0.003      -0.001       0.001       0.001       0.002
-    PGSPARED        -0.006      -0.005      -0.004      -0.001       0.002       0.003       0.004
-    PGSSINGPAR      -0.002      -0.001      -0.001       0.000       0.001       0.001       0.001
-    WHITE           -0.008      -0.007      -0.007      -0.005      -0.004      -0.003      -0.003
-    NATIVE           0.000       0.000       0.000       0.000       0.000       0.000       0.001
-
- HISPANIC WITH
-    PGS             -0.006      -0.004      -0.003      -0.001       0.001       0.002       0.003
-    AGE              0.000       0.002       0.003       0.007       0.011       0.012       0.014
-    SEX             -0.002      -0.002      -0.001       0.000       0.001       0.002       0.002
-    INCOME          -0.004      -0.004      -0.003      -0.001       0.001       0.002       0.003
-    PARED           -0.004      -0.003      -0.002       0.001       0.004       0.006       0.007
-    PGSPARENT       -0.005      -0.003      -0.003       0.000       0.003       0.003       0.004
-    PGSPEER         -0.006      -0.005      -0.004      -0.001       0.002       0.003       0.004
-    PGSSCHOOL       -0.005      -0.004      -0.003       0.000       0.003       0.003       0.004
-    PGSNEIGHBO      -0.004      -0.003      -0.003       0.000       0.002       0.002       0.003
-    PGSAGE          -0.009      -0.008      -0.006      -0.001       0.004       0.005       0.006
-    PGSSEX          -0.002      -0.002      -0.002       0.000       0.001       0.001       0.002
-    PGSINC          -0.005      -0.004      -0.003       0.000       0.002       0.003       0.004
-    PGSPARED        -0.005      -0.004      -0.003       0.001       0.006       0.007       0.009
-    PGSSINGPAR      -0.002      -0.002      -0.001       0.000       0.001       0.002       0.002
-    WHITE           -0.005      -0.004      -0.004      -0.003      -0.001      -0.001      -0.001
-    NATIVE           0.000       0.000       0.000       0.000       0.001       0.001       0.001
-    OTHER            0.001       0.002       0.002       0.003       0.005       0.005       0.006
+    PGS             -0.307      -0.300      -0.296      -0.277      -0.258      -0.255      -0.247
+    AGE             -0.035      -0.027      -0.024      -0.004       0.015       0.020       0.026
+    SEX             -0.010      -0.009      -0.008      -0.002       0.004       0.005       0.007
+    INCOME          -0.008      -0.005      -0.003       0.007       0.016       0.018       0.021
+    PARED            0.024       0.028       0.030       0.043       0.056       0.058       0.062
+    PGSPARENT       -0.064      -0.057      -0.053      -0.032      -0.012      -0.009      -0.002
+    PGSPEER          0.012       0.019       0.022       0.043       0.063       0.067       0.076
+    PGSSCHOOL       -0.056      -0.048      -0.044      -0.026      -0.006      -0.002       0.007
+    PGSNEIGHBO      -0.084      -0.075      -0.071      -0.051      -0.031      -0.027      -0.020
+    PGSAGE          -0.069      -0.053      -0.047      -0.013       0.022       0.032       0.042
+    PGSSEX          -0.028      -0.025      -0.023      -0.013      -0.004      -0.002       0.001
+    PGSINC          -0.126      -0.121      -0.117      -0.100      -0.085      -0.081      -0.076
+    PGSPARED        -0.072      -0.065      -0.061      -0.039      -0.018      -0.013      -0.004
 
  SINGLE_P WITH
-    PGS              0.020       0.024       0.025       0.035       0.045       0.046       0.051
-    AGE             -0.012      -0.005      -0.001       0.013       0.030       0.034       0.042
-    SEX             -0.007      -0.005      -0.005       0.000       0.005       0.006       0.007
-    INCOME          -0.121      -0.119      -0.117      -0.107      -0.098      -0.096      -0.094
-    PARED           -0.058      -0.055      -0.054      -0.041      -0.030      -0.027      -0.023
-    PGSPARENT       -0.016      -0.013      -0.011       0.001       0.012       0.013       0.018
-    PGSPEER         -0.019      -0.016      -0.013      -0.004       0.006       0.009       0.012
-    PGSSCHOOL       -0.009      -0.006      -0.004       0.006       0.016       0.018       0.022
-    PGSNEIGHBO      -0.015      -0.012      -0.010       0.000       0.010       0.012       0.016
-    PGSAGE          -0.029      -0.022      -0.019      -0.003       0.013       0.017       0.024
-    PGSSEX          -0.005      -0.003      -0.002       0.003       0.008       0.008       0.010
-    PGSINC          -0.024      -0.021      -0.019      -0.010      -0.001       0.001       0.005
-    PGSPARED        -0.007      -0.002       0.001       0.011       0.023       0.025       0.027
-    PGSSINGPAR       0.002       0.004       0.004       0.009       0.013       0.015       0.016
-    WHITE           -0.001      -0.001      -0.001       0.000       0.001       0.001       0.001
-    NATIVE          -0.002      -0.002      -0.001       0.000       0.001       0.002       0.003
-    OTHER           -0.002      -0.001      -0.001       0.000       0.000       0.001       0.001
-    HISPANIC        -0.001       0.000       0.000       0.001       0.002       0.003       0.003
+    PGS              0.021       0.024       0.026       0.036       0.045       0.047       0.051
+    AGE             -0.013      -0.006      -0.003       0.013       0.030       0.034       0.040
+    SEX             -0.006      -0.005      -0.004       0.001       0.006       0.007       0.009
+    INCOME          -0.120      -0.118      -0.117      -0.107      -0.098      -0.097      -0.094
+    PARED           -0.061      -0.057      -0.055      -0.044      -0.032      -0.029      -0.025
+    PGSPARENT       -0.017      -0.012      -0.010       0.001       0.011       0.013       0.018
+    PGSPEER         -0.019      -0.015      -0.013      -0.003       0.008       0.010       0.013
+    PGSSCHOOL       -0.010      -0.006      -0.004       0.006       0.015       0.018       0.022
+    PGSNEIGHBO      -0.018      -0.012      -0.010       0.000       0.011       0.013       0.017
+    PGSAGE          -0.031      -0.023      -0.021      -0.003       0.013       0.016       0.022
+    PGSSEX          -0.004      -0.003      -0.002       0.003       0.008       0.009       0.010
+    PGSINC          -0.023      -0.021      -0.019      -0.009       0.000       0.002       0.005
+    PGSPARED        -0.007      -0.003      -0.002       0.010       0.021       0.023       0.026
+    PGSSINGPAR       0.002       0.003       0.004       0.009       0.014       0.015       0.017
 
  Means
-    PGS             -0.036      -0.027      -0.024       0.000       0.023       0.027       0.033
-    AGE             -0.065      -0.047      -0.041       0.000       0.040       0.045       0.065
-    SEX              0.013       0.017       0.020       0.031       0.042       0.045       0.050
-    INCOME          -0.039      -0.030      -0.026      -0.007       0.014       0.018       0.022
-    PARED           -0.042      -0.035      -0.030      -0.005       0.022       0.025       0.031
-    PGSPARENT       -0.102      -0.093      -0.089      -0.065      -0.043      -0.037      -0.026
-    PGSPEER          0.125       0.134       0.138       0.159       0.182       0.185       0.193
-    PGSSCHOOL       -0.153      -0.147      -0.142      -0.122      -0.100      -0.095      -0.086
-    PGSNEIGHBO      -0.088      -0.080      -0.077      -0.055      -0.033      -0.028      -0.023
-    PGSAGE          -0.063      -0.049      -0.042       0.001       0.038       0.042       0.057
-    PGSSEX          -0.004      -0.001       0.002       0.013       0.024       0.027       0.030
-    PGSINC          -0.092      -0.087      -0.083      -0.064      -0.045      -0.041      -0.035
-    PGSPARED        -0.164      -0.159      -0.152      -0.128      -0.101      -0.094      -0.086
-    PGSSINGPAR       0.017       0.021       0.023       0.035       0.046       0.050       0.053
-    WHITE            0.991       0.992       0.992       0.994       0.995       0.996       0.996
-    NATIVE           0.016       0.017       0.018       0.021       0.025       0.025       0.027
-    OTHER            0.004       0.005       0.005       0.007       0.009       0.010       0.011
-    HISPANIC         0.009       0.010       0.010       0.013       0.016       0.016       0.017
-    SINGLE_PAR      -0.275      -0.272      -0.269      -0.258      -0.249      -0.247      -0.244
+    PGS             -0.038      -0.028      -0.025       0.000       0.023       0.027       0.038
+    AGE             -0.068      -0.050      -0.044      -0.005       0.036       0.043       0.054
+    SEX              0.013       0.017       0.019       0.031       0.042       0.044       0.048
+    INCOME          -0.035      -0.029      -0.025      -0.005       0.014       0.017       0.024
+    PARED           -0.046      -0.036      -0.030      -0.004       0.020       0.025       0.035
+    PGSPARENT       -0.101      -0.094      -0.087      -0.065      -0.042      -0.036      -0.029
+    PGSPEER          0.123       0.132       0.137       0.160       0.183       0.188       0.195
+    PGSSCHOOL       -0.155      -0.148      -0.143      -0.120      -0.097      -0.093      -0.086
+    PGSNEIGHBO      -0.088      -0.081      -0.077      -0.054      -0.030      -0.027      -0.017
+    PGSAGE          -0.062      -0.043      -0.037       0.003       0.044       0.051       0.065
+    PGSSEX          -0.004       0.000       0.002       0.014       0.025       0.027       0.033
+    PGSINC          -0.094      -0.086      -0.082      -0.063      -0.044      -0.041      -0.033
+    PGSPARED        -0.163      -0.157      -0.152      -0.126      -0.100      -0.095      -0.087
+    PGSSINGPAR       0.017       0.022       0.024       0.036       0.048       0.050       0.055
+    SINGLE_PAR      -0.273      -0.270      -0.269      -0.259      -0.249      -0.247      -0.244
 
  Intercepts
-    PARENT          -0.511      -0.411      -0.344       0.198       0.657       0.736       0.868
-    PEER            -0.962      -0.849      -0.727      -0.269       0.222       0.347       0.484
-    SCHOOL          -0.291      -0.154      -0.064       0.377       0.836       0.971       1.112
-    NEIGHBOR        -0.721      -0.439      -0.319       0.185       0.618       0.668       0.778
-    ASB#1          -14.340     -11.692     -10.514      -4.342      -0.400       2.162       5.236
-    ASB#2           -5.368      -4.151      -3.887      -2.143      -0.365       0.093       0.532
-    ASB#3          -16.310     -14.047     -12.802      -5.098      -3.354      -2.958      -2.571
-    SUB#1           -1.228      -0.895      -0.763       0.279       1.545       1.817       2.418
-    SUB#2           -6.858      -2.183      -1.792      -0.385       1.186       2.031       7.170
+    PARENT          -0.067      -0.056      -0.051      -0.021       0.011       0.015       0.027
+    PEER             0.009       0.021       0.027       0.056       0.082       0.088       0.096
+    SCHOOL          -0.082      -0.070      -0.064      -0.037      -0.008      -0.002       0.014
+    NEIGHBOR        -0.099      -0.087      -0.081      -0.053      -0.025      -0.020      -0.011
+    ASB#1           -8.316      -7.734      -7.499      -6.425      -6.001      -5.904      -5.686
+    ASB#2           -2.432      -2.366      -2.343      -2.191      -2.063      -2.031      -1.986
+    ASB#3           -3.643      -3.557      -3.505      -3.233      -3.070      -3.018      -2.976
+    SUB#1           -0.212      -0.182      -0.172      -0.098      -0.025      -0.009       0.023
+    SUB#2           -1.546      -1.489      -1.466      -1.324      -1.216      -1.197      -1.145
 
  Variances
-    PGS              0.950       0.958       0.965       1.000       1.032       1.040       1.055
-    AGE              2.840       2.866       2.879       2.950       3.023       3.037       3.059
+    PGS              0.943       0.959       0.965       0.998       1.032       1.037       1.053
+    AGE              2.841       2.867       2.878       2.950       3.021       3.036       3.064
     SEX              0.248       0.248       0.248       0.249       0.250       0.250       0.250
-    INCOME           0.544       0.555       0.562       0.598       0.640       0.652       0.674
-    PARED            1.177       1.186       1.195       1.231       1.265       1.273       1.279
-    PGSPARENT        0.872       0.896       0.912       0.996       1.075       1.091       1.126
-    PGSPEER          0.919       0.933       0.944       1.011       1.080       1.099       1.129
-    PGSSCHOOL        0.874       0.888       0.896       0.959       1.011       1.024       1.039
-    PGSNEIGHBO       0.895       0.917       0.931       1.002       1.078       1.089       1.124
-    PGSAGE           2.706       2.767       2.787       2.956       3.123       3.145       3.248
-    PGSSEX           0.238       0.239       0.241       0.250       0.258       0.260       0.263
-    PGSINC           0.477       0.495       0.507       0.570       0.643       0.654       0.690
-    PGSPARED         1.091       1.119       1.134       1.205       1.272       1.284       1.322
-    PGSSINGPAR       0.236       0.238       0.240       0.249       0.257       0.258       0.262
-    WHITE            0.004       0.004       0.005       0.006       0.008       0.008       0.009
-    NATIVE           0.016       0.017       0.017       0.021       0.024       0.025       0.026
-    OTHER            0.004       0.005       0.005       0.007       0.009       0.009       0.010
-    HISPANIC         0.009       0.010       0.010       0.013       0.016       0.016       0.017
-    SINGLE_PAR       0.174       0.176       0.178       0.183       0.188       0.189       0.190
+    INCOME           0.540       0.550       0.557       0.598       0.637       0.647       0.663
+    PARED            1.166       1.178       1.186       1.221       1.256       1.261       1.274
+    PGSPARENT        0.856       0.885       0.897       0.981       1.073       1.089       1.132
+    PGSPEER          0.904       0.925       0.935       1.005       1.077       1.094       1.127
+    PGSSCHOOL        0.854       0.876       0.888       0.946       1.007       1.020       1.040
+    PGSNEIGHBO       0.882       0.914       0.925       1.002       1.083       1.101       1.133
+    PGSAGE           2.706       2.769       2.797       2.953       3.119       3.146       3.209
+    PGSSEX           0.236       0.239       0.241       0.249       0.258       0.259       0.263
+    PGSINC           0.471       0.487       0.501       0.564       0.638       0.648       0.683
+    PGSPARED         1.079       1.106       1.115       1.182       1.248       1.265       1.287
+    PGSSINGPAR       0.235       0.239       0.240       0.248       0.257       0.258       0.261
+    SINGLE_PAR       0.175       0.177       0.178       0.183       0.188       0.189       0.190
 
  Residual Variances
-    PARENT           0.895       0.905       0.915       0.963       1.006       1.016       1.046
-    PEER             0.826       0.839       0.843       0.875       0.905       0.910       0.925
-    SCHOOL           0.902       0.920       0.927       0.962       0.992       1.001       1.021
-    NEIGHBOR         0.926       0.935       0.939       0.977       1.009       1.019       1.028
+    PARENT           0.887       0.903       0.913       0.961       1.007       1.018       1.032
+    PEER             0.820       0.832       0.841       0.875       0.906       0.912       0.926
+    SCHOOL           0.902       0.914       0.920       0.955       0.987       0.993       1.013
+    NEIGHBOR         0.919       0.933       0.940       0.977       1.012       1.017       1.034
 
 New/Additional Parameters
-    INDASB11        -0.008      -0.003      -0.001       0.010       0.025       0.028       0.033
-    INDASB12         0.125       0.133       0.141       0.170       0.220       0.234       0.252
-    INDASB13        -0.003       0.007       0.012       0.039       0.064       0.070       0.078
-    INDASB14        -0.019      -0.013      -0.011       0.001       0.011       0.015       0.020
-    TOTALASB         0.059       0.242       0.276       0.656       0.991       1.070       1.175
-    INDASB21         0.003       0.004       0.005       0.011       0.018       0.021       0.023
-    INDASB22         0.011       0.015       0.017       0.029       0.043       0.046       0.050
-    INDASB23        -0.005       0.000       0.002       0.011       0.021       0.023       0.025
-    INDASB24        -0.008      -0.006      -0.005      -0.001       0.003       0.004       0.005
-    TOTALASB         0.022       0.058       0.081       0.177       0.282       0.298       0.343
-    INDASB31         0.003       0.004       0.006       0.012       0.019       0.022       0.025
-    INDASB32         0.073       0.081       0.084       0.105       0.128       0.133       0.145
-    INDASB33         0.011       0.014       0.017       0.031       0.044       0.047       0.052
-    INDASB34        -0.011      -0.007      -0.006      -0.001       0.004       0.006       0.010
-    TOTALASB        -0.034       0.011       0.045       0.212       0.356       0.394       0.444
-    INDSUB11        -0.005      -0.003      -0.003       0.001       0.005       0.006       0.007
-    INDSUB12         0.066       0.070       0.074       0.088       0.105       0.107       0.111
-    INDSUB13         0.009       0.011       0.013       0.021       0.029       0.031       0.035
+    INDASB11        -0.010      -0.004      -0.001       0.011       0.024       0.028       0.035
+    INDASB12         0.122       0.133       0.139       0.177       0.223       0.234       0.263
+    INDASB13        -0.004       0.008       0.013       0.038       0.067       0.072       0.081
+    INDASB14        -0.016      -0.012      -0.009       0.002       0.013       0.016       0.022
+    TOTALASB         0.032       0.133       0.211       0.600       0.951       1.014       1.180
+    INDASB21         0.003       0.004       0.005       0.012       0.019       0.020       0.025
+    INDASB22         0.011       0.015       0.018       0.031       0.044       0.046       0.053
+    INDASB23        -0.003      -0.001       0.001       0.011       0.020       0.023       0.027
+    INDASB24        -0.008      -0.006      -0.005       0.000       0.003       0.004       0.006
+    TOTALASB         0.035       0.067       0.084       0.185       0.280       0.301       0.343
+    INDASB31         0.003       0.004       0.005       0.012       0.020       0.022       0.026
+    INDASB32         0.077       0.083       0.088       0.109       0.132       0.137       0.146
+    INDASB33         0.012       0.015       0.017       0.029       0.043       0.046       0.050
+    INDASB34        -0.009      -0.006      -0.005       0.000       0.005       0.006       0.010
+    TOTALASB        -0.026       0.034       0.051       0.207       0.369       0.402       0.479
+    INDSUB11        -0.005      -0.003      -0.002       0.001       0.005       0.006       0.007
+    INDSUB12         0.064       0.071       0.073       0.089       0.107       0.110       0.117
+    INDSUB13         0.008       0.011       0.013       0.020       0.028       0.030       0.034
     INDSUB14        -0.004      -0.003      -0.002       0.001       0.004       0.004       0.006
-    TOTALSUB         0.242       0.281       0.293       0.359       0.430       0.443       0.480
-    INDSUB21        -0.021      -0.015      -0.013      -0.006      -0.001       0.000       0.001
-    INDSUB22        -0.138      -0.128      -0.122      -0.095      -0.074      -0.070      -0.064
-    INDSUB23        -0.013      -0.009      -0.007       0.002       0.011       0.014       0.019
-    INDSUB24         0.000       0.001       0.002       0.006       0.011       0.013       0.015
-    TOTALSUB        -0.478      -0.433      -0.407      -0.267      -0.148      -0.120      -0.079
+    TOTALSUB         0.249       0.269       0.282       0.355       0.433       0.447       0.481
+    INDSUB21        -0.017      -0.015      -0.013      -0.006      -0.001       0.000       0.002
+    INDSUB22        -0.139      -0.128      -0.123      -0.096      -0.073      -0.069      -0.064
+    INDSUB23        -0.013      -0.008      -0.007       0.003       0.013       0.015       0.019
+    INDSUB24         0.000       0.000       0.001       0.005       0.010       0.011       0.014
+    TOTALSUB        -0.460      -0.416      -0.389      -0.259      -0.144      -0.123      -0.075
 
 
 SAVEDATA INFORMATION
@@ -1591,10 +1299,6 @@ SAVEDATA INFORMATION
     PGSINC
     PGSPARED
     PGSSINGP
-    WHITE
-    NATIVE
-    OTHER
-    HISPANIC
     SINGLE_P
     SUB_HI_D
     SUB_LO_D
@@ -1616,9 +1320,9 @@ DIAGRAM INFORMATION
   Diagram output
     c:\repo\2024_ge_interplay_ext_trajectory\analysis\rnr_eur.dgm
 
-     Beginning Time:  18:44:45
-        Ending Time:  11:07:24
-       Elapsed Time:  16:22:39
+     Beginning Time:  23:40:05
+        Ending Time:  09:08:06
+       Elapsed Time:  09:28:01
 
 
 
