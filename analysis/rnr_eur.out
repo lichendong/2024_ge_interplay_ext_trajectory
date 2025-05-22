@@ -1,6 +1,6 @@
 Mplus VERSION 7.4
 MUTHEN & MUTHEN
-05/19/2025   6:44 PM
+05/21/2025  11:40 PM
 
 INPUT INSTRUCTIONS
 
@@ -23,9 +23,6 @@ INPUT INSTRUCTIONS
     asb_hi_dum asb_mod_dum asb_ado_dum
     pgsparent pgspeer pgsschool pgsneighbor
     pgsage pgssex pgsinc pgspared pgssingpar
-    white !african
-    native !asian
-    other hispanic
     single_par
     ;
 
