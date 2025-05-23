@@ -17,9 +17,6 @@ Variable:
   asb_hi_dum asb_mod_dum asb_ado_dum 
   pgsparent pgspeer pgsschool pgsneighbor 
   pgsage pgssex pgsinc pgspared pgssingpar
-  white !african 
-  native asian 
-  other hispanic
   single_par
   ;
   
@@ -27,19 +24,19 @@ Variable:
    asb sub;
   
   USEOBSERVATIONS ARE
-    ancestry == 3;
+    ancestry == 3 AND hispanic == 1;
 
   IDVARIABLE IS AID;
 
   Missing are .; 
 
 Analysis: 
-    process = 15;
+    process = 5;
     estimator = ML;
     Algorithm = INTEGRATION;
-    INTEGRATION = MONTECARLO (1500);  
+    INTEGRATION = MONTECARLO (2000);  
     !LINK = PROBIT;
-    bootstrap=500;
+    bootstrap=1500;
 
 Define:
 
@@ -47,9 +44,7 @@ Define:
 MODEL:
     
     parent peer school neighbor ON age sex income pared 
-    white !african 
-    native asian 
-    other hispanic single_par;
+    single_par;
 
     parent ON pgs(a1);
     peer ON pgs(a2);
@@ -62,9 +57,7 @@ MODEL:
     pgsage pgssex pgsinc pgspared pgssingpar
     sub_hi_dum sub_lo_dum age sex
     income pared
-    white !african 
-    native asian 
-    other hispanic single_par;
+    single_par;
 
     asb#1 ON pgs(cpasb1);
     asb#1 ON parent(basb11);
@@ -89,9 +82,7 @@ MODEL:
     pgsage pgssex pgsinc pgspared pgssingpar
     asb_hi_dum asb_mod_dum asb_ado_dum age sex
     income pared
-    white !african 
-    native asian 
-    other hispanic single_par;
+    single_par;
 
     sub#1 ON pgs(cpsub1);
     sub#1 ON parent(bsub11);
@@ -115,9 +106,7 @@ MODEL:
     neighbor WITH parent peer school;
 
     [pgs parent peer school neighbor
-    age sex income pared white !african 
-    native asian 
-    other hispanic single_par
+    age sex income pared single_par
     pgsparent pgspeer 
     pgsschool pgsneighbor 
     pgsage pgssex pgsinc pgspared pgssingpar];
