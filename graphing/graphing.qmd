@@ -37,7 +37,7 @@ eur <- readModels(here::here("analysis/rnr_eur.out"))$parameters$ci.unstandardiz
           as_tibble() |> janitor::clean_names() |> 
           select(param_header, param, est, low_5, up_5)
 
-eur$param_header[396:420] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
+eur$param_header[286:310] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
 eur <- eur |> mutate(param = replace(param, param %in% c("INDASB11","INDASB21",
                                                          "INDASB31","INDSUB11","INDSUB21"), 
                                      "Parent Indirect Effect"),
@@ -76,13 +76,9 @@ eur_apaths <- eur_apaths |>
                                         "SEX" ~ "Female Sex",
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
-                                        "WHITE" ~ "White",
-                                        "NATIVE" ~ "Native",
-                                        "OTHER" ~ "Other Race",
-                                        "HISPANIC" ~ "Hispanic",
                                         "SINGLE_PAR" ~ "Single Parent",
                                         "PGS" ~ "PGS"),
-                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent","White", "Native", "Other Race", "Hispanic"))) 
+                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent"))) 
 ```
 
 ## Process main paths
@@ -116,10 +112,6 @@ eur_mainpaths <- eur_mainpaths |>
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
                                         "SINGLE_PAR" ~ "Single Parent",
-                                        "WHITE" ~ "White",
-                                        "NATIVE" ~ "Native",
-                                        "OTHER" ~ "Other Race",
-                                        "HISPANIC" ~ "Hispanic",
                                         "PGSAGE" ~ "PGS x Age",
                                         "PGSSEX" ~ "PGS x Sex",
                                         "PGSINC" ~ "PGS x Income",
@@ -151,10 +143,6 @@ eur_mainpaths <- eur_mainpaths |>
                                         "Family Income",
                                         "Parental Education",
                                         "Single Parent",
-                                        "White",
-                                        "Native",
-                                        "Other Race",
-                                        "Hispanic",
                                         "PGS x Age",
                                         "PGS x Sex",
                                         "PGS x Income",
@@ -307,7 +295,7 @@ afr <- readModels(here::here("analysis/rnr_afr.out"))$parameters$ci.unstandardiz
           as_tibble() |> janitor::clean_names() |> 
           select(param_header, param, est, low_5, up_5)
 
-afr$param_header[426:450] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
+afr$param_header[286:310] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
 afr <- afr |> mutate(param = replace(param, param %in% c("INDASB11","INDASB21",
                                                          "INDASB31","INDSUB11","INDSUB21"), 
                                      "Parent Indirect Effect"),
@@ -345,14 +333,9 @@ afr_apaths <- afr_apaths |>
                                         "SEX" ~ "Female Sex",
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
-                                        "WHITE" ~ "White",
-                                        "AFRICAN" ~ "African",
-                                        "NATIVE" ~ "Native",
-                                        "OTHER" ~ "Other Race",
-                                        "HISPANIC" ~ "Hispanic",
                                         "SINGLE_PAR" ~ "Single Parent",
                                         "PGS" ~ "PGS"),
-                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent","White", "African", "Native", "Other Race", "Hispanic"))) 
+                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent"))) 
 
 ```
 
@@ -388,11 +371,6 @@ afr_mainpaths <- afr_mainpaths |>
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
                                         "SINGLE_PAR" ~ "Single Parent",
-                                        "WHITE" ~ "White",
-                                        "AFRICAN" ~ "African",
-                                        "NATIVE" ~ "Native",
-                                        "OTHER" ~ "Other Race",
-                                        "HISPANIC" ~ "Hispanic",
                                         "PGSAGE" ~ "PGS x Age",
                                         "PGSSEX" ~ "PGS x Sex",
                                         "PGSINC" ~ "PGS x Income",
@@ -424,11 +402,6 @@ afr_mainpaths <- afr_mainpaths |>
                                         "Family Income",
                                         "Parental Education",
                                         "Single Parent",
-                                        "White",
-                                        "African",
-                                        "Native",
-                                        "Other Race",
-                                        "Hispanic",
                                         "PGS x Age",
                                         "PGS x Sex",
                                         "PGS x Income",
@@ -494,7 +467,7 @@ asi <- readModels(here::here("analysis/rnr_asi.out"))$parameters$ci.unstandardiz
           select(param_header, param, est, low_5, up_5) |> 
           mutate(low_5 = as.numeric(replace(low_5, low_5 == "*********", "-9999")))
 
-asi$param_header[312:336] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
+asi$param_header[286:310] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
 asi <- asi |> mutate(param = replace(param, param %in% c("INDASB11","INDASB21",
                                                          "INDASB31","INDSUB11","INDSUB21"), 
                                      "Parent Indirect Effect"),
@@ -532,10 +505,9 @@ asi_apaths <- asi_apaths |>
                                         "SEX" ~ "Female Sex",
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
-                                        "HISPANIC" ~ "Hispanic",
                                         "SINGLE_PAR" ~ "Single Parent",
                                         "PGS" ~ "PGS"),
-                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent", "Hispanic"))) 
+                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent"))) 
 
 ```
 
@@ -571,7 +543,6 @@ asi_mainpaths <- asi_mainpaths |>
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
                                         "SINGLE_PAR" ~ "Single Parent",
-                                        "HISPANIC" ~ "Hispanic",
                                         "PGSAGE" ~ "PGS x Age",
                                         "PGSSEX" ~ "PGS x Sex",
                                         "PGSINC" ~ "PGS x Income",
@@ -603,7 +574,6 @@ asi_mainpaths <- asi_mainpaths |>
                                         "Family Income",
                                         "Parental Education",
                                         "Single Parent",
-                                        "Hispanic",
                                         "PGS x Age",
                                         "PGS x Sex",
                                         "PGS x Income",
@@ -670,7 +640,7 @@ his <- readModels(here::here("analysis/rnr_his.out"))$parameters$ci.unstandardiz
           select(param_header, param, est, low_5, up_5)|> 
           mutate(low_5 = as.numeric(replace(low_5, low_5 == "*********", "-9999")))
 
-his$param_header[426:450] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
+his$param_header[286:310] <- rep(c("ASB#1.ON", "ASB#2.ON", "ASB#3.ON","SUB#1.ON", "SUB#2.ON"), each = 5)
 his <- his |> mutate(param = replace(param, param %in% c("INDASB11","INDASB21",
                                                          "INDASB31","INDSUB11","INDSUB21"), 
                                      "Parent Indirect Effect"),
@@ -708,14 +678,9 @@ his_apaths <- his_apaths |>
                                         "SEX" ~ "Female Sex",
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
-                                        "WHITE" ~ "White",
-                                        "NATIVE" ~ "Native",
-                                        "ASIAN" ~ "Asian", 
-                                        "OTHER" ~ "Other Race",
-                                        "HISPANIC" ~ "Hispanic",
                                         "SINGLE_PAR" ~ "Single Parent",
                                         "PGS" ~ "PGS"),
-                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent","White", "Native", "Asian", "Other Race", "Hispanic"))) 
+                     variable = factor(variable, c("PGS", "Age", "Female Sex", "Family Income", "Parental Education", "Single Parent"))) 
 
 ```
 
@@ -751,11 +716,6 @@ his_mainpaths <- his_mainpaths |>
                                         "INCOME" ~ "Family Income",
                                         "PARED" ~ "Parental Education",
                                         "SINGLE_PAR" ~ "Single Parent",
-                                        "WHITE" ~ "White",
-                                        "NATIVE" ~ "Native",
-                                        "ASIAN" ~ "Asian", 
-                                        "OTHER" ~ "Other Race",
-                                        "HISPANIC" ~ "Hispanic",
                                         "PGSAGE" ~ "PGS x Age",
                                         "PGSSEX" ~ "PGS x Sex",
                                         "PGSINC" ~ "PGS x Income",
@@ -787,11 +747,6 @@ his_mainpaths <- his_mainpaths |>
                                         "Family Income",
                                         "Parental Education",
                                         "Single Parent",
-                                        "White",
-                                        "Native",
-                                        "Asian",
-                                        "Other Race",
-                                        "Hispanic",
                                         "PGS x Age",
                                         "PGS x Sex",
                                         "PGS x Income",

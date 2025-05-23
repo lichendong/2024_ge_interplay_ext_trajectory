@@ -1,0 +1,25 @@
+outcome,variable,est,lower,upper
+Supportive Parenting,PGS,-0.058,-0.121,0.008
+Supportive Parenting,Age,-0.098*,-0.132,-0.065
+Supportive Parenting,Female Sex,-0.211*,-0.331,-0.084
+Supportive Parenting,Family Income,-0.023,-0.126,0.080
+Supportive Parenting,Parental Education,0.033,-0.028,0.096
+Supportive Parenting,Single Parent,0.004,-0.127,0.134
+Delinquent Peer Affiliation,PGS,0.075*,0.016,0.140
+Delinquent Peer Affiliation,Age,0.097*,0.063,0.130
+Delinquent Peer Affiliation,Female Sex,-0.192*,-0.320,-0.062
+Delinquent Peer Affiliation,Family Income,-0.050,-0.156,0.045
+Delinquent Peer Affiliation,Parental Education,-0.081*,-0.147,-0.024
+Delinquent Peer Affiliation,Single Parent,0.110,-0.038,0.239
+School Connectedness,PGS,-0.034,-0.095,0.032
+School Connectedness,Age,-0.045*,-0.085,-0.007
+School Connectedness,Female Sex,-0.143*,-0.259,-0.017
+School Connectedness,Family Income,-0.092,-0.193,0.007
+School Connectedness,Parental Education,0.012,-0.050,0.072
+School Connectedness,Single Parent,-0.123,-0.252,0.021
+Neighborhood Connectedness,PGS,0.008,-0.058,0.068
+Neighborhood Connectedness,Age,-0.080*,-0.112,-0.046
+Neighborhood Connectedness,Female Sex,-0.279*,-0.394,-0.160
+Neighborhood Connectedness,Family Income,-0.015,-0.097,0.079
+Neighborhood Connectedness,Parental Education,-0.001,-0.060,0.057
+Neighborhood Connectedness,Single Parent,-0.216*,-0.363,-0.084

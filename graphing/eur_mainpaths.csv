@@ -1,0 +1,133 @@
+outcome,variable,est,lower,upper
+High SUB,Supportive Parenting,0.980,0.890,1.071
+High SUB,Delinquent Peer Affiliation,1.878*,1.674,2.098
+High SUB,School Connectedness,0.827*,0.746,0.912
+High SUB,Neighborhood Connectedness,0.984,0.898,1.079
+High SUB,Total Effect,1.426*,1.283,1.618
+High SUB,Parent Indirect Effect,1.001,0.995,1.007
+High SUB,Peer Indirect Effect,1.093*,1.066,1.124
+High SUB,School Indirect Effect,1.020*,1.008,1.035
+High SUB,Neighborhood Indirect Effect,1.001,0.996,1.006
+High SUB,PGS Direct Effect,1.276*,1.143,1.442
+High SUB,PGS x Parent,0.977,0.885,1.078
+High SUB,PGS x Peer,0.935,0.837,1.039
+High SUB,PGS x School,1.016,0.908,1.137
+High SUB,PGS x Neighborhood,1.089,0.984,1.196
+High SUB,Age,0.888*,0.836,0.941
+High SUB,Female Sex,0.802*,0.670,0.961
+High SUB,Family Income,0.953,0.824,1.095
+High SUB,Parental Education,0.897*,0.824,0.984
+High SUB,Single Parent,1.257*,1.011,1.594
+High SUB,PGS x Age,1.057,0.997,1.119
+High SUB,PGS x Sex,1.203*,1.000,1.451
+High SUB,PGS x Income,0.939,0.802,1.102
+High SUB,PGS x Parental Education,1.073,0.975,1.194
+High SUB,PGS x Single Parent,0.979,0.774,1.229
+High SUB,High-Decline ASB,4.242*,1.636,18.840
+High SUB,Moderate ASB,1.881*,1.428,2.484
+High SUB,Adolescent-Peaked ASB,1.738*,1.191,2.643
+Low SUB,Supportive Parenting,1.119,0.968,1.317
+Low SUB,Delinquent Peer Affiliation,0.508*,0.399,0.624
+Low SUB,School Connectedness,0.971,0.850,1.122
+Low SUB,Neighborhood Connectedness,0.893,0.788,1.008
+Low SUB,Total Effect,0.772*,0.631,0.928
+Low SUB,Parent Indirect Effect,0.994,0.983,1.002
+Low SUB,Peer Indirect Effect,0.908*,0.870,0.938
+Low SUB,School Indirect Effect,1.003,0.987,1.019
+Low SUB,Neighborhood Indirect Effect,1.005*,1.000,1.014
+Low SUB,PGS Direct Effect,0.848,0.700,1.017
+Low SUB,PGS x Parent,1.064,0.920,1.244
+Low SUB,PGS x Peer,1.079,0.882,1.300
+Low SUB,PGS x School,0.959,0.833,1.102
+Low SUB,PGS x Neighborhood,1.059,0.926,1.197
+Low SUB,Age,1.157*,1.079,1.249
+Low SUB,Female Sex,1.441*,1.142,1.857
+Low SUB,Family Income,0.813*,0.664,0.973
+Low SUB,Parental Education,0.814*,0.708,0.925
+Low SUB,Single Parent,1.001,0.698,1.335
+Low SUB,PGS x Age,1.031,0.958,1.115
+Low SUB,PGS x Sex,0.998,0.789,1.279
+Low SUB,PGS x Income,1.039,0.858,1.279
+Low SUB,PGS x Parental Education,0.986,0.862,1.116
+Low SUB,PGS x Single Parent,0.908,0.662,1.240
+Low SUB,High-Decline ASB,0.000*,0.000,0.000
+Low SUB,Moderate ASB,0.450*,0.246,0.724
+Low SUB,Adolescent-Peaked ASB,0.739,0.276,1.542
+High-Decline ASB,Supportive Parenting,0.825,0.593,1.166
+High-Decline ASB,Delinquent Peer Affiliation,3.497*,2.614,5.094
+High-Decline ASB,School Connectedness,0.693,0.472,1.033
+High-Decline ASB,Neighborhood Connectedness,0.954,0.681,1.405
+High-Decline ASB,Total Effect,1.822*,1.033,3.254
+High-Decline ASB,Parent Indirect Effect,1.011,0.990,1.036
+High-Decline ASB,Peer Indirect Effect,1.194*,1.130,1.301
+High-Decline ASB,School Indirect Effect,1.039,0.996,1.084
+High-Decline ASB,Neighborhood Indirect Effect,1.002,0.984,1.022
+High-Decline ASB,PGS Direct Effect,1.449,0.796,2.606
+High-Decline ASB,PGS x Parent,0.931,0.690,1.405
+High-Decline ASB,PGS x Peer,0.861,0.658,1.170
+High-Decline ASB,PGS x School,1.067,0.691,1.530
+High-Decline ASB,PGS x Neighborhood,0.841,0.602,1.254
+High-Decline ASB,Age,0.689*,0.561,0.829
+High-Decline ASB,Female Sex,0.060*,0.012,0.139
+High-Decline ASB,Family Income,0.870,0.583,1.522
+High-Decline ASB,Parental Education,1.344,0.947,1.844
+High-Decline ASB,Single Parent,0.795,0.360,1.685
+High-Decline ASB,PGS x Age,1.006,0.811,1.231
+High-Decline ASB,PGS x Sex,1.039,0.438,2.474
+High-Decline ASB,PGS x Income,1.112,0.722,1.906
+High-Decline ASB,PGS x Parental Education,0.873,0.611,1.214
+High-Decline ASB,PGS x Single Parent,1.043,0.455,2.303
+High-Decline ASB,High SUB,4.811*,1.914,25.636
+High-Decline ASB,Low SUB,0.000*,0.000,0.000
+Moderate ASB,Supportive Parenting,0.812*,0.715,0.933
+Moderate ASB,Delinquent Peer Affiliation,1.241*,1.089,1.416
+Moderate ASB,School Connectedness,0.904,0.791,1.030
+Moderate ASB,Neighborhood Connectedness,1.010,0.890,1.166
+Moderate ASB,Total Effect,1.203*,1.036,1.409
+Moderate ASB,Parent Indirect Effect,1.012*,1.003,1.025
+Moderate ASB,Peer Indirect Effect,1.031*,1.011,1.054
+Moderate ASB,School Indirect Effect,1.011,0.997,1.027
+Moderate ASB,Neighborhood Indirect Effect,1.000,0.992,1.006
+Moderate ASB,PGS Direct Effect,1.142,0.984,1.338
+Moderate ASB,PGS x Parent,1.078,0.952,1.228
+Moderate ASB,PGS x Peer,0.989,0.873,1.127
+Moderate ASB,PGS x School,1.000,0.861,1.141
+Moderate ASB,PGS x Neighborhood,0.957,0.839,1.090
+Moderate ASB,Age,0.883*,0.817,0.947
+Moderate ASB,Female Sex,0.256*,0.194,0.328
+Moderate ASB,Family Income,1.043,0.874,1.288
+Moderate ASB,Parental Education,1.088,0.951,1.218
+Moderate ASB,Single Parent,0.954,0.717,1.257
+Moderate ASB,PGS x Age,1.022,0.944,1.099
+Moderate ASB,PGS x Sex,1.135,0.886,1.441
+Moderate ASB,PGS x Income,0.955,0.785,1.190
+Moderate ASB,PGS x Parental Education,1.083,0.946,1.229
+Moderate ASB,PGS x Single Parent,0.888,0.657,1.186
+Moderate ASB,High SUB,1.874*,1.423,2.445
+Moderate ASB,Low SUB,0.433*,0.238,0.701
+Adolescent-Peaked ASB,Supportive Parenting,0.806*,0.696,0.931
+Adolescent-Peaked ASB,Delinquent Peer Affiliation,2.166*,1.872,2.563
+Adolescent-Peaked ASB,School Connectedness,0.760*,0.636,0.890
+Adolescent-Peaked ASB,Neighborhood Connectedness,0.996,0.846,1.198
+Adolescent-Peaked ASB,Total Effect,1.230,0.974,1.614
+Adolescent-Peaked ASB,Parent Indirect Effect,1.012*,1.003,1.026
+Adolescent-Peaked ASB,Peer Indirect Effect,1.115*,1.080,1.157
+Adolescent-Peaked ASB,School Indirect Effect,1.029*,1.012,1.051
+Adolescent-Peaked ASB,Neighborhood Indirect Effect,1.000,0.991,1.010
+Adolescent-Peaked ASB,PGS Direct Effect,1.059,0.843,1.392
+Adolescent-Peaked ASB,PGS x Parent,0.916,0.789,1.074
+Adolescent-Peaked ASB,PGS x Peer,1.005,0.861,1.163
+Adolescent-Peaked ASB,PGS x School,0.934,0.783,1.125
+Adolescent-Peaked ASB,PGS x Neighborhood,1.100,0.929,1.303
+Adolescent-Peaked ASB,Age,0.717*,0.634,0.795
+Adolescent-Peaked ASB,Female Sex,0.357*,0.241,0.504
+Adolescent-Peaked ASB,Family Income,1.153,0.886,1.613
+Adolescent-Peaked ASB,Parental Education,1.062,0.896,1.259
+Adolescent-Peaked ASB,Single Parent,1.074,0.687,1.605
+Adolescent-Peaked ASB,PGS x Age,0.994,0.890,1.103
+Adolescent-Peaked ASB,PGS x Sex,1.080,0.758,1.564
+Adolescent-Peaked ASB,PGS x Income,0.963,0.731,1.262
+Adolescent-Peaked ASB,PGS x Parental Education,1.050,0.886,1.266
+Adolescent-Peaked ASB,PGS x Single Parent,1.388,0.892,2.230
+Adolescent-Peaked ASB,High SUB,1.761*,1.206,2.694
+Adolescent-Peaked ASB,Low SUB,0.594,0.215,1.270
