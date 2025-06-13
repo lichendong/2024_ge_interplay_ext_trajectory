@@ -1,0 +1,238 @@
+Data:
+  File is "c:\Repo\data_local\gxe_ext_trajectory_wave.csv";
+Variable:
+ Names are 
+    AID white african native asian other hispanic FAMID pgs 
+    ANCESTRY parent single_par peer school neighbor age sex asb sub 
+    income pared sub_hi_dum sub_lo_dum asb_hi_dum 
+    asb_mod_dum asb_ado_dum pgsparent pgspeer pgsschool 
+    pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar
+    pgsafrican pgsnative pgsasian pgsother pgshispanic 
+    w1asb w2asb w3asb w4asb w5asb 
+    w1sub w2sub w3sub w4sub w5sub;
+
+ usevariables are  
+  pgs parent peer school neighbor age sex 
+  income pared
+  sub_hi_dum sub_lo_dum 
+  asb_hi_dum asb_mod_dum asb_ado_dum 
+  pgsparent pgspeer pgsschool pgsneighbor 
+  pgsage pgssex pgsinc pgspared pgssingpar
+  single_par
+  w1asb w2asb w3asb w4asb w5asb 
+  w1sub w2sub w3sub w4sub w5sub
+  ;
+  
+  COUNT ARE
+   w1asb-w5sub;
+  
+  USEOBSERVATIONS ARE
+    ancestry == 0 AND white == 1 AND hispanic == 0;
+
+  IDVARIABLE IS AID;
+
+  Missing are .; 
+
+Analysis: 
+    process = 18;
+    estimator = ML;
+    Algorithm = INTEGRATION;
+    INTEGRATION = MONTECARLO (2000);  
+    !LINK = PROBIT;
+    bootstrap=1500;
+
+Define:
+
+
+MODEL:
+    
+    w5asb w5sub ON w4asb w4sub;
+    w4asb w4sub ON w3asb w3sub;
+    w3asb w3sub ON w2asb w2sub;
+    w2asb w2sub ON w1asb w1sub;
+
+    parent peer school neighbor ON age sex income pared 
+    single_par;
+
+    parent ON pgs(a1);
+    peer ON pgs(a2);
+    school ON pgs(a3);
+    neighbor ON pgs(a4);
+
+
+    w1asb-w5asb ON pgsparent pgspeer 
+    pgsschool pgsneighbor 
+    pgsage pgssex pgsinc pgspared pgssingpar
+    sub_hi_dum sub_lo_dum age sex
+    income pared
+    single_par;
+
+    w1asb ON pgs(cpasb1);
+    w1asb ON parent(basb11);
+    w1asb ON peer(basb12);
+    w1asb ON school(basb13);
+    w1asb ON neighbor(basb14);
+
+    w2asb ON pgs(cpasb2);
+    w2asb ON parent(basb21);
+    w2asb ON peer(basb22);
+    w2asb ON school(basb23);
+    w2asb ON neighbor(basb24);
+
+    w3asb ON pgs(cpasb3);
+    w3asb ON parent(basb31);
+    w3asb ON peer(basb32);
+    w3asb ON school(basb33);
+    w3asb ON neighbor(basb34);    
+
+    w4asb ON pgs(cpasb4);
+    w4asb ON parent(basb41);
+    w4asb ON peer(basb42);
+    w4asb ON school(basb43);
+    w4asb ON neighbor(basb44);    
+ 
+    w5asb ON pgs(cpasb5);
+    w5asb ON parent(basb51);
+    w5asb ON peer(basb52);
+    w5asb ON school(basb53);
+    w5asb ON neighbor(basb54);    
+
+    w1sub-w5sub ON pgsparent pgspeer pgsschool pgsneighbor 
+    pgsage pgssex pgsinc pgspared pgssingpar
+    asb_hi_dum asb_mod_dum asb_ado_dum age sex
+    income pared
+    single_par;
+
+    w1sub ON pgs(cpsub1);
+    w1sub ON parent(bsub11);
+    w1sub ON peer(bsub12); 
+    w1sub ON school(bsub13);
+    w1sub ON neighbor(bsub14);
+
+    w2sub ON pgs(cpsub2);
+    w2sub ON parent(bsub21); 
+    w2sub ON peer(bsub22);
+    w2sub ON school(bsub23);
+    w2sub ON neighbor(bsub24);
+
+    w3sub ON pgs(cpsub3);
+    w3sub ON parent(bsub31); 
+    w3sub ON peer(bsub32);
+    w3sub ON school(bsub33);
+    w3sub ON neighbor(bsub34);
+
+    w4sub ON pgs(cpsub4);
+    w4sub ON parent(bsub41); 
+    w4sub ON peer(bsub42);
+    w4sub ON school(bsub43);
+    w4sub ON neighbor(bsub44);
+
+    w5sub ON pgs(cpsub5);
+    w5sub ON parent(bsub51); 
+    w5sub ON peer(bsub52);
+    w5sub ON school(bsub53);
+    w5sub ON neighbor(bsub54);
+
+    parent WITH peer school neighbor;
+
+    peer WITH parent school neighbor;
+
+    school WITH parent peer neighbor;
+
+    neighbor WITH parent peer school;
+
+    [pgs parent peer school neighbor
+    age sex income pared single_par
+    pgsparent pgspeer 
+    pgsschool pgsneighbor 
+    pgsage pgssex pgsinc pgspared pgssingpar];
+
+MODEL CONSTRAINT:
+    NEW (indasb11 indasb12 indasb13 indasb14 totalasb1
+    indasb21 indasb22 indasb23 indasb24 totalasb2
+    indasb31 indasb32 indasb33 indasb34 totalasb3
+    indasb41 indasb42 indasb43 indasb44 totalasb4
+    indasb51 indasb52 indasb53 indasb54 totalasb5
+    indsub11 indsub12 indsub13 indsub14 totalsub1
+    indsub21 indsub22 indsub23 indsub24 totalsub2
+    indsub31 indsub32 indsub33 indsub34 totalsub3
+    indsub41 indsub42 indsub43 indsub44 totalsub4
+    indsub51 indsub52 indsub53 indsub54 totalsub5);
+
+    indasb11 = a1*basb11;
+    indasb12 = a2*basb12;
+    indasb13 = a3*basb13;
+    indasb14 = a4*basb14;
+    totalasb1 = indasb11 + indasb12 + indasb13 + 
+        indasb14 + cpasb1;
+
+    indasb21 = a1*basb21;
+    indasb22 = a2*basb22;
+    indasb23 = a3*basb23;
+    indasb24 = a4*basb24;
+    totalasb2 = indasb21 + indasb22 + indasb23 + 
+        indasb24 + cpasb2;
+
+    indasb31 = a1*basb31;
+    indasb32 = a2*basb32;
+    indasb33 = a3*basb33;
+    indasb34 = a4*basb34;
+    totalasb3 = indasb31 + indasb32 + indasb33 + 
+        indasb34 + cpasb3;
+
+    indasb41 = a1*basb41;
+    indasb42 = a2*basb42;
+    indasb43 = a3*basb43;
+    indasb44 = a4*basb44;
+    totalasb4 = indasb41 + indasb42 + indasb43 + 
+        indasb44 + cpasb4;
+
+    indasb51 = a1*basb51;
+    indasb52 = a2*basb52;
+    indasb53 = a3*basb53;
+    indasb54 = a4*basb54;
+    totalasb5 = indasb51 + indasb52 + indasb53 + 
+        indasb54 + cpasb5;
+
+    indsub11 = a1*bsub11;
+    indsub12 = a2*bsub12;
+    indsub13 = a3*bsub13;
+    indsub14 = a4*bsub14;
+    totalsub1 = indsub11 + indsub12 + indsub13 + 
+        indsub14 + cpsub1;
+
+    indsub21 = a1*bsub21;
+    indsub22 = a2*bsub22;
+    indsub23 = a3*bsub23;
+    indsub24 = a4*bsub24;
+    totalsub2 = indsub21 + indsub22 + indsub23 + 
+        indsub24 + cpsub2;
+
+    indsub31 = a1*bsub31;
+    indsub32 = a2*bsub32;
+    indsub33 = a3*bsub33;
+    indsub34 = a4*bsub34;
+    totalsub3 = indsub31 + indsub32 + indsub33 + 
+        indsub34 + cpsub3;
+
+    indsub41 = a1*bsub41;
+    indsub42 = a2*bsub42;
+    indsub43 = a3*bsub43;
+    indsub44 = a4*bsub44;
+    totalsub4 = indsub41 + indsub42 + indsub43 + 
+        indsub44 + cpsub4;
+
+    indsub51 = a1*bsub51;
+    indsub52 = a2*bsub52;
+    indsub53 = a3*bsub53;
+    indsub54 = a4*bsub54;
+    totalsub5 = indsub51 + indsub52 + indsub53 + 
+        indsub54 + cpsub5;
+
+    OUTPUT: 
+    CINTERVAL(BOOTSTRAP)
+    ;
+
+    SAVEDATA:
+    FILE is eur_wave_id.dat;
+    FORMAT is free;

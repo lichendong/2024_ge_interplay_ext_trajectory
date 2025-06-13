@@ -20,9 +20,12 @@ editor_options:
 options(conflicts.policy = "depends.ok",
         digits = 3,
         pillar.sigfig = 0)
+
 library(tidyverse)
 library(lavaan)
 library(MplusAutomation)
+
+theme_set(theme_bw())
 
 path_data <- "../data_local"
 ```
@@ -186,7 +189,7 @@ plot_all_int <- ggplot(data = plot_int) +
   geom_vline(xintercept = 1, color = "red",linetype = "dashed",linewidth = .25) +
   geom_errorbar(aes(y = variable, xmin = lower, xmax = upper),width=.3,linewidth = .55) + 
   geom_text(aes(x = est, y = variable, label = sig),vjust = -.9) +
-  facet_grid(cols = vars(outcome)) + coord_cartesian(xlim = c(0.5,1.75)) +theme_bw() +
+  facet_grid(cols = vars(outcome)) + coord_cartesian(xlim = c(0.5,1.6)) +theme_bw() +
   scale_y_discrete(limits=rev) + 
   scale_x_continuous(breaks = seq(0.5, 1.75, by = .25))+
   theme(text = element_text(size = 9),
@@ -229,7 +232,7 @@ plot_all_med <- ggplot(data = plot_med) +
   geom_vline(xintercept = 1, color = "red",linetype = "dashed",linewidth = .25) +
   geom_errorbar(aes(y = variable, xmin = lower, xmax = upper),width=.3,linewidth = .55) + 
   geom_text(aes(x = est, y = variable, label = sig),vjust = -.9) +
-  facet_grid(cols = vars(outcome)) + coord_cartesian(xlim = c(0.65,2.05)) +theme_bw() +
+  facet_grid(cols = vars(outcome)) + coord_cartesian(xlim = c(0.65,2.00)) +theme_bw() +
   scale_y_discrete(limits=rev) + 
   scale_x_continuous(breaks = seq(0.5, 2.5, by = .25))+
   theme(text = element_text(size = 9),

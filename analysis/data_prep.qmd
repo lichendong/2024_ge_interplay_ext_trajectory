@@ -17,7 +17,7 @@ editor_options:
 ```{r}
 #| output: false
 
-options(conflicts.policy = "depends.ok")
+options(conflicts.policy = "depends.ok", scipen = 999, pillar.max_dec_width = 999)
 library(tidyverse)
 library(lavaan)
 
@@ -155,13 +155,16 @@ parent <- Wave1 |> select(AID, H1WP9, H1WP10, H1PF1, H1PF2,
                                         H1PF24, H1PF25))) <= 2,
                                         mean(c(H1WP13, H1WP14, H1PF23,
                                         H1PF24, H1PF25), na.rm = T), NA),
-                   parent = mean(c(parent_mum, parent_dad), na.rm = T)) |> 
+                   parent = mean(c(parent_mum, parent_dad), na.rm = T),
+                   highest_parent = max(c(parent_mum, parent_dad), na.rm = T),
+                   highest_parent = replace(highest_parent, highest_parent == -Inf, NA)) |> 
             ungroup() |> 
             mutate(single_par = as.numeric(
                                            (is.na(parent_mum)&!is.na(parent_dad))|
                                            (!is.na(parent_mum)&is.na(parent_dad))
                                            ) - .5)
-
+cor(parent$highest_parent, parent$parent, use = "pairwise")
+parent |> select(parent, highest_parent) |> skimr::skim()
 parent <- parent |> select(AID, parent, single_par)
 ```
 
@@ -342,18 +345,404 @@ write.table(data,file = here::here(path_data, "gxe_ext_trajectory.csv"),sep = ",
 names(data) |> cat()
 ```
 
+## Sensitivity analyses: sum scores by waves
+
+```{r}
+sum_scores <- read_csv(here::here(path_data, "ASB_SUB_vars_wave_AllParticipants.csv")) |> 
+              mutate(AID = as.character(AID))
+```
+
+
+```{r}
+write.table(left_join(data, sum_scores),file = here::here(path_data, "gxe_ext_trajectory_wave.csv"),sep = ",", na = ".",row.names = F,col.names  = F)
+
+names(left_join(data, sum_scores)) |> cat()
+```
 
 ## Descriptives
+
 
 ### Create data for descriptives
 
 ```{r}
-descrip <- data |> select(AID, ANCESTRY, sex, white, african, native, 
-                          asian, other, hispanic, single_par, EXT_PGS)
+descrip <- Wave1 |> left_join(Wave2) |> left_join(Wave3) |> 
+  left_join(Wave4) |> left_join(Wave5)|> 
+  mutate(H1GI1Y = na_if(H1GI1Y, 96),
+  H1GI1M = na_if(H1GI1M, 96),
+  H2GI1Y = na_if(H1GI1Y, 98),
+  H2GI1M = na_if(H1GI1M, 98),
+  age1 = (IYEAR - H1GI1Y) + (IMONTH - H1GI1M)/12,
+  age2 = (IYEAR2 - H2GI1Y) + (IMONTH2 - H2GI1M)/12,
+  age3 = (IYEAR3 - H3OD1Y) + (IMONTH3 - H3OD1M)/12,
+  age4 = (IYEAR4 - H4OD1Y) + (IMONTH4 - H4OD1M)/12,
+  age5 = (IYEAR5 - H5OD1Y) + (IMONTH5 - H5OD1M)/12,
+  income = na_if(PA55, 9996),
+  H1RM1 = if_else(H1RM1 %in% c(96:99, 11, 12), NA, H1RM1),
+  H1RF1 = if_else(H1RF1 %in% c(96:99, 11, 12), NA, H1RF1),
+  edu_mum = dplyr::recode(H1RM1,'3' = 3,
+                        '4' = 3,
+                        '5' = 3,
+                        '6' = 4,
+                        '7' = 4,
+                        '8' = 5,
+                        '9' = 6,
+                        '10' = 0),
+              edu_dad = dplyr::recode(H1RF1, '3' = 3,
+                        '4' = 3,
+                        '5' = 3,
+                        '6' = 4,
+                        '7' = 4,
+                        '8' = 5,
+                        '9' = 6,
+                        '10' = 0)
+  ) |> rowwise() |> mutate(par_ed = mean(c(edu_mum, edu_dad), na.rm = T)) |> ungroup() |> left_join(sex) |> left_join(race) |> left_join(parent) |> left_join(sum_scores) |> 
+    left_join(pgs_ext) |> left_join(del_peer) |> 
+    left_join(school_con) |> left_join(neigh_con) |> 
+  select(AID, ANCESTRY, sex, age1:age5, white:hispanic, income, edu_mum, edu_dad, par_ed, single_par, w1asb_s:w5sub_s, EXT_PGS, parent, peer, school, neigh) |> 
+  mutate(ANCESTRY = factor(ANCESTRY),
+         sex = factor(sex, c(-.5, .5), c("male","female")),
+         across(white:hispanic, ~factor(.x)),
+         across(edu_mum:single_par, ~factor(.x)),
+)
+
+eur <- data |> filter(ANCESTRY == 0 & white == 1 & hispanic == 0) |> 
+       select(AID) |> left_join(descrip)
+
+afr <- data |> filter(ANCESTRY == 1 & african == 1 & hispanic == 0) |> 
+       select(AID) |> left_join(descrip)
+
+asi <- data |> filter(ANCESTRY == 2 & asian == 1 & hispanic == 0) |> 
+       select(AID) |> left_join(descrip)
+
+his <- data |> filter(ANCESTRY == 3 & hispanic == 1) |> 
+       select(AID) |> left_join(descrip)
+
+full <- eur |> bind_rows(afr) |> 
+  bind_rows(asi) |> bind_rows(his)
 ```
 
-### Read in sum scores of ASB and SUB
 
 ### Skim
+
+```{r}
+descrip |> skimr::skim()
+eur |> skimr::skim()
+eur$edu_mum |> table()
+eur$edu_dad |> table()
+
+afr |> skimr::skim()
+afr$edu_mum |> table()
+afr$edu_dad |> table()
+
+asi |> skimr::skim()
+asi$edu_mum |> table()
+asi$edu_dad |> table()
+
+his |> skimr::skim()
+his$edu_mum |> table()
+his$edu_dad |> table()
+
+```
+
+### Diff test
+
+```{r}
+chisq.test(full$sex, full$ANCESTRY)
+chisq.test(full$edu_mum, full$ANCESTRY)
+chisq.test(full$edu_dad, full$ANCESTRY)
+
+lm(age1~ANCESTRY, full) |> car::Anova(type = 3)
+lm(age2~ANCESTRY, full) |> car::Anova(type = 3)
+lm(age3~ANCESTRY, full) |> car::Anova(type = 3)
+lm(age4~ANCESTRY, full) |> car::Anova(type = 3)
+lm(age5~ANCESTRY, full) |> car::Anova(type = 3)
+
+lm(income~ANCESTRY, full) |> car::Anova(type = 3)
+
+lm(w1sub_s~ANCESTRY, full) |> car::Anova(type = 3)
+lm(w2sub_s~ANCESTRY, full) |> car::Anova(type = 3)
+lm(w3sub_s~ANCESTRY, full) |> car::Anova(type = 3)
+lm(w4sub_s~ANCESTRY, full) |> car::Anova(type = 3)
+lm(w5sub_s~ANCESTRY, full) |> car::Anova(type = 3)
+
+lm(w1asb_s~ANCESTRY, full) |> car::Anova(type = 3)
+lm(w2asb_s~ANCESTRY, full) |> car::Anova(type = 3)
+lm(w3asb_s~ANCESTRY, full) |> car::Anova(type = 3)
+lm(w4asb_s~ANCESTRY, full) |> car::Anova(type = 3)
+lm(w5asb_s~ANCESTRY, full) |> car::Anova(type = 3)
+
+lm(parent~ANCESTRY, full) |> car::Anova(type = 3)
+lm(peer~ANCESTRY, full) |> car::Anova(type = 3)
+lm(school~ANCESTRY, full) |> car::Anova(type = 3)
+lm(neigh~ANCESTRY, full) |> car::Anova(type = 3)
+
+```
+
+### Correlations
+
+```{r}
+apaTables::apa.cor.table(eur |> select(w1sub_s:w5sub_s, w1asb_s:w5asb_s, EXT_PGS, parent, peer, 
+                                       school, neigh, sex, age1, income, par_ed, single_par) |>
+                                mutate(income = log(income + 1), 
+                                       across(everything(), ~as.numeric(.x))) |> 
+                                rowwise() |> mutate(sub = mean(c(w1sub_s, w2sub_s, w3sub_s, 
+                                                                 w4sub_s, w5sub_s), na.rm = T),
+                                                    asb = mean(c(w1asb_s, w2asb_s, w3asb_s, 
+                                                                 w4asb_s, w5asb_s), na.rm = T)) |>
+                                ungroup() |> select(sub,asb, EXT_PGS, parent, peer, 
+                                       school, neigh, sex, age1, income, par_ed, single_par), 
+                         filename = "cor_eur.doc")
+
+apaTables::apa.cor.table(afr |> select(w1sub_s:w5sub_s, w1asb_s:w5asb_s, EXT_PGS, parent, peer, 
+                                       school, neigh, sex, age1, income, par_ed, single_par) |>
+                                mutate(income = log(income + 1), 
+                                       across(everything(), ~as.numeric(.x))) |> 
+                                rowwise() |> mutate(sub = mean(c(w1sub_s, w2sub_s, w3sub_s, 
+                                                                 w4sub_s, w5sub_s), na.rm = T),
+                                                    asb = mean(c(w1asb_s, w2asb_s, w3asb_s, 
+                                                                 w4asb_s, w5asb_s), na.rm = T)) |>
+                                ungroup() |> select(sub,asb, EXT_PGS, parent, peer, 
+                                       school, neigh, sex, age1, income, par_ed, single_par), 
+                         filename = "cor_afr.doc")
+
+apaTables::apa.cor.table(asi |> select(w1sub_s:w5sub_s, w1asb_s:w5asb_s, EXT_PGS, parent, peer, 
+                                       school, neigh, sex, age1, income, par_ed, single_par) |>
+                                mutate(income = log(income + 1), 
+                                       across(everything(), ~as.numeric(.x))) |> 
+                                rowwise() |> mutate(sub = mean(c(w1sub_s, w2sub_s, w3sub_s, 
+                                                                 w4sub_s, w5sub_s), na.rm = T),
+                                                    asb = mean(c(w1asb_s, w2asb_s, w3asb_s, 
+                                                                 w4asb_s, w5asb_s), na.rm = T)) |>
+                                ungroup() |> select(sub,asb, EXT_PGS, parent, peer, 
+                                       school, neigh, sex, age1, income, par_ed, single_par), 
+                         filename = "cor_asi.doc")
+
+apaTables::apa.cor.table(his |> select(w1sub_s:w5sub_s, w1asb_s:w5asb_s, EXT_PGS, parent, peer, 
+                                       school, neigh, sex, age1, income, par_ed, single_par) |>
+                                mutate(income = log(income + 1), 
+                                       across(everything(), ~as.numeric(.x))) |> 
+                                rowwise() |> mutate(sub = mean(c(w1sub_s, w2sub_s, w3sub_s, 
+                                                                 w4sub_s, w5sub_s), na.rm = T),
+                                                    asb = mean(c(w1asb_s, w2asb_s, w3asb_s, 
+                                                                 w4asb_s, w5asb_s), na.rm = T)) |>
+                                ungroup() |> select(sub,asb, EXT_PGS, parent, peer, 
+                                       school, neigh, sex, age1, income, par_ed, single_par), 
+                         filename = "cor_his.doc")
+
+```
+
+
+## Missing Data
+
+### GMM
+
+```{r}
+mda_gmm <- Wave1 |> select(AID) |> left_join(sum_scores) |> 
+                    rowwise() |> mutate(sub = mean(c(w1sub_s, w2sub_s, w3sub_s, 
+                                                     w4sub_s, w5sub_s), na.rm = T),
+                                        asb = mean(c(w1asb_s, w2asb_s, w3asb_s, 
+                                                     w4asb_s, w5asb_s), na.rm = T)) |>
+                                ungroup()
+
+mda_gmm_plot <- mda_gmm |>  rename("Wave 1 SUB" = w1sub_s, 
+                           "Wave 2 SUB" = w2sub_s, 
+                           "Wave 3 SUB" = w3sub_s, 
+                           "Wave 4 SUB" = w4sub_s, 
+                           "Wave 5 SUB" = w5sub_s,
+                           "Wave 1 ASB" = w1asb_s, 
+                           "Wave 2 ASB" = w2asb_s, 
+                           "Wave 3 ASB" = w3asb_s, 
+                           "Wave 4 ASB" = w4asb_s, 
+                           "Wave 5 ASB" = w5asb_s,
+                           "Average SUB" = sub, 
+                           "Average ASB" = asb)
+mda_gmm_plot |>  select("Wave 1 SUB":"Wave 5 SUB") |> mice::md.pattern(rotate.names = T)
+mda_gmm_plot |>  select("Wave 1 ASB":"Wave 5 ASB") |> mice::md.pattern(rotate.names = T)
+
+mda_gmm |> select(w1sub_s:w5sub_s) |> naniar::miss_var_summary()
+mda_gmm_sub <-mda_gmm |> select(w1sub_s:w5sub_s) |> naniar::bind_shadow()
+
+lm(w1sub_s ~ w2sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w1sub_s ~ w3sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w1sub_s ~ w4sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w1sub_s ~ w5sub_s_NA, data = mda_gmm_sub) |> summary()
+
+lm(w2sub_s ~ w1sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w2sub_s ~ w3sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w2sub_s ~ w4sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w2sub_s ~ w5sub_s_NA, data = mda_gmm_sub) |> summary()
+
+lm(w3sub_s ~ w1sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w3sub_s ~ w2sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w3sub_s ~ w4sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w3sub_s ~ w5sub_s_NA, data = mda_gmm_sub) |> summary()
+
+lm(w4sub_s ~ w1sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w4sub_s ~ w2sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w4sub_s ~ w3sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w4sub_s ~ w5sub_s_NA, data = mda_gmm_sub) |> summary()
+
+lm(w5sub_s ~ w1sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w5sub_s ~ w2sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w5sub_s ~ w3sub_s_NA, data = mda_gmm_sub) |> summary()
+lm(w5sub_s ~ w4sub_s_NA, data = mda_gmm_sub) |> summary()
+
+
+mda_gmm |> select(w1asb_s:w5asb_s) |> naniar::miss_var_summary()
+mda_gmm_asb <-mda_gmm |> select(w1asb_s:w5asb_s) |> naniar::bind_shadow()
+
+lm(w1asb_s ~ w2asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w1asb_s ~ w3asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w1asb_s ~ w4asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w1asb_s ~ w5asb_s_NA, data = mda_gmm_asb) |> summary()
+
+lm(w2asb_s ~ w1asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w2asb_s ~ w3asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w2asb_s ~ w4asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w2asb_s ~ w5asb_s_NA, data = mda_gmm_asb) |> summary()
+
+lm(w3asb_s ~ w1asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w3asb_s ~ w2asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w3asb_s ~ w4asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w3asb_s ~ w5asb_s_NA, data = mda_gmm_asb) |> summary()
+
+lm(w4asb_s ~ w1asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w4asb_s ~ w2asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w4asb_s ~ w3asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w4asb_s ~ w5asb_s_NA, data = mda_gmm_asb) |> summary()
+
+lm(w5asb_s ~ w1asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w5asb_s ~ w2asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w5asb_s ~ w3asb_s_NA, data = mda_gmm_asb) |> summary()
+lm(w5asb_s ~ w4asb_s_NA, data = mda_gmm_asb) |> summary()
+
+```
+
+
+### G-E
+```{r}
+mda <- data |> select(white:hispanic, EXT_PGS:par_ed)
+
+mda_eur <- mda |> filter(ANCESTRY == 0 & white == 1 & hispanic == 0) 
+mda_afr <- mda |> filter(ANCESTRY == 1 & african == 1 & hispanic == 0) 
+mda_asi <- mda |> filter(ANCESTRY == 2 & asian == 1 & hispanic == 0) 
+mda_his <- mda |> filter(ANCESTRY == 3 & hispanic == 1) 
+
+mda_full <- mda_eur |> bind_rows(mda_afr) |> bind_rows(mda_asi) |> bind_rows(mda_his)
+
+mda_full |> mutate(
+                   ANCESTRY = factor(ANCESTRY, 0:3, c("EUR", "AFR", "ASI", "HIS"))
+                   ) |> 
+            select(-c(white:hispanic)) |> 
+  naniar::gg_miss_fct(fct = ANCESTRY)
+
+mda_full |> mutate(
+                   ANCESTRY = factor(ANCESTRY, 0:3, c("EUR", "AFR", "ASI", "HIS"))
+                   ) |> 
+            select(-c(white:hispanic)) |> 
+            group_by(ANCESTRY) |> 
+            naniar::miss_var_summary() |> print(n = 100)
+
+mda_full |> mice::md.pattern(rotate.names = T)
+
+mda_eur <- mda_eur |> naniar::bind_shadow()
+mda_afr <- mda_afr |> naniar::bind_shadow()
+mda_asi <- mda_asi |> naniar::bind_shadow()
+mda_his <- mda_his |> naniar::bind_shadow()
+
+lm(EXT_PGS ~ par_ed_NA, mda_eur) |> summary()
+lm(parent ~ par_ed_NA, mda_eur) |> summary()
+lm(peer ~ par_ed_NA, mda_eur) |> summary()
+lm(school ~ par_ed_NA, mda_eur) |> summary()
+lm(neigh ~ par_ed_NA, mda_eur) |> summary()
+lm(age ~ par_ed_NA, mda_eur) |> summary()
+glm(sex ~ par_ed_NA, family = binomial("logit"), mda_eur |> mutate(sex = case_match(sex, -.5 ~ 0, .5 ~ 1))) |> summary()
+lm(income ~ par_ed_NA, mda_eur) |> summary()
+glm(single_par ~ par_ed_NA,  family = binomial("logit"), mda_eur |> mutate(single_par = case_match(single_par, -.5 ~ 0, .5 ~ 1))) |> summary()
+
+lm(EXT_PGS ~ income_NA, mda_eur) |> summary()
+lm(parent ~ income_NA, mda_eur) |> summary()
+lm(peer ~ income_NA, mda_eur) |> summary()
+lm(school ~ income_NA, mda_eur) |> summary()
+lm(neigh ~ income_NA, mda_eur) |> summary()
+lm(age ~ income_NA, mda_eur) |> summary()
+glm(sex ~ income_NA, family = binomial("logit"), mda_eur |> mutate(sex = case_match(sex, -.5 ~ 0, .5 ~ 1))) |> summary()
+lm(par_ed ~ income_NA, mda_eur) |> summary()
+glm(single_par ~ income_NA,  family = binomial("logit"), mda_eur |> mutate(single_par = case_match(single_par, -.5 ~ 0, .5 ~ 1))) |> summary()
+
+lm(EXT_PGS ~ par_ed_NA, mda_afr) |> summary()
+lm(parent ~ par_ed_NA, mda_afr) |> summary()
+lm(peer ~ par_ed_NA, mda_afr) |> summary()
+lm(school ~ par_ed_NA, mda_afr) |> summary()
+lm(neigh ~ par_ed_NA, mda_afr) |> summary()
+lm(age ~ par_ed_NA, mda_afr) |> summary()
+glm(sex ~ par_ed_NA, family = binomial("logit"), mda_afr |> mutate(sex = case_match(sex, -.5 ~ 0, .5 ~ 1))) |> summary()
+lm(income ~ par_ed_NA, mda_afr) |> summary()
+glm(single_par ~ par_ed_NA,  family = binomial("logit"), mda_afr |> mutate(single_par = case_match(single_par, -.5 ~ 0, .5 ~ 1))) |> summary()
+
+lm(EXT_PGS ~ income_NA, mda_afr) |> summary()
+lm(parent ~ income_NA, mda_afr) |> summary()
+lm(peer ~ income_NA, mda_afr) |> summary()
+lm(school ~ income_NA, mda_afr) |> summary()
+lm(neigh ~ income_NA, mda_afr) |> summary()
+lm(age ~ income_NA, mda_afr) |> summary()
+glm(sex ~ income_NA, family = binomial("logit"), mda_afr |> mutate(sex = case_match(sex, -.5 ~ 0, .5 ~ 1))) |> summary()
+lm(par_ed ~ income_NA, mda_afr) |> summary()
+glm(single_par ~ income_NA,  family = binomial("logit"), mda_afr |> mutate(single_par = case_match(single_par, -.5 ~ 0, .5 ~ 1))) |> summary()
+
+lm(EXT_PGS ~ par_ed_NA, mda_asi) |> summary()
+lm(parent ~ par_ed_NA, mda_asi) |> summary()
+lm(peer ~ par_ed_NA, mda_asi) |> summary()
+lm(school ~ par_ed_NA, mda_asi) |> summary()
+lm(neigh ~ par_ed_NA, mda_asi) |> summary()
+lm(age ~ par_ed_NA, mda_asi) |> summary()
+glm(sex ~ par_ed_NA, family = binomial("logit"), mda_asi |> mutate(sex = case_match(sex, -.5 ~ 0, .5 ~ 1))) |> summary()
+lm(income ~ par_ed_NA, mda_asi) |> summary()
+glm(single_par ~ par_ed_NA,  family = binomial("logit"), mda_asi |> mutate(single_par = case_match(single_par, -.5 ~ 0, .5 ~ 1))) |> summary()
+
+lm(EXT_PGS ~ income_NA, mda_asi) |> summary()
+lm(parent ~ income_NA, mda_asi) |> summary()
+lm(peer ~ income_NA, mda_asi) |> summary()
+lm(school ~ income_NA, mda_asi) |> summary()
+lm(neigh ~ income_NA, mda_asi) |> summary()
+lm(age ~ income_NA, mda_asi) |> summary()
+glm(sex ~ income_NA, family = binomial("logit"), mda_asi |> mutate(sex = case_match(sex, -.5 ~ 0, .5 ~ 1))) |> summary()
+lm(par_ed ~ income_NA, mda_asi) |> summary()
+glm(single_par ~ income_NA,  family = binomial("logit"), mda_asi |> mutate(single_par = case_match(single_par, -.5 ~ 0, .5 ~ 1))) |> summary()
+
+lm(EXT_PGS ~ par_ed_NA, mda_his) |> summary()
+lm(parent ~ par_ed_NA, mda_his) |> summary()
+lm(peer ~ par_ed_NA, mda_his) |> summary()
+lm(school ~ par_ed_NA, mda_his) |> summary()
+lm(neigh ~ par_ed_NA, mda_his) |> summary()
+lm(age ~ par_ed_NA, mda_his) |> summary()
+glm(sex ~ par_ed_NA, family = binomial("logit"), mda_his |> mutate(sex = case_match(sex, -.5 ~ 0, .5 ~ 1))) |> summary()
+lm(income ~ par_ed_NA, mda_his) |> summary()
+glm(single_par ~ par_ed_NA,  family = binomial("logit"), mda_his |> mutate(single_par = case_match(single_par, -.5 ~ 0, .5 ~ 1))) |> summary()
+
+lm(EXT_PGS ~ income_NA, mda_his) |> summary()
+lm(parent ~ income_NA, mda_his) |> summary()
+lm(peer ~ income_NA, mda_his) |> summary()
+lm(school ~ income_NA, mda_his) |> summary()
+lm(neigh ~ income_NA, mda_his) |> summary()
+lm(age ~ income_NA, mda_his) |> summary()
+glm(sex ~ income_NA, family = binomial("logit"), mda_his |> mutate(sex = case_match(sex, -.5 ~ 0, .5 ~ 1))) |> summary()
+lm(par_ed ~ income_NA, mda_his) |> summary()
+glm(single_par ~ income_NA,  family = binomial("logit"), mda_his |> mutate(single_par = case_match(single_par, -.5 ~ 0, .5 ~ 1))) |> summary()
+```
+
+### GMM in G-E sample
+
+```{r}
+
+eur |> bind_rows(afr) |> bind_rows(asi) |> bind_rows(his) |> select(AID) |> left_join(mda_gmm) |>  select(w1sub_s:w5sub_s) |> mice::md.pattern(rotate.names = T)
+
+eur |> bind_rows(afr) |> bind_rows(asi) |> bind_rows(his)  |> select(AID) |> left_join(mda_gmm) |>  select(w1sub_s:w5sub_s) |> naniar::miss_case_table()
+
+eur |> bind_rows(afr) |> bind_rows(asi) |> bind_rows(his)  |> select(AID) |> left_join(mda_gmm) |>  select(w1asb_s:w5asb_s) |> mice::md.pattern(rotate.names = T)
+
+eur |> bind_rows(afr) |> bind_rows(asi) |> bind_rows(his)  |> select(AID) |> left_join(mda_gmm) |>  select(w1asb_s:w5asb_s) |> naniar::miss_case_table()
+
+```
 
 
