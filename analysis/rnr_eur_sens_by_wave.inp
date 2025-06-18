@@ -34,22 +34,22 @@ Variable:
   Missing are .; 
 
 Analysis: 
-    process = 18;
+    process = 9;
     estimator = ML;
     Algorithm = INTEGRATION;
-    INTEGRATION = MONTECARLO (2000);  
+    INTEGRATION = MONTECARLO (1000);  
     !LINK = PROBIT;
-    bootstrap=1500;
+    bootstrap= 500;
 
 Define:
 
 
 MODEL:
     
-    w5asb w5sub ON w4asb w4sub;
-    w4asb w4sub ON w3asb w3sub;
-    w3asb w3sub ON w2asb w2sub;
-    w2asb w2sub ON w1asb w1sub;
+    !w5asb w5sub ON w4asb w4sub;
+    !w4asb w4sub ON w3asb w3sub;
+    !w3asb w3sub ON w2asb w2sub;
+    !w2asb w2sub ON w1asb w1sub;
 
     parent peer school neighbor ON age sex income pared 
     single_par;

@@ -804,3 +804,211 @@ write_csv(his_apaths, "his_apaths.csv")
 write_csv(his_mainpaths, "his_mainpaths.csv")
 ```
 
+
+# Sens by wave
+
+## Read in output
+
+```{r}
+eur_sens <- readModels(here::here("analysis/rnr_eur_sens_by_wave.out"))$parameters$ci.unstandardized |> 
+          as_tibble() |> janitor::clean_names() |> 
+          select(param_header, param, est, low_5, up_5)
+
+eur_sens$param_header[399:448] <- rep(c(paste0("W", 1:5, "ASB.ON"), paste0("W", 1:5, "SUB.ON")), each = 5)
+eur_sens <- eur_sens |> mutate(param = replace(param, param %in% c("INDASB11","INDASB21",
+                                                         "INDASB31","INDASB41","INDASB51",
+                                                         "INDSUB11","INDSUB21","INDSUB31",
+                                                         "INDSUB41","INDSUB51"), 
+                                     "Parent Indirect Effect"),
+                     param = replace(param, param %in% c("INDASB12","INDASB22",
+                                                         "INDASB32","INDASB42","INDASB52",
+                                                         "INDSUB12","INDSUB22","INDSUB32",
+                                                         "INDSUB42","INDSUB52"), 
+                                     "Peer Indirect Effect"),
+                     param = replace(param, param %in% c("INDASB13","INDASB23",
+                                                         "INDASB33","INDASB43","INDASB53",
+                                                         "INDSUB13","INDSUB23","INDSUB33",
+                                                         "INDSUB43","INDSUB53"), 
+                                     "School Indirect Effect"),
+                     param = replace(param, param %in% c("INDASB14","INDASB24",
+                                                         "INDASB34","INDASB44","INDASB54",
+                                                         "INDSUB14","INDSUB24","INDSUB34",
+                                                         "INDSUB44","INDSUB54"), 
+                                     "Neighborhood Indirect Effect"),
+                     param = replace(param, param %in% c("TOTALASB","TOTALSUB"), 
+                                     "Total Effect"))
+
+eur_sens_mainpaths <- eur_sens |> filter(param_header %in% c(paste0("W", 1:5, "ASB.ON"), paste0("W", 1:5, "SUB.ON")))
+```
+
+## Process main paths
+
+```{r}
+eur_sens_mainpaths <- eur_sens_mainpaths |> 
+              rename(variable = "param", lower = "low_5", upper = "up_5") |> 
+              mutate(outcome = case_match(param_header, 
+                                               "W1ASB.ON" ~ "ASB", 
+                                               "W2ASB.ON" ~ "ASB", 
+                                               "W3ASB.ON" ~ "ASB", 
+                                               "W4ASB.ON" ~ "ASB", 
+                                               "W5ASB.ON" ~ "ASB", 
+                                               "W1SUB.ON" ~ "SUB",
+                                               "W2SUB.ON" ~ "SUB",
+                                               "W3SUB.ON" ~ "SUB",
+                                               "W4SUB.ON" ~ "SUB",
+                                               "W5SUB.ON" ~ "SUB"),
+                     wave = case_match(param_header, 
+                                               "W1ASB.ON" ~ "Wave 1", 
+                                               "W2ASB.ON" ~ "Wave 2", 
+                                               "W3ASB.ON" ~ "Wave 3", 
+                                               "W4ASB.ON" ~ "Wave 4", 
+                                               "W5ASB.ON" ~ "Wave 5", 
+                                               "W1SUB.ON" ~ "Wave 1",
+                                               "W2SUB.ON" ~ "Wave 2",
+                                               "W3SUB.ON" ~ "Wave 3",
+                                               "W4SUB.ON" ~ "Wave 4",
+                                               "W5SUB.ON" ~ "Wave 5"),
+                     variable = case_match(variable,
+                                        "PARENT" ~ "Supportive Parenting",
+                                        "PEER" ~ "Delinquent Peer Affiliation",
+                                        "SCHOOL" ~ "School Connectedness",
+                                        "NEIGHBOR" ~ "Neighborhood Connectedness",
+                                        "Total Effect" ~ "Total Effect",
+                                        "Parent Indirect Effect" ~ "Parent Indirect Effect",
+                                        "Peer Indirect Effect" ~ "Peer Indirect Effect",
+                                        "School Indirect Effect" ~ "School Indirect Effect",
+                                        "Neighborhood Indirect Effect" ~ "Neighborhood Indirect Effect",
+                                        "PGS" ~ "PGS Direct Effect",
+                                        "PGSPARENT" ~ "PGS x Parent",
+                                        "PGSPEER" ~ "PGS x Peer",
+                                        "PGSSCHOOL" ~ "PGS x School",
+                                        "PGSNEIGHBO" ~ "PGS x Neighborhood",
+                                        "AGE" ~ "Age",
+                                        "SEX" ~ "Female Sex",
+                                        "INCOME" ~ "Family Income",
+                                        "PARED" ~ "Parental Education",
+                                        "SINGLE_PAR" ~ "Single Parent",
+                                        "PGSAGE" ~ "PGS x Age",
+                                        "PGSSEX" ~ "PGS x Sex",
+                                        "PGSINC" ~ "PGS x Income",
+                                        "PGSPARED" ~ "PGS x Parental Education",
+                                        "PGSSINGPAR" ~ "PGS x Single Parent",
+                                        "SUB_HI_DUM" ~ "High SUB",
+                                        "SUB_LO_DUM" ~ "Low SUB",
+                                        "ASB_HI_DUM" ~ "High-Decline ASB",
+                                        "ASB_MOD_DU" ~ "Moderate ASB",
+                                        "ASB_ADO_DU"  ~ "Adolescent-Peaked ASB"
+                                          ),
+                     variable = factor(variable, c(
+                                        "Supportive Parenting",
+                                        "Delinquent Peer Affiliation",
+                                        "School Connectedness",
+                                        "Neighborhood Connectedness",
+                                        "Total Effect",
+                                        "Parent Indirect Effect",
+                                        "Peer Indirect Effect",
+                                        "School Indirect Effect",
+                                        "Neighborhood Indirect Effect",
+                                        "PGS Direct Effect",
+                                        "PGS x Parent",
+                                        "PGS x Peer",
+                                        "PGS x School",
+                                        "PGS x Neighborhood",
+                                        "Age",
+                                        "Female Sex",
+                                        "Family Income",
+                                        "Parental Education",
+                                        "Single Parent",
+                                        "PGS x Age",
+                                        "PGS x Sex",
+                                        "PGS x Income",
+                                        "PGS x Parental Education",
+                                        "PGS x Single Parent",
+                                        "High SUB",
+                                        "Low SUB",
+                                        "High-Decline ASB",
+                                        "Moderate ASB",
+                                        "Adolescent-Peaked ASB"
+
+                     ))) 
+```
+
+## Sens plots
+
+### Interaction 
+
+```{r}
+plot_int <- eur_sens_mainpaths |> filter(variable %in% c("PGS x Parent",
+                                                    "PGS x Peer",
+                                                    "PGS x School",
+                                                    "PGS x Neighborhood")) |> 
+            mutate(outcome = factor(outcome,
+                                    c("SUB","ASB")),
+                   wave = factor(wave, paste("Wave", 1:5)),
+                   sig = if_else((lower)*(upper) >= 0, 
+                                 paste0(sprintf("%.3f", round(est, digits = 3)), "*"), 
+                                 paste0(sprintf("%.3f", round(est, digits = 3)), "")))
+
+plot_all_int <- ggplot(data = plot_int, aes(fill = wave)) + 
+  geom_pointrange(aes(x = est,y = variable, xmin = lower, xmax = upper), 
+                  shape = 23, size = 1, stroke = 1.2, position = position_dodge(-.8)) + 
+  geom_vline(xintercept = 0, color = "red",linetype = "dashed",linewidth = .25) +
+  geom_text(aes(x = est, y = variable, label = sig),vjust = -.9, position = position_dodge(-.8)) +
+  facet_grid(cols = vars(outcome)) + 
+  coord_cartesian(xlim = c(-.5,.5)) +
+  theme_bw() +
+  scale_y_discrete(limits=rev) + 
+  scale_x_continuous(breaks = seq(-.5, .5, by = .25))+
+  scale_fill_brewer(type = "seq", palette = 1) +
+  theme(text = element_text(size = 9),
+        axis.text.x = element_text(size = 9),
+        axis.text.y = element_text(size = 9),  
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10),
+        strip.text = element_text(size = 10)) +
+  labs(x = "b (Poisson Regression)")
+plot_all_int
+
+ggsave("plot_sens_int.jpg", plot_all_int, width = 14, height = 9, dpi = 300)
+```
+
+### Mediation
+
+```{r}
+plot_med <- eur_sens_mainpaths |> filter(variable %in% c("PGS Direct Effect",
+                                                    "Parent Indirect Effect",
+                                                    "Peer Indirect Effect",
+                                                    "School Indirect Effect",
+                                                    "Neighborhood Indirect Effect",
+                                                    "Total Effect")) |> 
+            mutate(outcome = factor(outcome,
+                                    c("SUB","ASB")),
+                   wave = factor(wave, paste("Wave", 1:5)),
+                   sig = if_else((lower)*(upper) >= 0, 
+                                 paste0(sprintf("%.3f", round(est, digits = 3)), "*"), 
+                                 paste0(sprintf("%.3f", round(est, digits = 3)), "")))
+
+plot_all_med <- ggplot(data = plot_med, aes(fill = wave)) + 
+  geom_pointrange(aes(x = est,y = variable, xmin = lower, xmax = upper), 
+                  shape = 23, size = 1, stroke = 1.2, position = position_dodge(-.8)) + 
+  geom_vline(xintercept = 0, color = "red",linetype = "dashed",linewidth = .25) +
+  geom_text(aes(x = est, y = variable, label = sig),vjust = -.9, position = position_dodge(-.8)) +
+  facet_grid(cols = vars(outcome)) + 
+  coord_cartesian(xlim = c(-.3,.3)) +
+  theme_bw() +
+  scale_y_discrete(limits=rev) + 
+  scale_x_continuous(breaks = seq(-.5, .5, by = .25))+
+  scale_fill_brewer(type = "seq", palette = 1) +
+  theme(text = element_text(size = 9),
+        axis.text.x = element_text(size = 9),
+        axis.text.y = element_text(size = 9),  
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10),
+        strip.text = element_text(size = 10)) +
+  labs(x = "b (Poisson Regression)")
+plot_all_med
+
+ggsave("plot_sens_med.jpg", plot_all_med, width = 14, height = 13, dpi = 300)
+
+```
+
