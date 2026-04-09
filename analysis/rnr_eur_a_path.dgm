@@ -1,0 +1,110 @@
+VERSION 1.1.0
+INPUT
+DATA:
+  File is "c:\Repo\data_local\gxe_ext_trajectory.csv";
+VARIABLE:
+ Names are
+    AID white african native asian other hispanic FAMID pgs
+    ANCESTRY parent single_par peer school neighbor age sex asb sub
+    income pared sub_hi_dum sub_lo_dum asb_hi_dum
+    asb_mod_dum asb_ado_dum pgsparent pgspeer pgsschool
+    pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar
+    pgsafrican pgsnative pgsasian pgsother pgshispanic;
+ usevariables are
+  pgs parent peer school neighbor age sex
+  income pared
+  single_par
+  ;
+  USEOBSERVATIONS ARE
+    ancestry == 0 AND white == 1 AND hispanic == 0;
+  IDVARIABLE IS AID;
+  Missing are .;
+ANALYSIS:
+    process = 18;
+    estimator = ML;
+OUTPUT:
+    ;
+SAVEDATA:
+    FILE is eur_id.dat;
+    FORMAT is free;
+MODEL:
+    parent peer school neighbor ON age sex income pared
+    single_par;
+    parent ON pgs(a1);
+    peer ON pgs(a2);
+    school ON pgs(a3);
+    neighbor ON pgs(a4);
+    parent WITH peer school neighbor;
+    peer WITH parent school neighbor;
+    school WITH parent peer neighbor;
+    neighbor WITH parent peer school;
+INPUT_END
+2
+0
+0
+0
+ML
+1
+GENERAL
+0
+4
+0
+6
+parent peer school neighbor pgs age sex income pared single_par
+2
+1 1 1 1 0 0 0 0 0 0
+0
+0
+1 1 age parent -0.082 0.009
+1 1 sex parent -0.179 0.030
+1 1 income parent 0.043 0.023
+1 1 pared parent 0.025 0.015
+1 1 single_par parent -0.101 0.038
+1 1 pgs parent -0.053 0.015
+91 1 pgs parent a1
+1 1 age peer 0.153 0.009
+1 1 sex peer -0.055 0.030
+1 1 income peer 0.002 0.022
+1 1 pared peer -0.098 0.015
+1 1 single_par peer 0.245 0.037
+1 1 pgs peer 0.140 0.015
+91 1 pgs peer a2
+1 1 age school -0.052 0.009
+1 1 sex school -0.008 0.031
+1 1 income school 0.034 0.023
+1 1 pared school 0.072 0.016
+1 1 single_par school -0.172 0.038
+1 1 pgs school -0.101 0.015
+91 1 pgs school a3
+1 1 age neighbor -0.047 0.009
+1 1 sex neighbor -0.042 0.031
+1 1 income neighbor 0.009 0.023
+1 1 pared neighbor -0.007 0.016
+1 1 single_par neighbor -0.237 0.039
+1 1 pgs neighbor -0.044 0.016
+91 1 pgs neighbor a4
+2 1 parent peer -0.154 0.014
+2 1 parent school 0.312 0.016
+2 1 parent neighbor 0.185 0.015
+2 1 peer school -0.222 0.015
+2 1 peer neighbor -0.053 0.015
+2 1 school neighbor 0.274 0.016
+4 1 parent 0.912 0.020
+4 1 peer 0.863 0.019
+4 1 school 0.926 0.021
+4 1 neighbor 0.960 0.022
+2 1 pgs age 999.000 999.000
+2 1 pgs sex 999.000 999.000
+2 1 pgs income 999.000 999.000
+2 1 pgs pared 999.000 999.000
+2 1 pgs single_par 999.000 999.000
+2 1 age sex 999.000 999.000
+2 1 age income 999.000 999.000
+2 1 age pared 999.000 999.000
+2 1 age single_par 999.000 999.000
+2 1 sex income 999.000 999.000
+2 1 sex pared 999.000 999.000
+2 1 sex single_par 999.000 999.000
+2 1 income pared 999.000 999.000
+2 1 income single_par 999.000 999.000
+2 1 pared single_par 999.000 999.000

@@ -1,0 +1,68 @@
+Data:
+  File is "c:\Repo\data_local\gxe_ext_trajectory.csv";
+Variable:
+ Names are 
+    AID white african native asian other hispanic FAMID pgs 
+    ANCESTRY parent single_par peer school neighbor age sex asb sub 
+    income pared sub_hi_dum sub_lo_dum asb_hi_dum 
+    asb_mod_dum asb_ado_dum pgsparent pgspeer pgsschool 
+    pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar
+    pgsafrican pgsnative pgsasian pgsother pgshispanic;
+
+ usevariables are  
+  !sub asb
+  pgs parent peer school neighbor age sex 
+  income pared
+  !sub_hi_dum sub_lo_dum 
+  !asb_hi_dum asb_mod_dum asb_ado_dum 
+  !pgsparent pgspeer pgsschool pgsneighbor 
+  !pgsage pgssex pgsinc pgspared pgssingpar
+  single_par
+  ;
+  
+  !NOMINAL ARE
+   !asb sub;
+  
+  USEOBSERVATIONS ARE
+    ancestry == 0 AND white == 1 AND hispanic == 0;
+
+  IDVARIABLE IS AID;
+
+  Missing are .; 
+
+Analysis: 
+    process = 18;
+    estimator = ML;
+    !Algorithm = INTEGRATION;
+    !INTEGRATION = MONTECARLO (2000);  
+    !LINK = PROBIT;
+    !bootstrap=1500;
+
+Define:
+
+
+MODEL:
+    
+    parent peer school neighbor ON age sex income pared 
+    single_par;
+
+    parent ON pgs(a1);
+    peer ON pgs(a2);
+    school ON pgs(a3);
+    neighbor ON pgs(a4);
+
+    parent WITH peer school neighbor;
+
+    peer WITH parent school neighbor;
+
+    school WITH parent peer neighbor;
+
+    neighbor WITH parent peer school;
+
+
+    OUTPUT: 
+    ;
+
+    SAVEDATA:
+    FILE is eur_id.dat;
+    FORMAT is free;

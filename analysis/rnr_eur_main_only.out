@@ -1,0 +1,2454 @@
+Mplus VERSION 8.6
+MUTHEN & MUTHEN
+12/10/2025   7:09 PM
+
+INPUT INSTRUCTIONS
+
+  Data:
+    File is "c:\Repo\data_local\gxe_ext_trajectory.csv";
+  Variable:
+   Names are
+      AID white african native asian other hispanic FAMID pgs
+      ANCESTRY parent single_par peer school neighbor age sex asb sub
+      income pared sub_hi_dum sub_lo_dum asb_hi_dum
+      asb_mod_dum asb_ado_dum pgsparent pgspeer pgsschool
+      pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar
+      pgsafrican pgsnative pgsasian pgsother pgshispanic;
+
+   usevariables are
+    sub asb
+    pgs parent peer school neighbor age sex
+    income pared
+    sub_hi_dum sub_lo_dum
+    asb_hi_dum asb_mod_dum asb_ado_dum
+    pgsparent pgspeer pgsschool pgsneighbor
+    pgsage pgssex pgsinc pgspared pgssingpar
+    single_par
+    ;
+
+    NOMINAL ARE
+     asb sub;
+
+    USEOBSERVATIONS ARE
+      ancestry == 0 AND white == 1 AND hispanic == 0;
+
+    IDVARIABLE IS AID;
+
+    Missing are .;
+
+  Analysis:
+      process = 18;
+      estimator = ML;
+      Algorithm = INTEGRATION;
+      INTEGRATION = MONTECARLO (2000);
+      !LINK = PROBIT;
+      !bootstrap=1500;
+
+  Define:
+
+
+  MODEL:
+
+      asb ON pgsparent pgspeer
+      pgsschool pgsneighbor
+      pgsage pgssex pgsinc pgspared pgssingpar
+      sub_hi_dum sub_lo_dum age sex
+      income pared
+      single_par;
+
+      asb#1 ON pgs(cpasb1);
+      asb#1 ON parent(basb11);
+      asb#1 ON peer(basb12);
+      asb#1 ON school(basb13);
+      asb#1 ON neighbor(basb14);
+
+      asb#2 ON pgs(cpasb2);
+      asb#2 ON parent(basb21);
+      asb#2 ON peer(basb22);
+      asb#2 ON school(basb23);
+      asb#2 ON neighbor(basb24);
+
+      asb#3 ON pgs(cpasb3);
+      asb#3 ON parent(basb31);
+      asb#3 ON peer(basb32);
+      asb#3 ON school(basb33);
+      asb#3 ON neighbor(basb34);
+
+
+      sub ON pgsparent pgspeer pgsschool pgsneighbor
+      pgsage pgssex pgsinc pgspared pgssingpar
+      asb_hi_dum asb_mod_dum asb_ado_dum age sex
+      income pared
+      single_par;
+
+      sub#1 ON pgs(cpsub1);
+      sub#1 ON parent(bsub11);
+      sub#1 ON peer(bsub12);
+      sub#1 ON school(bsub13);
+      sub#1 ON neighbor(bsub14);
+
+      sub#2 ON pgs(cpsub2);
+      sub#2 ON parent(bsub21);
+      sub#2 ON peer(bsub22);
+      sub#2 ON school(bsub23);
+      sub#2 ON neighbor(bsub24);
+
+      [pgs parent peer school neighbor
+      age sex income pared single_par
+      pgsparent pgspeer
+      pgsschool pgsneighbor
+      pgsage pgssex pgsinc pgspared pgssingpar];
+
+  MODEL CONSTRAINT:
+
+      OUTPUT:
+      ;
+
+      SAVEDATA:
+      FILE is eur_id.dat;
+      FORMAT is free;
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        5025
+
+Number of dependent variables                                    2
+Number of independent variables                                 24
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Unordered categorical (nominal)
+   ASB         SUB
+
+Observed independent variables
+   PGS         PARENT      PEER        SCHOOL      NEIGHBOR    AGE
+   SEX         INCOME      PARED       SUB_HI_D    SUB_LO_D    ASB_HI_D
+   ASB_MOD_    ASB_ADO_    PGSPAREN    PGSPEER     PGSSCHOO    PGSNEIGH
+   PGSAGE      PGSSEX      PGSINC      PGSPARED    PGSSINGP    SINGLE_P
+
+Variables with special functions
+
+  ID variable           AID
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-02
+    Relative loglikelihood change                        0.100D-05
+    Derivative                                           0.100D-02
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-02
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Integration Specifications
+  Type                                                  MONTECARLO
+  Number of integration points                                2000
+  Dimensions of numerical integration                           14
+  Adaptive quadrature                                           ON
+  Monte Carlo integration seed                                   0
+Cholesky                                                       OFF
+
+Input data file(s)
+  c:\Repo\data_local\gxe_ext_trajectory.csv
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns            24
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR Y
+
+
+           Covariance Coverage
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+ PGS            1.000
+ PARENT         0.981         0.981
+ PEER           0.991         0.973         0.991
+ SCHOOL         0.982         0.964         0.973         0.982
+ NEIGHBOR       0.997         0.979         0.989         0.979         0.997
+ AGE            1.000         0.980         0.990         0.981         0.997
+ SEX            1.000         0.981         0.991         0.982         0.997
+ INCOME         0.817         0.810         0.810         0.802         0.815
+ PARED          0.959         0.959         0.951         0.943         0.957
+ PGSPAREN       0.981         0.981         0.973         0.964         0.979
+ PGSPEER        0.991         0.973         0.991         0.973         0.989
+ PGSSCHOO       0.982         0.964         0.973         0.982         0.979
+ PGSNEIGH       0.997         0.979         0.989         0.979         0.997
+ PGSAGE         1.000         0.980         0.990         0.981         0.997
+ PGSSEX         1.000         0.981         0.991         0.982         0.997
+ PGSINC         0.817         0.810         0.810         0.802         0.815
+ PGSPARED       0.959         0.959         0.951         0.943         0.957
+ PGSSINGP       1.000         0.981         0.991         0.982         0.997
+ SINGLE_P       1.000         0.981         0.991         0.982         0.997
+ SUB_HI_D       1.000         0.981         0.991         0.982         0.997
+ SUB_LO_D       1.000         0.981         0.991         0.982         0.997
+ ASB_HI_D       1.000         0.981         0.991         0.982         0.997
+ ASB_MOD_       1.000         0.981         0.991         0.982         0.997
+ ASB_ADO_       1.000         0.981         0.991         0.982         0.997
+
+
+           Covariance Coverage
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+ AGE            1.000
+ SEX            1.000         1.000
+ INCOME         0.817         0.817         0.817
+ PARED          0.959         0.959         0.794         0.959
+ PGSPAREN       0.980         0.981         0.810         0.959         0.981
+ PGSPEER        0.990         0.991         0.810         0.951         0.973
+ PGSSCHOO       0.981         0.982         0.802         0.943         0.964
+ PGSNEIGH       0.997         0.997         0.815         0.957         0.979
+ PGSAGE         1.000         1.000         0.817         0.959         0.980
+ PGSSEX         1.000         1.000         0.817         0.959         0.981
+ PGSINC         0.817         0.817         0.817         0.794         0.810
+ PGSPARED       0.959         0.959         0.794         0.959         0.959
+ PGSSINGP       1.000         1.000         0.817         0.959         0.981
+ SINGLE_P       1.000         1.000         0.817         0.959         0.981
+ SUB_HI_D       1.000         1.000         0.817         0.959         0.981
+ SUB_LO_D       1.000         1.000         0.817         0.959         0.981
+ ASB_HI_D       1.000         1.000         0.817         0.959         0.981
+ ASB_MOD_       1.000         1.000         0.817         0.959         0.981
+ ASB_ADO_       1.000         1.000         0.817         0.959         0.981
+
+
+           Covariance Coverage
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ PGSPEER        0.991
+ PGSSCHOO       0.973         0.982
+ PGSNEIGH       0.989         0.979         0.997
+ PGSAGE         0.990         0.981         0.997         1.000
+ PGSSEX         0.991         0.982         0.997         1.000         1.000
+ PGSINC         0.810         0.802         0.815         0.817         0.817
+ PGSPARED       0.951         0.943         0.957         0.959         0.959
+ PGSSINGP       0.991         0.982         0.997         1.000         1.000
+ SINGLE_P       0.991         0.982         0.997         1.000         1.000
+ SUB_HI_D       0.991         0.982         0.997         1.000         1.000
+ SUB_LO_D       0.991         0.982         0.997         1.000         1.000
+ ASB_HI_D       0.991         0.982         0.997         1.000         1.000
+ ASB_MOD_       0.991         0.982         0.997         1.000         1.000
+ ASB_ADO_       0.991         0.982         0.997         1.000         1.000
+
+
+           Covariance Coverage
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+ PGSINC         0.817
+ PGSPARED       0.794         0.959
+ PGSSINGP       0.817         0.959         1.000
+ SINGLE_P       0.817         0.959         1.000         1.000
+ SUB_HI_D       0.817         0.959         1.000         1.000         1.000
+ SUB_LO_D       0.817         0.959         1.000         1.000         1.000
+ ASB_HI_D       0.817         0.959         1.000         1.000         1.000
+ ASB_MOD_       0.817         0.959         1.000         1.000         1.000
+ ASB_ADO_       0.817         0.959         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ SUB_LO_D       1.000
+ ASB_HI_D       1.000         1.000
+ ASB_MOD_       1.000         1.000         1.000
+ ASB_ADO_       1.000         1.000         1.000         1.000
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    ASB
+      Category 1    0.018           91.000
+      Category 2    0.128          643.000
+      Category 3    0.060          304.000
+      Category 4    0.793         3987.000
+    SUB
+      Category 1    0.432         2171.000
+      Category 2    0.148          746.000
+      Category 3    0.420         2108.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     PGS                   0.000       0.007      -3.534    0.02%      -0.853     -0.251      0.007
+            5025.000       0.998       0.016       3.646    0.02%       0.243      0.834
+     PARENT                0.002      -1.372      -5.849    0.02%      -0.654     -0.051      0.158
+            4929.000       0.997       2.599       1.186    0.75%       0.408      0.886
+     PEER                 -0.002       0.889      -1.140    0.02%      -1.019     -0.443     -0.332
+            4979.000       0.997       0.093       3.674    0.28%      -0.020      0.906
+     SCHOOL                0.004      -0.604      -3.715    0.06%      -0.731     -0.046      0.187
+            4933.000       0.992       0.256       1.812    1.82%       0.412      0.880
+     NEIGHBOR              0.005      -0.948      -4.128    0.02%      -0.842     -0.023      0.252
+            5010.000       0.998       0.441       1.227    0.02%       0.449      0.939
+     AGE                  -0.005      -0.072      -4.017    0.02%      -1.684     -0.517     -0.017
+            5023.000       2.950      -0.940       5.316    0.02%       0.566      1.733
+     SEX                   0.031      -0.122      -0.500   46.95%      -0.500     -0.500      0.500
+            5025.000       0.249      -1.985       0.500   53.05%       0.500      0.500
+     INCOME                0.002      -1.177      -3.702    0.90%      -0.483     -0.038      0.127
+            4106.000       0.596       4.455       3.206    0.05%       0.230      0.561
+     PARED                 0.001       0.153      -2.742    1.16%      -0.742     -0.742     -0.242
+            4821.000       1.220      -0.484       2.258    4.96%       0.258      1.258
+     PGSPARENT            -0.064      -1.239     -10.024    0.02%      -0.522     -0.092     -0.006
+            4929.000       0.978      11.659       5.520    0.02%       0.062      0.443
+     PGSPEER               0.161       0.700      -5.897    0.02%      -0.421     -0.033      0.040
+            4979.000       1.000       6.828      11.254    0.02%       0.195      0.748
+     PGSSCHOOL            -0.120      -0.710      -7.317    0.02%      -0.607     -0.128     -0.020
+            4933.000       0.943       4.771       4.938    0.02%       0.031      0.387
+     PGSNEIGHBOR          -0.054      -0.401     -10.190    0.02%      -0.606     -0.140     -0.021
+            5010.000       1.003       8.738       7.500    0.02%       0.063      0.494
+     PGSAGE                0.003       0.155      -8.774    0.02%      -1.039     -0.174     -0.006
+            5023.000       2.953       3.275      11.316    0.02%       0.168      0.999
+     PGSSEX                0.014       0.027      -1.767    0.02%      -0.413     -0.109      0.022
+            5025.000       0.249       0.013       1.823    0.02%       0.135      0.429
+     PGSINC               -0.064      -0.956      -9.811    0.02%      -0.386     -0.086     -0.011
+            4106.000       0.568      20.229       5.937    0.02%       0.025      0.273
+     PGSPARED             -0.127      -0.439      -6.137    0.02%      -0.735     -0.200     -0.048
+            4821.000       1.181       3.991       5.656    0.02%       0.079      0.494
+     PGSSINGPAR            0.036       0.013      -1.823    0.02%      -0.389     -0.082      0.036
+            5025.000       0.248       0.012       1.767    0.02%       0.161      0.453
+     SINGLE_PAR           -0.258       1.207      -0.500   75.84%      -0.500     -0.500     -0.500
+            5025.000       0.183      -0.542       0.500   24.16%      -0.500      0.500
+     SUB_HI_DUM            0.432       0.274       0.000   56.80%       0.000      0.000      0.000
+            5025.000       0.245      -1.925       1.000   43.20%       1.000      1.000
+     SUB_LO_DUM            0.148       1.977       0.000   85.15%       0.000      0.000      0.000
+            5025.000       0.126       1.910       1.000   14.85%       0.000      0.000
+     ASB_HI_DUM            0.018       7.228       0.000   98.19%       0.000      0.000      0.000
+            5025.000       0.018      50.238       1.000    1.81%       0.000      0.000
+     ASB_MOD_DUM           0.128       2.227       0.000   87.20%       0.000      0.000      0.000
+            5025.000       0.112       2.962       1.000   12.80%       0.000      0.000
+     ASB_ADO_DUM           0.060       3.687       0.000   93.95%       0.000      0.000      0.000
+            5025.000       0.057      11.594       1.000    6.05%       0.000      0.000
+
+     THE STANDARD ERRORS OF THE MODEL PARAMETER ESTIMATES MAY NOT BE
+     TRUSTWORTHY FOR SOME PARAMETERS DUE TO A NON-POSITIVE DEFINITE
+     FIRST-ORDER DERIVATIVE PRODUCT MATRIX.  THIS MAY BE DUE TO THE STARTING
+     VALUES BUT MAY ALSO BE AN INDICATION OF MODEL NONIDENTIFICATION.  THE
+     CONDITION NUMBER IS       0.159D-16.  PROBLEM INVOLVING THE FOLLOWING PARAMETER:
+     Parameter 299, PGSSINGPAR WITH PGSSEX
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                      321
+
+Loglikelihood
+
+          H0 Value                     -122871.435
+
+Information Criteria
+
+          Akaike (AIC)                  246384.870
+          Bayesian (BIC)                248478.490
+          Sample-Size Adjusted BIC      247458.462
+            (n* = (n + 2) / 24)
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ ASB#1      ON
+    PGSPARENT         -0.071      0.119     -0.595      0.552
+    PGSPEER           -0.152      0.115     -1.315      0.188
+    PGSSCHOOL          0.068      0.128      0.530      0.596
+    PGSNEIGHBO        -0.172      0.119     -1.442      0.149
+    PGSAGE             0.007      0.075      0.092      0.926
+    PGSSEX             0.040      0.363      0.111      0.911
+    PGSINC             0.105      0.188      0.557      0.578
+    PGSPARED          -0.138      0.125     -1.100      0.272
+    PGSSINGPAR         0.058      0.291      0.198      0.843
+    SUB_HI_DUM         1.576      0.374      4.219      0.000
+    SUB_LO_DUM        -9.246     69.291     -0.133      0.894
+    AGE               -0.371      0.080     -4.640      0.000
+    SEX               -2.818      0.394     -7.155      0.000
+    INCOME            -0.141      0.188     -0.747      0.455
+    PARED              0.300      0.129      2.328      0.020
+    SINGLE_PAR        -0.232      0.294     -0.789      0.430
+    PGS                0.377      0.258      1.459      0.144
+    PARENT            -0.192      0.128     -1.499      0.134
+    PEER               1.251      0.121     10.358      0.000
+    SCHOOL            -0.367      0.132     -2.785      0.005
+    NEIGHBOR          -0.048      0.130     -0.367      0.713
+
+ ASB#2      ON
+    PGSPARENT          0.075      0.050      1.484      0.138
+    PGSPEER           -0.020      0.051     -0.387      0.699
+    PGSSCHOOL         -0.001      0.054     -0.021      0.984
+    PGSNEIGHBO        -0.044      0.049     -0.900      0.368
+    PGSAGE             0.024      0.029      0.826      0.409
+    PGSSEX             0.129      0.099      1.302      0.193
+    PGSINC            -0.046      0.076     -0.603      0.547
+    PGSPARED           0.080      0.049      1.619      0.105
+    PGSSINGPAR        -0.114      0.116     -0.984      0.325
+    SUB_HI_DUM         0.630      0.100      6.320      0.000
+    SUB_LO_DUM        -0.835      0.207     -4.022      0.000
+    AGE               -0.123      0.029     -4.263      0.000
+    SEX               -1.362      0.100    -13.654      0.000
+    INCOME             0.045      0.075      0.596      0.551
+    PARED              0.083      0.048      1.739      0.082
+    SINGLE_PAR        -0.046      0.113     -0.407      0.684
+    PGS                0.136      0.060      2.273      0.023
+    PARENT            -0.207      0.049     -4.211      0.000
+    PEER               0.215      0.052      4.122      0.000
+    SCHOOL            -0.101      0.053     -1.902      0.057
+    NEIGHBOR           0.009      0.049      0.185      0.854
+
+ ASB#3      ON
+    PGSPARENT         -0.088      0.064     -1.372      0.170
+    PGSPEER            0.002      0.063      0.028      0.978
+    PGSSCHOOL         -0.064      0.073     -0.888      0.374
+    PGSNEIGHBO         0.096      0.065      1.461      0.144
+    PGSAGE            -0.005      0.041     -0.115      0.909
+    PGSSEX             0.080      0.134      0.597      0.551
+    PGSINC            -0.027      0.113     -0.240      0.811
+    PGSPARED           0.048      0.069      0.702      0.483
+    PGSSINGPAR         0.364      0.160      2.279      0.023
+    SUB_HI_DUM         0.568      0.150      3.791      0.000
+    SUB_LO_DUM        -0.503      0.312     -1.610      0.107
+    AGE               -0.333      0.042     -7.938      0.000
+    SEX               -1.032      0.135     -7.626      0.000
+    INCOME             0.147      0.110      1.338      0.181
+    PARED              0.060      0.068      0.886      0.375
+    SINGLE_PAR         0.078      0.160      0.486      0.627
+    PGS                0.067      0.091      0.732      0.464
+    PARENT            -0.213      0.066     -3.252      0.001
+    PEER               0.774      0.067     11.626      0.000
+    SCHOOL            -0.277      0.072     -3.859      0.000
+    NEIGHBOR          -0.006      0.067     -0.084      0.933
+
+ SUB#1      ON
+    PGSPARENT         -0.025      0.039     -0.634      0.526
+    PGSPEER           -0.073      0.042     -1.750      0.080
+    PGSSCHOOL          0.020      0.042      0.469      0.639
+    PGSNEIGHBO         0.084      0.037      2.280      0.023
+    PGSAGE             0.056      0.022      2.609      0.009
+    PGSSEX             0.186      0.070      2.655      0.008
+    PGSINC            -0.064      0.060     -1.067      0.286
+    PGSPARED           0.069      0.037      1.862      0.063
+    PGSSINGPAR        -0.034      0.089     -0.379      0.705
+    ASB_HI_DUM         1.447      0.368      3.928      0.000
+    ASB_MOD_DU         0.634      0.100      6.343      0.000
+    ASB_ADO_DU         0.554      0.150      3.706      0.000
+    AGE               -0.118      0.021     -5.573      0.000
+    SEX               -0.221      0.070     -3.168      0.002
+    INCOME            -0.052      0.057     -0.921      0.357
+    PARED             -0.107      0.035     -3.048      0.002
+    SINGLE_PAR         0.228      0.085      2.688      0.007
+    PGS                0.242      0.043      5.675      0.000
+    PARENT            -0.018      0.038     -0.481      0.631
+    PEER               0.628      0.041     15.318      0.000
+    SCHOOL            -0.190      0.040     -4.779      0.000
+    NEIGHBOR          -0.016      0.036     -0.436      0.663
+
+ SUB#2      ON
+    PGSPARENT          0.063      0.058      1.092      0.275
+    PGSPEER            0.091      0.074      1.238      0.216
+    PGSSCHOOL         -0.042      0.057     -0.741      0.459
+    PGSNEIGHBO         0.056      0.049      1.145      0.252
+    PGSAGE             0.029      0.027      1.074      0.283
+    PGSSEX            -0.005      0.092     -0.054      0.957
+    PGSINC             0.040      0.079      0.506      0.613
+    PGSPARED          -0.014      0.049     -0.286      0.775
+    PGSSINGPAR        -0.100      0.123     -0.814      0.416
+    ASB_HI_DUM        -9.920    114.081     -0.087      0.931
+    ASB_MOD_DU        -0.799      0.208     -3.847      0.000
+    ASB_ADO_DU        -0.292      0.310     -0.943      0.345
+    AGE                0.147      0.028      5.330      0.000
+    SEX                0.366      0.095      3.842      0.000
+    INCOME            -0.207      0.073     -2.851      0.004
+    PARED             -0.207      0.048     -4.327      0.000
+    SINGLE_PAR        -0.001      0.117     -0.007      0.995
+    PGS               -0.156      0.071     -2.193      0.028
+    PARENT             0.111      0.055      2.030      0.042
+    PEER              -0.690      0.073     -9.417      0.000
+    SCHOOL            -0.030      0.054     -0.548      0.584
+    NEIGHBOR          -0.113      0.048     -2.366      0.018
+
+ PARENT   WITH
+    PGS               -0.065      0.014     -4.588      0.000
+
+ PEER     WITH
+    PGS                0.160      0.014     11.223      0.000
+    PARENT            -0.234      0.015    -15.979      0.000
+
+ SCHOOL   WITH
+    PGS               -0.120      0.014     -8.429      0.000
+    PARENT             0.355      0.015     23.226      0.000
+    PEER              -0.297      0.015    -20.030      0.000
+
+ NEIGHBOR WITH
+    PGS               -0.054      0.014     -3.844      0.000
+    PARENT             0.219      0.015     15.022      0.000
+    PEER              -0.100      0.014     -7.014      0.000
+    SCHOOL             0.313      0.015     21.058      0.000
+
+ AGE      WITH
+    PGS                0.003      0.024      0.126      0.900
+    PARENT            -0.266      0.025    -10.711      0.000
+    PEER               0.473      0.025     18.777      0.000
+    SCHOOL            -0.181      0.025     -7.356      0.000
+    NEIGHBOR          -0.153      0.024     -6.275      0.000
+
+ SEX      WITH
+    PGS                0.014      0.007      1.943      0.052
+    PARENT            -0.038      0.007     -5.359      0.000
+    PEER              -0.018      0.007     -2.490      0.013
+    SCHOOL             0.001      0.007      0.082      0.934
+    NEIGHBOR          -0.011      0.007     -1.508      0.132
+    AGE               -0.054      0.012     -4.435      0.000
+
+ INCOME   WITH
+    PGS               -0.062      0.012     -5.269      0.000
+    PARENT             0.047      0.012      3.916      0.000
+    PEER              -0.062      0.012     -5.241      0.000
+    SCHOOL             0.068      0.012      5.697      0.000
+    NEIGHBOR           0.028      0.012      2.387      0.017
+    AGE               -0.004      0.021     -0.197      0.844
+    SEX                0.003      0.006      0.591      0.555
+
+ PARED    WITH
+    PGS               -0.126      0.016     -7.885      0.000
+    PARENT             0.065      0.016      4.042      0.000
+    PEER              -0.154      0.016     -9.586      0.000
+    SCHOOL             0.126      0.016      7.760      0.000
+    NEIGHBOR           0.016      0.016      0.987      0.324
+    AGE               -0.111      0.028     -4.028      0.000
+    SEX               -0.007      0.008     -0.892      0.372
+    INCOME             0.358      0.014     25.187      0.000
+
+ PGSPAREN WITH
+    PGS                0.018      0.014      1.291      0.197
+    PARENT             0.116      0.014      8.130      0.000
+    PEER              -0.029      0.014     -2.045      0.041
+    SCHOOL             0.022      0.014      1.554      0.120
+    NEIGHBOR           0.018      0.014      1.273      0.203
+    AGE                0.033      0.024      1.348      0.178
+    SEX                0.010      0.007      1.369      0.171
+    INCOME             0.001      0.012      0.051      0.959
+    PARED             -0.032      0.016     -2.006      0.045
+
+ PGSPEER  WITH
+    PGS               -0.003      0.014     -0.180      0.857
+    PARENT            -0.029      0.014     -2.017      0.044
+    PEER               0.096      0.014      6.740      0.000
+    SCHOOL            -0.046      0.014     -3.185      0.001
+    NEIGHBOR          -0.013      0.014     -0.914      0.361
+    AGE                0.035      0.024      1.449      0.147
+    SEX                0.002      0.007      0.243      0.808
+    INCOME             0.007      0.012      0.603      0.546
+    PARED              0.014      0.016      0.887      0.375
+    PGSPARENT         -0.247      0.015    -16.894      0.000
+
+ PGSSCHOO WITH
+    PGS                0.006      0.014      0.437      0.662
+    PARENT             0.021      0.014      1.524      0.127
+    PEER              -0.047      0.014     -3.359      0.001
+    SCHOOL             0.099      0.014      7.120      0.000
+    NEIGHBOR          -0.009      0.014     -0.641      0.522
+    AGE                0.017      0.024      0.723      0.470
+    SEX                0.007      0.007      1.000      0.317
+    INCOME             0.024      0.012      2.038      0.042
+    PARED              0.020      0.016      1.296      0.195
+    PGSPARENT          0.367      0.015     24.626      0.000
+    PGSPEER           -0.312      0.015    -21.368      0.000
+
+ PGSNEIGH WITH
+    PGS                0.003      0.014      0.247      0.805
+    PARENT             0.017      0.014      1.215      0.224
+    PEER              -0.013      0.014     -0.933      0.351
+    SCHOOL            -0.010      0.014     -0.672      0.502
+    NEIGHBOR           0.028      0.014      1.989      0.047
+    AGE               -0.015      0.024     -0.598      0.550
+    SEX               -0.009      0.007     -1.337      0.181
+    INCOME             0.011      0.012      0.913      0.361
+    PARED             -0.007      0.016     -0.427      0.670
+    PGSPARENT          0.223      0.014     15.381      0.000
+    PGSPEER           -0.094      0.014     -6.572      0.000
+    PGSSCHOOL          0.315      0.015     21.633      0.000
+
+ PGSAGE   WITH
+    PGS                0.066      0.024      2.702      0.007
+    PARENT             0.033      0.025      1.351      0.177
+    PEER               0.034      0.024      1.392      0.164
+    SCHOOL             0.018      0.024      0.738      0.461
+    NEIGHBOR          -0.014      0.024     -0.582      0.561
+    AGE                0.037      0.042      0.877      0.380
+    SEX               -0.001      0.012     -0.073      0.942
+    INCOME             0.030      0.021      1.466      0.143
+    PARED              0.036      0.028      1.287      0.198
+    PGSPARENT         -0.257      0.025    -10.421      0.000
+    PGSPEER            0.450      0.025     17.915      0.000
+    PGSSCHOOL         -0.159      0.024     -6.653      0.000
+    PGSNEIGHBO        -0.099      0.024     -4.067      0.000
+
+ PGSSEX   WITH
+    PGS                0.030      0.007      4.221      0.000
+    PARENT             0.008      0.007      1.081      0.280
+    PEER               0.006      0.007      0.877      0.380
+    SCHOOL             0.003      0.007      0.458      0.647
+    NEIGHBOR          -0.011      0.007     -1.588      0.112
+    AGE               -0.001      0.012     -0.064      0.949
+    SEX                0.000      0.004     -0.099      0.921
+    INCOME            -0.004      0.006     -0.636      0.525
+    PARED              0.003      0.008      0.432      0.666
+    PGSPARENT         -0.031      0.007     -4.389      0.000
+    PGSPEER           -0.013      0.007     -1.878      0.060
+    PGSSCHOOL          0.007      0.007      0.995      0.320
+    PGSNEIGHBO        -0.004      0.007     -0.576      0.565
+    PGSAGE            -0.047      0.012     -3.867      0.000
+
+ PGSINC   WITH
+    PGS                0.012      0.011      1.079      0.280
+    PARENT             0.000      0.012      0.014      0.989
+    PEER               0.007      0.011      0.616      0.538
+    SCHOOL             0.024      0.012      2.089      0.037
+    NEIGHBOR           0.012      0.012      1.066      0.286
+    AGE                0.029      0.020      1.433      0.152
+    SEX               -0.002      0.006     -0.376      0.707
+    INCOME             0.041      0.009      4.536      0.000
+    PARED             -0.008      0.013     -0.646      0.518
+    PGSPARENT          0.049      0.012      4.203      0.000
+    PGSPEER           -0.053      0.011     -4.655      0.000
+    PGSSCHOOL          0.078      0.011      6.913      0.000
+    PGSNEIGHBO         0.061      0.011      5.331      0.000
+    PGSAGE             0.025      0.020      1.236      0.216
+    PGSSEX             0.003      0.006      0.457      0.648
+
+ PGSPARED WITH
+    PGS                0.033      0.016      2.102      0.036
+    PARENT            -0.033      0.016     -2.069      0.039
+    PEER               0.014      0.016      0.893      0.372
+    SCHOOL             0.021      0.016      1.315      0.189
+    NEIGHBOR          -0.006      0.016     -0.401      0.688
+    AGE                0.036      0.027      1.312      0.189
+    SEX                0.007      0.008      0.905      0.365
+    INCOME            -0.009      0.013     -0.732      0.464
+    PARED             -0.022      0.017     -1.247      0.212
+    PGSPARENT          0.076      0.016      4.843      0.000
+    PGSPEER           -0.140      0.016     -8.837      0.000
+    PGSSCHOOL          0.102      0.016      6.552      0.000
+    PGSNEIGHBO         0.007      0.016      0.442      0.659
+    PGSAGE            -0.145      0.027     -5.329      0.000
+    PGSSEX            -0.007      0.008     -0.848      0.396
+    PGSINC             0.348      0.013     25.842      0.000
+
+ PGSSINGP WITH
+    PGS               -0.277      0.008    -34.432      0.000
+    PARENT             0.017      0.007      2.330      0.020
+    PEER              -0.044      0.007     -6.264      0.000
+    SCHOOL             0.036      0.007      5.091      0.000
+    NEIGHBOR           0.014      0.007      1.990      0.047
+    AGE               -0.004      0.012     -0.362      0.717
+    SEX               -0.002      0.004     -0.491      0.624
+    INCOME             0.006      0.006      1.045      0.296
+    PARED              0.042      0.008      5.250      0.000
+    PGSPARENT         -0.035      0.007     -4.931      0.000
+    PGSPEER            0.040      0.007      5.675      0.000
+    PGSSCHOOL         -0.027      0.007     -3.946      0.000
+    PGSNEIGHBO        -0.050      0.007     -7.118      0.000
+    PGSAGE            -0.014      0.012     -1.145      0.252
+    PGSSEX            -0.013      0.004     -3.582      0.000
+    PGSINC            -0.101      0.006    -17.262      0.000
+    PGSPARED          -0.040      0.008     -5.135      0.000
+
+ SINGLE_P WITH
+    PGS                0.036      0.006      5.959      0.000
+    PARENT            -0.025      0.006     -4.082      0.000
+    PEER               0.050      0.006      8.230      0.000
+    SCHOOL            -0.037      0.006     -6.130      0.000
+    NEIGHBOR          -0.044      0.006     -7.250      0.000
+    AGE                0.014      0.010      1.304      0.192
+    SEX                0.001      0.003      0.391      0.696
+    INCOME            -0.108      0.005    -20.486      0.000
+    PARED             -0.044      0.007     -6.517      0.000
+    PGSPARENT         -0.001      0.006     -0.098      0.922
+    PGSPEER           -0.003      0.006     -0.562      0.574
+    PGSSCHOOL          0.005      0.006      0.831      0.406
+    PGSNEIGHBO         0.000      0.006      0.024      0.981
+    PGSAGE            -0.004      0.010     -0.351      0.725
+    PGSSEX             0.003      0.003      0.966      0.334
+    PGSINC            -0.010      0.005     -2.016      0.044
+    PGSPARED           0.009      0.007      1.357      0.175
+    PGSSINGPAR         0.009      0.003      3.113      0.002
+
+ Means
+    PGS                0.000      0.014      0.020      0.984
+    PARENT            -0.005      0.014     -0.352      0.725
+    PEER              -0.002      0.014     -0.169      0.866
+    SCHOOL            -0.001      0.014     -0.053      0.958
+    NEIGHBOR           0.005      0.014      0.353      0.724
+    AGE               -0.005      0.024     -0.197      0.844
+    SEX                0.031      0.007      4.339      0.000
+    INCOME            -0.005      0.012     -0.447      0.655
+    PARED             -0.004      0.016     -0.278      0.781
+    PGSPARENT         -0.065      0.014     -4.626      0.000
+    PGSPEER            0.160      0.014     11.333      0.000
+    PGSSCHOOL         -0.120      0.014     -8.701      0.000
+    PGSNEIGHBO        -0.054      0.014     -3.827      0.000
+    PGSAGE             0.003      0.024      0.135      0.893
+    PGSSEX             0.014      0.007      1.942      0.052
+    PGSINC            -0.063      0.011     -5.519      0.000
+    PGSPARED          -0.126      0.016     -8.050      0.000
+    PGSSINGPAR         0.036      0.007      5.123      0.000
+    SINGLE_PAR        -0.258      0.006    -42.794      0.000
+
+ Intercepts
+    ASB#1             -6.429      0.425    -15.144      0.000
+    ASB#2             -2.190      0.084    -25.988      0.000
+    ASB#3             -3.235      0.133    -24.415      0.000
+    SUB#1             -0.098      0.044     -2.233      0.026
+    SUB#2             -1.332      0.070    -18.963      0.000
+
+ Variances
+    PGS                0.998      0.020     50.125      0.000
+    PARENT             1.000      0.020     49.529      0.000
+    PEER               0.996      0.020     49.944      0.000
+    SCHOOL             0.994      0.020     49.632      0.000
+    NEIGHBOR           0.998      0.020     50.046      0.000
+    AGE                2.950      0.059     50.114      0.000
+    SEX                0.249      0.005     50.125      0.000
+    INCOME             0.598      0.013     45.515      0.000
+    PARED              1.220      0.025     49.149      0.000
+    PGSPARENT          0.981      0.020     49.513      0.000
+    PGSPEER            0.999      0.020     49.937      0.000
+    PGSSCHOOL          0.945      0.019     49.641      0.000
+    PGSNEIGHBO         1.003      0.020     50.054      0.000
+    PGSAGE             2.953      0.059     50.116      0.000
+    PGSSEX             0.249      0.005     50.125      0.000
+    PGSINC             0.564      0.012     45.884      0.000
+    PGSPARED           1.182      0.024     49.099      0.000
+    PGSSINGPAR         0.248      0.005     50.125      0.000
+    SINGLE_PAR         0.183      0.004     50.125      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.159E-16
+       (ratio of smallest to largest eigenvalue)
+
+
+LOGISTIC REGRESSION ODDS RATIO RESULTS
+
+                                                95% C.I.
+                    Estimate       S.E.  Lower 2.5% Upper 2.5%
+
+ ASB#1      ON
+    PGSPARENT          0.932      0.111      0.738      1.176
+    PGSPEER            0.859      0.099      0.685      1.077
+    PGSSCHOOL          1.070      0.137      0.833      1.376
+    PGSNEIGHBO         0.842      0.100      0.667      1.064
+    PGSAGE             1.007      0.075      0.870      1.166
+    PGSSEX             1.041      0.378      0.511      2.120
+    PGSINC             1.110      0.209      0.768      1.605
+    PGSPARED           0.871      0.109      0.682      1.114
+    PGSSINGPAR         1.059      0.309      0.598      1.876
+    SUB_HI_DUM         4.838      1.808      2.326     10.063
+    SUB_LO_DUM         0.000      0.007      0.000  *********
+    AGE                0.690      0.055      0.590      0.807
+    SEX                0.060      0.024      0.028      0.129
+    INCOME             0.869      0.163      0.601      1.256
+    PARED              1.350      0.174      1.049      1.738
+    SINGLE_PAR         0.793      0.233      0.445      1.411
+    PGS                1.458      0.377      0.879      2.419
+    PARENT             0.825      0.106      0.642      1.061
+    PEER               3.495      0.422      2.758      4.428
+    SCHOOL             0.693      0.091      0.535      0.897
+    NEIGHBOR           0.953      0.124      0.739      1.229
+
+ ASB#2      ON
+    PGSPARENT          1.078      0.054      0.976      1.190
+    PGSPEER            0.981      0.050      0.888      1.083
+    PGSSCHOOL          0.999      0.054      0.898      1.111
+    PGSNEIGHBO         0.957      0.047      0.870      1.053
+    PGSAGE             1.024      0.029      0.968      1.083
+    PGSSEX             1.137      0.112      0.937      1.380
+    PGSINC             0.955      0.072      0.823      1.108
+    PGSPARED           1.083      0.053      0.983      1.192
+    PGSSINGPAR         0.892      0.103      0.711      1.120
+    SUB_HI_DUM         1.877      0.187      1.544      2.282
+    SUB_LO_DUM         0.434      0.090      0.289      0.652
+    AGE                0.884      0.026      0.835      0.935
+    SEX                0.256      0.026      0.211      0.311
+    INCOME             1.046      0.078      0.903      1.211
+    PARED              1.087      0.052      0.990      1.193
+    SINGLE_PAR         0.955      0.108      0.765      1.193
+    PGS                1.145      0.068      1.019      1.287
+    PARENT             0.813      0.040      0.738      0.895
+    PEER               1.240      0.065      1.120      1.374
+    SCHOOL             0.904      0.048      0.815      1.003
+    NEIGHBOR           1.009      0.049      0.917      1.111
+
+ ASB#3      ON
+    PGSPARENT          0.915      0.059      0.807      1.039
+    PGSPEER            1.002      0.063      0.885      1.134
+    PGSSCHOOL          0.938      0.068      0.813      1.081
+    PGSNEIGHBO         1.100      0.072      0.968      1.251
+    PGSAGE             0.995      0.041      0.919      1.078
+    PGSSEX             1.084      0.146      0.833      1.410
+    PGSINC             0.973      0.110      0.780      1.215
+    PGSPARED           1.049      0.072      0.917      1.201
+    PGSSINGPAR         1.439      0.230      1.052      1.969
+    SUB_HI_DUM         1.765      0.265      1.316      2.368
+    SUB_LO_DUM         0.605      0.189      0.328      1.115
+    AGE                0.717      0.030      0.660      0.778
+    SEX                0.356      0.048      0.273      0.464
+    INCOME             1.159      0.128      0.934      1.438
+    PARED              1.062      0.072      0.930      1.213
+    SINGLE_PAR         1.081      0.173      0.790      1.478
+    PGS                1.069      0.098      0.894      1.279
+    PARENT             0.808      0.053      0.711      0.919
+    PEER               2.168      0.144      1.903      2.471
+    SCHOOL             0.758      0.054      0.659      0.873
+    NEIGHBOR           0.994      0.066      0.873      1.133
+
+ SUB#1      ON
+    PGSPARENT          0.975      0.038      0.903      1.054
+    PGSPEER            0.930      0.039      0.857      1.009
+    PGSSCHOOL          1.020      0.043      0.939      1.108
+    PGSNEIGHBO         1.087      0.040      1.012      1.168
+    PGSAGE             1.058      0.023      1.014      1.104
+    PGSSEX             1.204      0.084      1.050      1.381
+    PGSINC             0.938      0.056      0.834      1.055
+    PGSPARED           1.072      0.040      0.996      1.153
+    PGSSINGPAR         0.967      0.086      0.812      1.151
+    ASB_HI_DUM         4.250      1.565      2.064      8.748
+    ASB_MOD_DU         1.884      0.188      1.549      2.292
+    ASB_ADO_DU         1.741      0.260      1.299      2.334
+    AGE                0.888      0.019      0.852      0.926
+    SEX                0.801      0.056      0.699      0.919
+    INCOME             0.949      0.054      0.850      1.061
+    PARED              0.898      0.032      0.838      0.962
+    SINGLE_PAR         1.256      0.106      1.064      1.483
+    PGS                1.273      0.054      1.171      1.384
+    PARENT             0.982      0.037      0.913      1.057
+    PEER               1.875      0.077      1.730      2.032
+    SCHOOL             0.827      0.033      0.765      0.894
+    NEIGHBOR           0.984      0.035      0.917      1.056
+
+ SUB#2      ON
+    PGSPARENT          1.065      0.061      0.951      1.193
+    PGSPEER            1.096      0.081      0.948      1.266
+    PGSSCHOOL          0.959      0.054      0.858      1.072
+    PGSNEIGHBO         1.057      0.052      0.961      1.163
+    PGSAGE             1.030      0.028      0.976      1.087
+    PGSSEX             0.995      0.092      0.830      1.193
+    PGSINC             1.041      0.082      0.892      1.214
+    PGSPARED           0.986      0.048      0.896      1.085
+    PGSSINGPAR         0.905      0.111      0.711      1.151
+    ASB_HI_DUM         0.000      0.006      0.000  *********
+    ASB_MOD_DU         0.450      0.093      0.300      0.676
+    ASB_ADO_DU         0.746      0.231      0.407      1.370
+    AGE                1.159      0.032      1.098      1.223
+    SEX                1.442      0.137      1.196      1.738
+    INCOME             0.813      0.059      0.705      0.937
+    PARED              0.813      0.039      0.740      0.893
+    SINGLE_PAR         0.999      0.117      0.795      1.257
+    PGS                0.856      0.061      0.745      0.984
+    PARENT             1.118      0.061      1.004      1.245
+    PEER               0.501      0.037      0.434      0.579
+    SCHOOL             0.971      0.053      0.873      1.079
+    NEIGHBOR           0.893      0.043      0.813      0.981
+
+
+TECHNICAL 1 OUTPUT
+
+
+     PARAMETER SPECIFICATION
+
+
+           NU
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+                    0             0             0             0             0
+
+
+           NU
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+                    0             0             0             0             0
+
+
+           NU
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+                    0             0             0             0             0
+
+
+           NU
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+                    0             0             0             0             0
+
+
+           NU
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+                    0             0             0             0             0
+
+
+           NU
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+                    0             0             0             0
+
+
+           LAMBDA
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+ ASB#1              0             0             0             0             0
+ ASB#2              0             0             0             0             0
+ ASB#3              0             0             0             0             0
+ SUB#1              0             0             0             0             0
+ SUB#2              0             0             0             0             0
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           LAMBDA
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+ ASB#1              0             0             0             0             0
+ ASB#2              0             0             0             0             0
+ ASB#3              0             0             0             0             0
+ SUB#1              0             0             0             0             0
+ SUB#2              0             0             0             0             0
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           LAMBDA
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+ ASB#1              0             0             0             0             0
+ ASB#2              0             0             0             0             0
+ ASB#3              0             0             0             0             0
+ SUB#1              0             0             0             0             0
+ SUB#2              0             0             0             0             0
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           LAMBDA
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ ASB#1              0             0             0             0             0
+ ASB#2              0             0             0             0             0
+ ASB#3              0             0             0             0             0
+ SUB#1              0             0             0             0             0
+ SUB#2              0             0             0             0             0
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           LAMBDA
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+ ASB#1              0             0             0             0             0
+ ASB#2              0             0             0             0             0
+ ASB#3              0             0             0             0             0
+ SUB#1              0             0             0             0             0
+ SUB#2              0             0             0             0             0
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           LAMBDA
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ ASB#1              0             0             0             0
+ ASB#2              0             0             0             0
+ ASB#3              0             0             0             0
+ SUB#1              0             0             0             0
+ SUB#2              0             0             0             0
+ PGS                0             0             0             0
+ PARENT             0             0             0             0
+ PEER               0             0             0             0
+ SCHOOL             0             0             0             0
+ NEIGHBOR           0             0             0             0
+ AGE                0             0             0             0
+ SEX                0             0             0             0
+ INCOME             0             0             0             0
+ PARED              0             0             0             0
+ PGSPAREN           0             0             0             0
+ PGSPEER            0             0             0             0
+ PGSSCHOO           0             0             0             0
+ PGSNEIGH           0             0             0             0
+ PGSAGE             0             0             0             0
+ PGSSEX             0             0             0             0
+ PGSINC             0             0             0             0
+ PGSPARED           0             0             0             0
+ PGSSINGP           0             0             0             0
+ SINGLE_P           0             0             0             0
+ SUB_HI_D           0             0             0             0
+ SUB_LO_D           0             0             0             0
+ ASB_HI_D           0             0             0             0
+ ASB_MOD_           0             0             0             0
+ ASB_ADO_           0             0             0             0
+
+
+           THETA
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+ ASB#1              0
+ ASB#2              0             0
+ ASB#3              0             0             0
+ SUB#1              0             0             0             0
+ SUB#2              0             0             0             0             0
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           THETA
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+ PGS                0
+ PARENT             0             0
+ PEER               0             0             0
+ SCHOOL             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           THETA
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+ AGE                0
+ SEX                0             0
+ INCOME             0             0             0
+ PARED              0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           THETA
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ PGSPEER            0
+ PGSSCHOO           0             0
+ PGSNEIGH           0             0             0
+ PGSAGE             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           THETA
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+ PGSINC             0
+ PGSPARED           0             0
+ PGSSINGP           0             0             0
+ SINGLE_P           0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           THETA
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ SUB_LO_D           0
+ ASB_HI_D           0             0
+ ASB_MOD_           0             0             0
+ ASB_ADO_           0             0             0             0
+
+
+           ALPHA
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+                    1             2             3             4             5
+
+
+           ALPHA
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+                    6             7             8             9            10
+
+
+           ALPHA
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+                   11            12            13            14            15
+
+
+           ALPHA
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+                   16            17            18            19            20
+
+
+           ALPHA
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+                   21            22            23            24             0
+
+
+           ALPHA
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+                    0             0             0             0
+
+
+           BETA
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+ ASB#1              0             0             0             0             0
+ ASB#2              0             0             0             0             0
+ ASB#3              0             0             0             0             0
+ SUB#1              0             0             0             0             0
+ SUB#2              0             0             0             0             0
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           BETA
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+ ASB#1             25            26            27            28            29
+ ASB#2             46            47            48            49            50
+ ASB#3             67            68            69            70            71
+ SUB#1             88            89            90            91            92
+ SUB#2            110           111           112           113           114
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           BETA
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+ ASB#1             30            31            32            33            34
+ ASB#2             51            52            53            54            55
+ ASB#3             72            73            74            75            76
+ SUB#1             93            94            95            96            97
+ SUB#2            115           116           117           118           119
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           BETA
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ ASB#1             35            36            37            38            39
+ ASB#2             56            57            58            59            60
+ ASB#3             77            78            79            80            81
+ SUB#1             98            99           100           101           102
+ SUB#2            120           121           122           123           124
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           BETA
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+ ASB#1             40            41            42            43            44
+ ASB#2             61            62            63            64            65
+ ASB#3             82            83            84            85            86
+ SUB#1            103           104           105           106             0
+ SUB#2            125           126           127           128             0
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           BETA
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ ASB#1             45             0             0             0
+ ASB#2             66             0             0             0
+ ASB#3             87             0             0             0
+ SUB#1              0           107           108           109
+ SUB#2              0           129           130           131
+ PGS                0             0             0             0
+ PARENT             0             0             0             0
+ PEER               0             0             0             0
+ SCHOOL             0             0             0             0
+ NEIGHBOR           0             0             0             0
+ AGE                0             0             0             0
+ SEX                0             0             0             0
+ INCOME             0             0             0             0
+ PARED              0             0             0             0
+ PGSPAREN           0             0             0             0
+ PGSPEER            0             0             0             0
+ PGSSCHOO           0             0             0             0
+ PGSNEIGH           0             0             0             0
+ PGSAGE             0             0             0             0
+ PGSSEX             0             0             0             0
+ PGSINC             0             0             0             0
+ PGSPARED           0             0             0             0
+ PGSSINGP           0             0             0             0
+ SINGLE_P           0             0             0             0
+ SUB_HI_D           0             0             0             0
+ SUB_LO_D           0             0             0             0
+ ASB_HI_D           0             0             0             0
+ ASB_MOD_           0             0             0             0
+ ASB_ADO_           0             0             0             0
+
+
+           PSI
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+ ASB#1              0
+ ASB#2              0             0
+ ASB#3              0             0             0
+ SUB#1              0             0             0             0
+ SUB#2              0             0             0             0             0
+ PGS                0             0             0             0             0
+ PARENT             0             0             0             0             0
+ PEER               0             0             0             0             0
+ SCHOOL             0             0             0             0             0
+ NEIGHBOR           0             0             0             0             0
+ AGE                0             0             0             0             0
+ SEX                0             0             0             0             0
+ INCOME             0             0             0             0             0
+ PARED              0             0             0             0             0
+ PGSPAREN           0             0             0             0             0
+ PGSPEER            0             0             0             0             0
+ PGSSCHOO           0             0             0             0             0
+ PGSNEIGH           0             0             0             0             0
+ PGSAGE             0             0             0             0             0
+ PGSSEX             0             0             0             0             0
+ PGSINC             0             0             0             0             0
+ PGSPARED           0             0             0             0             0
+ PGSSINGP           0             0             0             0             0
+ SINGLE_P           0             0             0             0             0
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           PSI
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+ PGS              132
+ PARENT           133           134
+ PEER             135           136           137
+ SCHOOL           138           139           140           141
+ NEIGHBOR         142           143           144           145           146
+ AGE              147           148           149           150           151
+ SEX              153           154           155           156           157
+ INCOME           160           161           162           163           164
+ PARED            168           169           170           171           172
+ PGSPAREN         177           178           179           180           181
+ PGSPEER          187           188           189           190           191
+ PGSSCHOO         198           199           200           201           202
+ PGSNEIGH         210           211           212           213           214
+ PGSAGE           223           224           225           226           227
+ PGSSEX           237           238           239           240           241
+ PGSINC           252           253           254           255           256
+ PGSPARED         268           269           270           271           272
+ PGSSINGP         285           286           287           288           289
+ SINGLE_P         303           304           305           306           307
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           PSI
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+ AGE              152
+ SEX              158           159
+ INCOME           165           166           167
+ PARED            173           174           175           176
+ PGSPAREN         182           183           184           185           186
+ PGSPEER          192           193           194           195           196
+ PGSSCHOO         203           204           205           206           207
+ PGSNEIGH         215           216           217           218           219
+ PGSAGE           228           229           230           231           232
+ PGSSEX           242           243           244           245           246
+ PGSINC           257           258           259           260           261
+ PGSPARED         273           274           275           276           277
+ PGSSINGP         290           291           292           293           294
+ SINGLE_P         308           309           310           311           312
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           PSI
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ PGSPEER          197
+ PGSSCHOO         208           209
+ PGSNEIGH         220           221           222
+ PGSAGE           233           234           235           236
+ PGSSEX           247           248           249           250           251
+ PGSINC           262           263           264           265           266
+ PGSPARED         278           279           280           281           282
+ PGSSINGP         295           296           297           298           299
+ SINGLE_P         313           314           315           316           317
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           PSI
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+ PGSINC           267
+ PGSPARED         283           284
+ PGSSINGP         300           301           302
+ SINGLE_P         318           319           320           321
+ SUB_HI_D           0             0             0             0             0
+ SUB_LO_D           0             0             0             0             0
+ ASB_HI_D           0             0             0             0             0
+ ASB_MOD_           0             0             0             0             0
+ ASB_ADO_           0             0             0             0             0
+
+
+           PSI
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ SUB_LO_D           0
+ ASB_HI_D           0             0
+ ASB_MOD_           0             0             0
+ ASB_ADO_           0             0             0             0
+
+
+     STARTING VALUES
+
+
+           NU
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           NU
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           NU
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           NU
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           NU
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           NU
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+                0.000         0.000         0.000         0.000
+
+
+           LAMBDA
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+ ASB#1          1.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         1.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         1.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         1.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         1.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           LAMBDA
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            1.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         1.000         0.000         0.000         0.000
+ PEER           0.000         0.000         1.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         1.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         1.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           LAMBDA
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            1.000         0.000         0.000         0.000         0.000
+ SEX            0.000         1.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         1.000         0.000         0.000
+ PARED          0.000         0.000         0.000         1.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         1.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           LAMBDA
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        1.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         1.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         1.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         1.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         1.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           LAMBDA
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         1.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         1.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         1.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         1.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         1.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           LAMBDA
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000
+ SUB_LO_D       1.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         1.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         1.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         1.000
+
+
+           THETA
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+ ASB#1          0.000
+ ASB#2          0.000         0.000
+ ASB#3          0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+ PGS            0.000
+ PARENT         0.000         0.000
+ PEER           0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+ AGE            0.000
+ SEX            0.000         0.000
+ INCOME         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ PGSPEER        0.000
+ PGSSCHOO       0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+ PGSINC         0.000
+ PGSPARED       0.000         0.000
+ PGSSINGP       0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ SUB_LO_D       0.000
+ ASB_HI_D       0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000
+
+
+           ALPHA
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+               -3.780        -1.825        -2.574         0.029        -1.039
+
+
+           ALPHA
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+                0.000         0.002        -0.002         0.004         0.005
+
+
+           ALPHA
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+               -0.005         0.031         0.002         0.001        -0.064
+
+
+           ALPHA
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+                0.161        -0.120        -0.054         0.003         0.014
+
+
+           ALPHA
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+               -0.064        -0.127         0.036        -0.258         0.000
+
+
+           ALPHA
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+                0.000         0.000         0.000         0.000
+
+
+           BETA
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           BETA
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           BETA
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           BETA
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           BETA
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           BETA
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ ASB#1          0.000         0.000         0.000         0.000
+ ASB#2          0.000         0.000         0.000         0.000
+ ASB#3          0.000         0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000
+
+
+           PSI
+              ASB#1         ASB#2         ASB#3         SUB#1         SUB#2
+              ________      ________      ________      ________      ________
+ ASB#1          0.000
+ ASB#2          0.000         0.000
+ ASB#3          0.000         0.000         0.000
+ SUB#1          0.000         0.000         0.000         0.000
+ SUB#2          0.000         0.000         0.000         0.000         0.000
+ PGS            0.000         0.000         0.000         0.000         0.000
+ PARENT         0.000         0.000         0.000         0.000         0.000
+ PEER           0.000         0.000         0.000         0.000         0.000
+ SCHOOL         0.000         0.000         0.000         0.000         0.000
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.000
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           PSI
+              PGS           PARENT        PEER          SCHOOL        NEIGHBOR
+              ________      ________      ________      ________      ________
+ PGS            0.499
+ PARENT         0.000         0.499
+ PEER           0.000         0.000         0.499
+ SCHOOL         0.000         0.000         0.000         0.496
+ NEIGHBOR       0.000         0.000         0.000         0.000         0.499
+ AGE            0.000         0.000         0.000         0.000         0.000
+ SEX            0.000         0.000         0.000         0.000         0.000
+ INCOME         0.000         0.000         0.000         0.000         0.000
+ PARED          0.000         0.000         0.000         0.000         0.000
+ PGSPAREN       0.000         0.000         0.000         0.000         0.000
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           PSI
+              AGE           SEX           INCOME        PARED         PGSPAREN
+              ________      ________      ________      ________      ________
+ AGE            1.475
+ SEX            0.000         0.125
+ INCOME         0.000         0.000         0.298
+ PARED          0.000         0.000         0.000         0.610
+ PGSPAREN       0.000         0.000         0.000         0.000         0.489
+ PGSPEER        0.000         0.000         0.000         0.000         0.000
+ PGSSCHOO       0.000         0.000         0.000         0.000         0.000
+ PGSNEIGH       0.000         0.000         0.000         0.000         0.000
+ PGSAGE         0.000         0.000         0.000         0.000         0.000
+ PGSSEX         0.000         0.000         0.000         0.000         0.000
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           PSI
+              PGSPEER       PGSSCHOO      PGSNEIGH      PGSAGE        PGSSEX
+              ________      ________      ________      ________      ________
+ PGSPEER        0.500
+ PGSSCHOO       0.000         0.472
+ PGSNEIGH       0.000         0.000         0.501
+ PGSAGE         0.000         0.000         0.000         1.476
+ PGSSEX         0.000         0.000         0.000         0.000         0.125
+ PGSINC         0.000         0.000         0.000         0.000         0.000
+ PGSPARED       0.000         0.000         0.000         0.000         0.000
+ PGSSINGP       0.000         0.000         0.000         0.000         0.000
+ SINGLE_P       0.000         0.000         0.000         0.000         0.000
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.000
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           PSI
+              PGSINC        PGSPARED      PGSSINGP      SINGLE_P      SUB_HI_D
+              ________      ________      ________      ________      ________
+ PGSINC         0.284
+ PGSPARED       0.000         0.590
+ PGSSINGP       0.000         0.000         0.124
+ SINGLE_P       0.000         0.000         0.000         0.092
+ SUB_HI_D       0.000         0.000         0.000         0.000         0.123
+ SUB_LO_D       0.000         0.000         0.000         0.000         0.000
+ ASB_HI_D       0.000         0.000         0.000         0.000         0.000
+ ASB_MOD_       0.000         0.000         0.000         0.000         0.000
+ ASB_ADO_       0.000         0.000         0.000         0.000         0.000
+
+
+           PSI
+              SUB_LO_D      ASB_HI_D      ASB_MOD_      ASB_ADO_
+              ________      ________      ________      ________
+ SUB_LO_D       0.063
+ ASB_HI_D       0.000         0.009
+ ASB_MOD_       0.000         0.000         0.056
+ ASB_ADO_       0.000         0.000         0.000         0.028
+
+
+SAVEDATA INFORMATION
+
+
+  Save file
+    eur_id.dat
+
+  Order of variables
+
+    ASB
+    SUB
+    PGS
+    PARENT
+    PEER
+    SCHOOL
+    NEIGHBOR
+    AGE
+    SEX
+    INCOME
+    PARED
+    PGSPAREN
+    PGSPEER
+    PGSSCHOO
+    PGSNEIGH
+    PGSAGE
+    PGSSEX
+    PGSINC
+    PGSPARED
+    PGSSINGP
+    SINGLE_P
+    SUB_HI_D
+    SUB_LO_D
+    ASB_HI_D
+    ASB_MOD_
+    ASB_ADO_
+    AID
+
+  Save file format           Free
+
+  Save file record length    10000
+
+  Save missing symbol        *
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\repo\2024_ge_interplay_ext_trajectory\analysis\rnr_eur_main_only.dgm
+
+     Beginning Time:  19:09:09
+        Ending Time:  19:10:39
+       Elapsed Time:  00:01:30
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

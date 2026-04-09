@@ -1,0 +1,361 @@
+Mplus VERSION 8.6
+MUTHEN & MUTHEN
+12/10/2025   7:25 PM
+
+INPUT INSTRUCTIONS
+
+  Data:
+    File is "c:\Repo\data_local\gxe_ext_trajectory.csv";
+  Variable:
+   Names are
+      AID white african native asian other hispanic FAMID pgs
+      ANCESTRY parent single_par peer school neighbor age sex asb sub
+      income pared sub_hi_dum sub_lo_dum asb_hi_dum
+      asb_mod_dum asb_ado_dum pgsparent pgspeer pgsschool
+      pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar
+      pgsafrican pgsnative pgsasian pgsother pgshispanic;
+
+   usevariables are
+    !sub asb
+    pgs parent peer school neighbor age sex
+    income pared
+    !sub_hi_dum sub_lo_dum
+    !asb_hi_dum asb_mod_dum asb_ado_dum
+    !pgsparent pgspeer pgsschool pgsneighbor
+    !pgsage pgssex pgsinc pgspared pgssingpar
+    single_par
+    ;
+
+    !NOMINAL ARE
+     !asb sub;
+
+    USEOBSERVATIONS ARE
+      ancestry == 0 AND white == 1 AND hispanic == 0;
+
+    IDVARIABLE IS AID;
+
+    Missing are .;
+
+  Analysis:
+      process = 18;
+      estimator = ML;
+      !Algorithm = INTEGRATION;
+      !INTEGRATION = MONTECARLO (2000);
+      !LINK = PROBIT;
+      !bootstrap=1500;
+
+  Define:
+
+
+  MODEL:
+
+      parent peer school neighbor ON age sex income pared
+      single_par;
+
+      parent ON pgs(a1);
+      peer ON pgs(a2);
+      school ON pgs(a3);
+      neighbor ON pgs(a4);
+
+      parent WITH peer school neighbor;
+
+      peer WITH parent school neighbor;
+
+      school WITH parent peer neighbor;
+
+      neighbor WITH parent peer school;
+
+
+      OUTPUT:
+      ;
+
+      SAVEDATA:
+      FILE is eur_id.dat;
+      FORMAT is free;
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+*** WARNING
+  Data set contains cases with missing on x-variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on x-variables:  1038
+   2 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        3987
+
+Number of dependent variables                                    4
+Number of independent variables                                  6
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Continuous
+   PARENT      PEER        SCHOOL      NEIGHBOR
+
+Observed independent variables
+   PGS         AGE         SEX         INCOME      PARED       SINGLE_P
+
+Variables with special functions
+
+  ID variable           AID
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+
+Input data file(s)
+  c:\Repo\data_local\gxe_ext_trajectory.csv
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             6
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              PARENT        PEER          SCHOOL        NEIGHBOR      PGS
+              ________      ________      ________      ________      ________
+ PARENT         1.000
+ PEER           0.992         0.992
+ SCHOOL         0.982         0.974         0.982
+ NEIGHBOR       0.998         0.991         0.980         0.998
+ PGS            1.000         0.992         0.982         0.998         1.000
+ AGE            1.000         0.992         0.982         0.998         1.000
+ SEX            1.000         0.992         0.982         0.998         1.000
+ INCOME         1.000         0.992         0.982         0.998         1.000
+ PARED          1.000         0.992         0.982         0.998         1.000
+ SINGLE_P       1.000         0.992         0.982         0.998         1.000
+
+
+           Covariance Coverage
+              AGE           SEX           INCOME        PARED         SINGLE_P
+              ________      ________      ________      ________      ________
+ AGE            1.000
+ SEX            1.000         1.000
+ INCOME         1.000         1.000         1.000
+ PARED          1.000         1.000         1.000         1.000
+ SINGLE_P       1.000         1.000         1.000         1.000         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     PARENT                0.024      -1.354      -5.849    0.03%      -0.621     -0.032      0.178
+            3986.000       0.947       2.540       1.186    0.68%       0.421      0.890
+     PEER                 -0.030       0.926      -1.050    0.03%      -1.019     -0.665     -0.353
+            3956.000       0.983       0.149       3.674    0.28%      -0.030      0.885
+     SCHOOL                0.025      -0.618      -3.715    0.03%      -0.722     -0.038      0.192
+            3915.000       0.961       0.312       1.812    1.74%       0.420      0.881
+     NEIGHBOR              0.022      -0.968      -4.128    0.03%      -0.813     -0.002      0.252
+            3979.000       0.980       0.536       1.227    0.03%       0.468      0.939
+     PGS                  -0.008      -0.023      -3.534    0.03%      -0.872     -0.254      0.007
+            3987.000       1.007      -0.014       3.344    0.03%       0.244      0.821
+     AGE                  -0.126      -0.026      -4.017    0.03%      -1.767     -0.600     -0.100
+            3987.000       2.799      -0.905       5.316    0.03%       0.400      1.566
+     SEX                   0.022      -0.088      -0.500   47.81%      -0.500     -0.500      0.500
+            3987.000       0.250      -1.992       0.500   52.19%       0.500      0.500
+     INCOME                0.008      -1.221      -3.702    0.93%      -0.483     -0.038      0.127
+            3987.000       0.596       4.569       3.206    0.03%       0.230      0.561
+     PARED                 0.032       0.141      -2.742    1.05%      -0.742     -0.242     -0.242
+            3987.000       1.195      -0.488       2.258    5.04%       0.258      1.258
+     SINGLE_PAR           -0.259       1.213      -0.500   75.92%      -0.500     -0.500     -0.500
+            3987.000       0.183      -0.530       0.500   24.08%      -0.500      0.500
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       38
+
+Loglikelihood
+
+          H0 Value                      -21179.212
+          H1 Value                      -21179.212
+
+Information Criteria
+
+          Akaike (AIC)                   42434.425
+          Bayesian (BIC)                 42673.475
+          Sample-Size Adjusted BIC       42552.728
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+          90 Percent C.I.                    0.000  0.000
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           2061.107
+          Degrees of Freedom                    30
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.000
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PARENT   ON
+    AGE               -0.082      0.009     -9.074      0.000
+    SEX               -0.179      0.030     -5.896      0.000
+    INCOME             0.043      0.023      1.885      0.059
+    PARED              0.025      0.015      1.642      0.101
+    SINGLE_PAR        -0.101      0.038     -2.671      0.008
+    PGS               -0.053      0.015     -3.494      0.000
+
+ PEER     ON
+    AGE                0.153      0.009     17.254      0.000
+    SEX               -0.055      0.030     -1.868      0.062
+    INCOME             0.002      0.022      0.094      0.925
+    PARED             -0.098      0.015     -6.557      0.000
+    SINGLE_PAR         0.245      0.037      6.665      0.000
+    PGS                0.140      0.015      9.414      0.000
+
+ SCHOOL   ON
+    AGE               -0.052      0.009     -5.592      0.000
+    SEX               -0.008      0.031     -0.264      0.791
+    INCOME             0.034      0.023      1.491      0.136
+    PARED              0.072      0.016      4.598      0.000
+    SINGLE_PAR        -0.172      0.038     -4.490      0.000
+    PGS               -0.101      0.015     -6.503      0.000
+
+ NEIGHBOR ON
+    AGE               -0.047      0.009     -5.081      0.000
+    SEX               -0.042      0.031     -1.358      0.174
+    INCOME             0.009      0.023      0.367      0.714
+    PARED             -0.007      0.016     -0.450      0.653
+    SINGLE_PAR        -0.237      0.039     -6.131      0.000
+    PGS               -0.044      0.016     -2.816      0.005
+
+ PARENT   WITH
+    PEER              -0.154      0.014    -10.800      0.000
+    SCHOOL             0.312      0.016     20.063      0.000
+    NEIGHBOR           0.185      0.015     12.246      0.000
+
+ PEER     WITH
+    SCHOOL            -0.222      0.015    -14.987      0.000
+    NEIGHBOR          -0.053      0.015     -3.626      0.000
+
+ SCHOOL   WITH
+    NEIGHBOR           0.274      0.016     17.473      0.000
+
+ Intercepts
+    PARENT            -0.010      0.018     -0.563      0.574
+    PEER               0.059      0.018      3.346      0.001
+    SCHOOL            -0.033      0.018     -1.824      0.068
+    NEIGHBOR          -0.045      0.019     -2.438      0.015
+
+ Residual Variances
+    PARENT             0.912      0.020     44.643      0.000
+    PEER               0.863      0.019     44.466      0.000
+    SCHOOL             0.926      0.021     44.178      0.000
+    NEIGHBOR           0.960      0.022     44.591      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.188E-01
+       (ratio of smallest to largest eigenvalue)
+
+
+SAVEDATA INFORMATION
+
+
+  Save file
+    eur_id.dat
+
+  Order of variables
+
+    PARENT
+    PEER
+    SCHOOL
+    NEIGHBOR
+    PGS
+    AGE
+    SEX
+    INCOME
+    PARED
+    SINGLE_P
+    AID
+
+  Save file format           Free
+
+  Save file record length    10000
+
+  Save missing symbol        *
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\repo\2024_ge_interplay_ext_trajectory\analysis\rnr_eur_a_path.dgm
+
+     Beginning Time:  19:25:07
+        Ending Time:  19:25:07
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

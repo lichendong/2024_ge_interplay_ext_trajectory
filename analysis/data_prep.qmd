@@ -745,4 +745,61 @@ eur |> bind_rows(afr) |> bind_rows(asi) |> bind_rows(his)  |> select(AID) |> lef
 
 ```
 
+### Item level
+
+```{r}
+parent_item <- Wave1 |> select(AID, H1WP9, H1WP10, H1PF1, H1PF2, 
+                            H1PF3, H1PF4, H1PF5, H1WP13, 
+                            H1WP14, H1PF23, H1PF24, H1PF25) |> 
+            mutate(across(H1WP9:H1PF25, ~ replace(.x, .x > 5, NA)),
+                   across(starts_with("H1PF"), ~ 6 - .x),
+                   across(H1WP9:H1PF25, ~ as.vector(scale(.x)))) 
+
+del_peer_item <- Wave1 |> select(AID, H1TO29, H1TO33, H1TO9, H1DS14) |> 
+            mutate(across(H1TO29:H1DS14, ~ replace(.x, .x > 5, NA)),
+                   across(H1TO29:H1DS14, ~ as.vector(scale(.x))))
+
+school_con_item <- Wave1 |> select(AID, H1ED19, H1ED20, H1ED22, H1ED23,
+                              H1ED24, H1PR2) |> 
+              mutate(across(H1ED19:H1PR2, ~ replace(.x, .x > 5, NA)),
+                     across(starts_with("H1ED"), ~ 6 - .x),
+                     across(H1ED19:H1PR2, ~ as.vector(scale(.x)))) 
+
+neigh_con_item <- Wave1 |> select(AID, H1NB1, H1NB2, H1NB3, H1NB5,
+                              H1NB6, H1NB7) |> 
+              mutate(across(H1NB1:H1NB7, ~ replace(.x, .x > 5, NA)),
+                     across(H1NB1:H1NB3, ~ 3 - .x),
+                     H1NB7 = 6 - H1NB7,
+                     across(H1NB1:H1NB7, ~ as.vector(scale(.x))))
+
+data |> select(AID) |>  left_join(parent_item) |> select(AID,H1WP9:H1PF5) |> rowwise() |> 
+  filter(sum(is.na(c(H1WP9,H1WP10,H1PF1,H1PF2,H1PF3,H1PF4,H1PF5))) < 7) |> ungroup() |> naniar::miss_case_table()
+
+data |> select(AID) |>  left_join(parent_item) |> select(AID,H1WP13:H1PF25) |> rowwise() |> 
+  filter(sum(is.na(c(H1WP13,H1WP14,H1PF23,H1PF24,H1PF25))) < 5) |> ungroup() |> naniar::miss_case_table()
+
+data |> select(AID) |>  left_join(del_peer_item) |> select(AID,H1TO29:H1DS14) |> rowwise() |> 
+  filter(sum(is.na(c(H1TO29, H1TO33, H1TO9, H1DS14))) < 4) |> ungroup() |> naniar::miss_case_table()
+
+data |> select(AID) |>  left_join(school_con_item) |> select(AID,H1ED19:H1PR2) |> rowwise() |> 
+  filter(sum(is.na(c(H1ED19,H1ED20, H1ED22, H1ED23, H1ED24, H1PR2))) < 6) |> ungroup() |> naniar::miss_case_table()
+
+data |> select(AID) |>  left_join(neigh_con_item) |> select(AID,H1NB1:H1NB7) |> rowwise() |> 
+  filter(sum(is.na(c(H1NB1,H1NB2,H1NB3,H1NB5,H1NB6,H1NB7))) < 6) |> ungroup() |> naniar::miss_case_table()
+
+
+
+```
+
+
+
+# QQ plot for false positives
+
+```{r}
+data_qq <- tibble(p = c(.609,.189,.664,.230,.128,.825,.998,.367,.147,.930,.304,.159,.581,.101,.718,.022,.284,.337,.460,.241,.178,.000,.018,.750,.005,.000,.075,.845,.008,.000,.000,.956,.617,.000,.000,.679,.094,.000,.599,.056))
+
+data_qq <- data_qq |> mutate(log_p = -log10(p + .0001))
+qqnorm(y = data_qq |> pull(log_p), main = "Normal Q-Q Plot Based on -log(p)")
+```
+
 

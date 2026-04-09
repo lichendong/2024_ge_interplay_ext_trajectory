@@ -1,0 +1,408 @@
+VERSION 1.1.0
+INPUT
+DATA:
+  File is "c:\Repo\data_local\gxe_ext_trajectory_no_item_miss.csv";
+VARIABLE:
+ Names are
+    AID white african native asian other hispanic FAMID pgs
+    ANCESTRY parent single_par peer school neighbor age sex asb sub
+    income pared sub_hi_dum sub_lo_dum asb_hi_dum
+    asb_mod_dum asb_ado_dum pgsparent pgspeer pgsschool
+    pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar
+    pgsafrican pgsnative pgsasian pgsother pgshispanic;
+ usevariables are
+  sub asb
+  pgs parent peer school neighbor age sex
+  income pared
+  sub_hi_dum sub_lo_dum
+  asb_hi_dum asb_mod_dum asb_ado_dum
+  pgsparent pgspeer pgsschool pgsneighbor
+  pgsage pgssex pgsinc pgspared pgssingpar
+  single_par
+  ;
+  NOMINAL ARE
+   asb sub;
+  USEOBSERVATIONS ARE
+    ancestry == 0 AND white == 1 AND hispanic == 0;
+  IDVARIABLE IS AID;
+  Missing are .;
+ANALYSIS:
+    process = 18;
+    estimator = ML;
+    Algorithm = INTEGRATION;
+    INTEGRATION = MONTECARLO (2000);
+OUTPUT:
+    CINTERVAL(BOOTSTRAP)
+    ;
+SAVEDATA:
+    FILE is eur_id.dat;
+    FORMAT is free;
+MODEL:
+    parent peer school neighbor ON age sex income pared
+    single_par;
+    parent ON pgs(a1);
+    peer ON pgs(a2);
+    school ON pgs(a3);
+    neighbor ON pgs(a4);
+    asb ON pgsparent pgspeer
+    pgsschool pgsneighbor
+    pgsage pgssex pgsinc pgspared pgssingpar
+    sub_hi_dum sub_lo_dum age sex
+    income pared
+    single_par;
+    asb#1 ON pgs(cpasb1);
+    asb#1 ON parent(basb11);
+    asb#1 ON peer(basb12);
+    asb#1 ON school(basb13);
+    asb#1 ON neighbor(basb14);
+    asb#2 ON pgs(cpasb2);
+    asb#2 ON parent(basb21);
+    asb#2 ON peer(basb22);
+    asb#2 ON school(basb23);
+    asb#2 ON neighbor(basb24);
+    asb#3 ON pgs(cpasb3);
+    asb#3 ON parent(basb31);
+    asb#3 ON peer(basb32);
+    asb#3 ON school(basb33);
+    asb#3 ON neighbor(basb34);
+    sub ON pgsparent pgspeer pgsschool pgsneighbor
+    pgsage pgssex pgsinc pgspared pgssingpar
+    asb_hi_dum asb_mod_dum asb_ado_dum age sex
+    income pared
+    single_par;
+    sub#1 ON pgs(cpsub1);
+    sub#1 ON parent(bsub11);
+    sub#1 ON peer(bsub12);
+    sub#1 ON school(bsub13);
+    sub#1 ON neighbor(bsub14);
+    sub#2 ON pgs(cpsub2);
+    sub#2 ON parent(bsub21);
+    sub#2 ON peer(bsub22);
+    sub#2 ON school(bsub23);
+    sub#2 ON neighbor(bsub24);
+    parent WITH peer school neighbor;
+    peer WITH parent school neighbor;
+    school WITH parent peer neighbor;
+    neighbor WITH parent peer school;
+    [pgs parent peer school neighbor
+    age sex income pared single_par
+    pgsparent pgspeer
+    pgsschool pgsneighbor
+    pgsage pgssex pgsinc pgspared pgssingpar];
+INPUT_END
+2
+0
+0
+0
+ML
+1
+GENERAL
+0
+24
+0
+5
+asb#1 asb#2 asb#3 sub#1 sub#2 parent peer school neighbor pgs age sex income pared pgsparent pgspeer pgsschool pgsneighbor pgsage pgssex pgsinc pgspared pgssingpar single_par sub_hi_dum sub_lo_dum asb_hi_dum asb_mod_dum asb_ado_dum
+3
+2 2 2 2 2 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0
+0
+1 1 age parent   -0.092    0.008
+1 1 sex parent   -0.168    0.028
+1 1 income parent    0.046    0.024
+1 1 pared parent    0.020    0.015
+1 1 single_par parent   -0.088    0.035
+1 1 pgs parent   -0.055    0.014
+91 1 pgs parent a1
+1 1 age peer    0.155    0.008
+1 1 sex peer   -0.047    0.027
+1 1 income peer   -0.001    0.022
+1 1 pared peer   -0.090    0.014
+1 1 single_par peer    0.207    0.033
+1 1 pgs peer    0.143    0.013
+91 1 pgs peer a2
+1 1 age school   -0.059    0.008
+1 1 sex school   -0.001    0.028
+1 1 income school    0.038    0.023
+1 1 pared school    0.071    0.015
+1 1 single_par school   -0.141    0.035
+1 1 pgs school   -0.103    0.014
+91 1 pgs school a3
+1 1 age neighbor   -0.054    0.008
+1 1 sex neighbor   -0.056    0.028
+1 1 income neighbor    0.009    0.024
+1 1 pared neighbor   -0.009    0.015
+1 1 single_par neighbor   -0.216    0.035
+1 1 pgs neighbor   -0.052    0.014
+91 1 pgs neighbor a4
+1 1 pgsparent asb#1   -0.060    0.118
+1 1 pgspeer asb#1   -0.183    0.114
+1 1 pgsschool asb#1    0.064    0.126
+1 1 pgsneighbor asb#1   -0.204    0.119
+1 1 pgsage asb#1    0.009    0.075
+1 1 pgssex asb#1    0.032    0.358
+1 1 pgsinc asb#1    0.132    0.187
+1 1 pgspared asb#1   -0.146    0.125
+1 1 pgssingpar asb#1    0.037    0.289
+1 1 sub_hi_dum asb#1    1.591    0.373
+1 1 sub_lo_dum asb#1   -9.230   69.902
+1 1 age asb#1   -0.371    0.080
+1 1 sex asb#1   -2.817    0.393
+1 1 income asb#1   -0.125    0.188
+1 1 pared asb#1    0.299    0.129
+1 1 single_par asb#1   -0.211    0.294
+1 1 pgs asb#1    0.410    0.253
+91 1 pgs asb#1 cpasb1
+1 1 parent asb#1   -0.190    0.128
+91 1 parent asb#1 basb11
+1 1 peer asb#1    1.240    0.121
+91 1 peer asb#1 basb12
+1 1 school asb#1   -0.386    0.132
+91 1 school asb#1 basb13
+1 1 neighbor asb#1   -0.019    0.132
+91 1 neighbor asb#1 basb14
+1 1 pgsparent asb#2    0.078    0.051
+1 1 pgspeer asb#2   -0.022    0.051
+1 1 pgsschool asb#2   -0.004    0.054
+1 1 pgsneighbor asb#2   -0.054    0.049
+1 1 pgsage asb#2    0.023    0.029
+1 1 pgssex asb#2    0.127    0.099
+1 1 pgsinc asb#2   -0.039    0.076
+1 1 pgspared asb#2    0.077    0.049
+1 1 pgssingpar asb#2   -0.109    0.115
+1 1 sub_hi_dum asb#2    0.629    0.100
+1 1 sub_lo_dum asb#2   -0.832    0.208
+1 1 age asb#2   -0.124    0.029
+1 1 sex asb#2   -1.363    0.100
+1 1 income asb#2    0.044    0.075
+1 1 pared asb#2    0.084    0.048
+1 1 single_par asb#2   -0.042    0.113
+1 1 pgs asb#2    0.137    0.060
+91 1 pgs asb#2 cpasb2
+1 1 parent asb#2   -0.207    0.049
+91 1 parent asb#2 basb21
+1 1 peer asb#2    0.217    0.052
+91 1 peer asb#2 basb22
+1 1 school asb#2   -0.103    0.053
+91 1 school asb#2 basb23
+1 1 neighbor asb#2    0.008    0.050
+91 1 neighbor asb#2 basb24
+1 1 pgsparent asb#3   -0.086    0.065
+1 1 pgspeer asb#3    0.019    0.064
+1 1 pgsschool asb#3   -0.067    0.072
+1 1 pgsneighbor asb#3    0.099    0.066
+1 1 pgsage asb#3   -0.009    0.041
+1 1 pgssex asb#3    0.077    0.135
+1 1 pgsinc asb#3   -0.019    0.113
+1 1 pgspared asb#3    0.046    0.069
+1 1 pgssingpar asb#3    0.363    0.160
+1 1 sub_hi_dum asb#3    0.572    0.150
+1 1 sub_lo_dum asb#3   -0.504    0.313
+1 1 age asb#3   -0.336    0.042
+1 1 sex asb#3   -1.035    0.135
+1 1 income asb#3    0.154    0.110
+1 1 pared asb#3    0.061    0.068
+1 1 single_par asb#3    0.092    0.160
+1 1 pgs asb#3    0.052    0.092
+91 1 pgs asb#3 cpasb3
+1 1 parent asb#3   -0.210    0.065
+91 1 parent asb#3 basb31
+1 1 peer asb#3    0.782    0.067
+91 1 peer asb#3 basb32
+1 1 school asb#3   -0.283    0.072
+91 1 school asb#3 basb33
+1 1 neighbor asb#3   -0.015    0.067
+91 1 neighbor asb#3 basb34
+1 1 pgsparent sub#1   -0.026    0.039
+1 1 pgspeer sub#1   -0.076    0.042
+1 1 pgsschool sub#1    0.029    0.042
+1 1 pgsneighbor sub#1    0.068    0.037
+1 1 pgsage sub#1    0.057    0.022
+1 1 pgssex sub#1    0.186    0.070
+1 1 pgsinc sub#1   -0.062    0.060
+1 1 pgspared sub#1    0.068    0.037
+1 1 pgssingpar sub#1   -0.041    0.089
+1 1 asb_hi_dum sub#1    1.459    0.368
+1 1 asb_mod_dum sub#1    0.633    0.100
+1 1 asb_ado_dum sub#1    0.557    0.150
+1 1 age sub#1   -0.117    0.021
+1 1 sex sub#1   -0.222    0.070
+1 1 income sub#1   -0.048    0.056
+1 1 pared sub#1   -0.109    0.035
+1 1 single_par sub#1    0.224    0.085
+1 1 pgs sub#1    0.240    0.043
+91 1 pgs sub#1 cpsub1
+1 1 parent sub#1   -0.019    0.038
+91 1 parent sub#1 bsub11
+1 1 peer sub#1    0.621    0.041
+91 1 peer sub#1 bsub12
+1 1 school sub#1   -0.195    0.040
+91 1 school sub#1 bsub13
+1 1 neighbor sub#1   -0.004    0.037
+91 1 neighbor sub#1 bsub14
+1 1 pgsparent sub#2    0.068    0.058
+1 1 pgspeer sub#2    0.106    0.074
+1 1 pgsschool sub#2   -0.045    0.057
+1 1 pgsneighbor sub#2    0.054    0.049
+1 1 pgsage sub#2    0.028    0.027
+1 1 pgssex sub#2   -0.003    0.092
+1 1 pgsinc sub#2    0.044    0.079
+1 1 pgspared sub#2   -0.013    0.049
+1 1 pgssingpar sub#2   -0.081    0.123
+1 1 asb_hi_dum sub#2   -9.936  115.154
+1 1 asb_mod_dum sub#2   -0.796    0.208
+1 1 asb_ado_dum sub#2   -0.294    0.310
+1 1 age sub#2    0.148    0.028
+1 1 sex sub#2    0.365    0.095
+1 1 income sub#2   -0.206    0.073
+1 1 pared sub#2   -0.207    0.048
+1 1 single_par sub#2    0.011    0.117
+1 1 pgs sub#2   -0.141    0.071
+91 1 pgs sub#2 cpsub2
+1 1 parent sub#2    0.111    0.055
+91 1 parent sub#2 bsub21
+1 1 peer sub#2   -0.702    0.074
+91 1 peer sub#2 bsub22
+1 1 school sub#2   -0.031    0.054
+91 1 school sub#2 bsub23
+1 1 neighbor sub#2   -0.116    0.048
+91 1 neighbor sub#2 bsub24
+2 1 parent peer   -0.174    0.013
+2 1 parent school    0.322    0.015
+2 1 parent neighbor    0.197    0.014
+2 1 peer school   -0.233    0.014
+2 1 peer neighbor   -0.063    0.013
+2 1 school neighbor    0.293    0.014
+2 1 age pgs    0.003    0.024
+2 1 sex pgs    0.014    0.007
+2 1 sex age   -0.054    0.012
+2 1 income pgs   -0.062    0.012
+2 1 income age   -0.003    0.021
+2 1 income sex    0.003    0.006
+2 1 pared pgs   -0.126    0.016
+2 1 pared age   -0.111    0.028
+2 1 pared sex   -0.007    0.008
+2 1 pared income    0.358    0.014
+2 1 pgsparent pgs    0.017    0.014
+2 1 pgsparent age    0.033    0.024
+2 1 pgsparent sex    0.009    0.007
+2 1 pgsparent income    0.000    0.012
+2 1 pgsparent pared   -0.031    0.016
+2 1 pgspeer pgs   -0.003    0.014
+2 1 pgspeer age    0.035    0.024
+2 1 pgspeer sex    0.003    0.007
+2 1 pgspeer income    0.004    0.012
+2 1 pgspeer pared    0.015    0.016
+2 1 pgspeer pgsparent   -0.249    0.015
+2 1 pgsschool pgs    0.002    0.014
+2 1 pgsschool age    0.015    0.024
+2 1 pgsschool sex    0.007    0.007
+2 1 pgsschool income    0.024    0.012
+2 1 pgsschool pared    0.021    0.016
+2 1 pgsschool pgsparent    0.371    0.015
+2 1 pgsschool pgspeer   -0.313    0.015
+2 1 pgsneighbor pgs    0.006    0.014
+2 1 pgsneighbor age   -0.019    0.024
+2 1 pgsneighbor sex   -0.010    0.007
+2 1 pgsneighbor income    0.010    0.012
+2 1 pgsneighbor pared   -0.010    0.016
+2 1 pgsneighbor pgsparent    0.230    0.015
+2 1 pgsneighbor pgspeer   -0.106    0.015
+2 1 pgsneighbor pgsschool    0.319    0.015
+2 1 pgsage pgs    0.066    0.024
+2 1 pgsage age    0.036    0.042
+2 1 pgsage sex   -0.001    0.012
+2 1 pgsage income    0.030    0.021
+2 1 pgsage pared    0.035    0.028
+2 1 pgsage pgsparent   -0.258    0.025
+2 1 pgsage pgspeer    0.450    0.025
+2 1 pgsage pgsschool   -0.163    0.024
+2 1 pgsage pgsneighbor   -0.105    0.024
+2 1 pgssex pgs    0.030    0.007
+2 1 pgssex age   -0.001    0.012
+2 1 pgssex sex    0.000    0.004
+2 1 pgssex income   -0.004    0.006
+2 1 pgssex pared    0.004    0.008
+2 1 pgssex pgsparent   -0.030    0.007
+2 1 pgssex pgspeer   -0.012    0.007
+2 1 pgssex pgsschool    0.007    0.007
+2 1 pgssex pgsneighbor   -0.007    0.007
+2 1 pgssex pgsage   -0.047    0.012
+2 1 pgsinc pgs    0.012    0.011
+2 1 pgsinc age    0.029    0.020
+2 1 pgsinc sex   -0.002    0.006
+2 1 pgsinc income    0.040    0.009
+2 1 pgsinc pared   -0.009    0.013
+2 1 pgsinc pgsparent    0.050    0.012
+2 1 pgsinc pgspeer   -0.060    0.011
+2 1 pgsinc pgsschool    0.079    0.011
+2 1 pgsinc pgsneighbor    0.065    0.012
+2 1 pgsinc pgsage    0.026    0.020
+2 1 pgsinc pgssex    0.002    0.006
+2 1 pgspared pgs    0.033    0.016
+2 1 pgspared age    0.035    0.027
+2 1 pgspared sex    0.007    0.008
+2 1 pgspared income   -0.009    0.013
+2 1 pgspared pared   -0.021    0.017
+2 1 pgspared pgsparent    0.075    0.016
+2 1 pgspared pgspeer   -0.141    0.016
+2 1 pgspared pgsschool    0.103    0.016
+2 1 pgspared pgsneighbor    0.009    0.016
+2 1 pgspared pgsage   -0.145    0.027
+2 1 pgspared pgssex   -0.007    0.008
+2 1 pgspared pgsinc    0.346    0.013
+2 1 pgssingpar pgs   -0.277    0.008
+2 1 pgssingpar age   -0.003    0.012
+2 1 pgssingpar sex   -0.002    0.004
+2 1 pgssingpar income    0.006    0.006
+2 1 pgssingpar pared    0.042    0.008
+2 1 pgssingpar pgsparent   -0.036    0.007
+2 1 pgssingpar pgspeer    0.041    0.007
+2 1 pgssingpar pgsschool   -0.026    0.007
+2 1 pgssingpar pgsneighbor   -0.050    0.007
+2 1 pgssingpar pgsage   -0.015    0.012
+2 1 pgssingpar pgssex   -0.012    0.004
+2 1 pgssingpar pgsinc   -0.100    0.006
+2 1 pgssingpar pgspared   -0.041    0.008
+2 1 single_par pgs    0.036    0.006
+2 1 single_par age    0.011    0.010
+2 1 single_par sex    0.002    0.003
+2 1 single_par income   -0.108    0.005
+2 1 single_par pared   -0.044    0.007
+2 1 single_par pgsparent    0.000    0.006
+2 1 single_par pgspeer   -0.002    0.006
+2 1 single_par pgsschool    0.004    0.006
+2 1 single_par pgsneighbor   -0.003    0.006
+2 1 single_par pgsage   -0.002    0.010
+2 1 single_par pgssex    0.003    0.003
+2 1 single_par pgsinc   -0.011    0.005
+2 1 single_par pgspared    0.009    0.007
+2 1 single_par pgssingpar    0.009    0.003
+4 1 parent    0.960    0.019
+4 1 peer    0.875    0.018
+4 1 school    0.954    0.019
+4 1 neighbor    0.975    0.020
+5 1 pgs    0.998    0.020
+5 1 age    2.950    0.059
+5 1 sex    0.249    0.005
+5 1 income    0.598    0.013
+5 1 pared    1.220    0.025
+5 1 pgsparent    0.981    0.020
+5 1 pgspeer    0.995    0.020
+5 1 pgsschool    0.956    0.019
+5 1 pgsneighbor    0.999    0.020
+5 1 pgsage    2.953    0.059
+5 1 pgssex    0.249    0.005
+5 1 pgsinc    0.564    0.012
+5 1 pgspared    1.180    0.024
+5 1 pgssingpar    0.248    0.005
+5 1 single_par    0.183    0.004
+2 1 sub_hi_dum sub_lo_dum  999.000  999.000
+2 1 sub_hi_dum asb_hi_dum  999.000  999.000
+2 1 sub_hi_dum asb_mod_dum  999.000  999.000
+2 1 sub_hi_dum asb_ado_dum  999.000  999.000
+2 1 sub_lo_dum asb_hi_dum  999.000  999.000
+2 1 sub_lo_dum asb_mod_dum  999.000  999.000
+2 1 sub_lo_dum asb_ado_dum  999.000  999.000
+2 1 asb_hi_dum asb_mod_dum  999.000  999.000
+2 1 asb_hi_dum asb_ado_dum  999.000  999.000
+2 1 asb_mod_dum asb_ado_dum  999.000  999.000
